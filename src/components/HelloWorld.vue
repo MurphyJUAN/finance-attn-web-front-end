@@ -257,7 +257,7 @@ export default {
   /* background-color: #f08bc3; */
   margin-top: 2px;
   display: flex;
-  padding: 0px 5px 0px 5px;
+  padding: 0px 5px 0px 15px;
   /* justify-content: center; */
   /* align-items: center; */
   color: black;
@@ -311,7 +311,7 @@ export default {
   /* background-color: #f08bc3; */
   margin: 2px;
   display: flex;
-  padding: 20px 5px 20px 5px;
+  padding: 20px 5px 20px 15px;
   overflow: hidden;
   /* justify-content: center; */
   /* align-items: center; */
