@@ -1,11 +1,8 @@
-/* eslint-disable vue/require-v-for-key */
+
+
 <template>
   <div :id="`line-chart-${id}`">
-    <svg id="chart" :width="width" :height="height">
-        <g v-for="(item, idx) in barChart.data" :transform="`translate(0, ${i * (barChart.barHeight + 10)})`">
-            <rect :height="barChart.barHeight" :width="barWidth(item.value)" ></rect>
-        </g>
-    </svg>
+      <svg :width=width :height=height></svg>
   </div>
 </template>
 
@@ -29,12 +26,13 @@ export default {
   methods: {
     drawChart() {
       const data = this.barChart.data;
-      //   const margin = {
-      //     top: 20,
-      //     bottom: 20,
-      //     left: 5,
-      //     right: 5,
-      //   };
+      console.log(data, 'banaba');
+      const margin = {
+        top: 20,
+        bottom: 20,
+        left: 5,
+        right: 5,
+      };
 
       let svgItemWidth = 212;
       let svgItemHeight = 500;
@@ -54,21 +52,37 @@ export default {
         console.log('jeje', svgItemWidth);
         console.log('keke', svgItemHeight);
       }
-    },
-    barWidth(value) {
-      const a = this.width / this.dataMax;
-      return a * value;
-    },
-  },
-  computed: {
-    dataMax() {
-      let maxValue = 0;
-      for (let i = 0; i < this.chartData.data.length; i++) {
-        if (this.chartData.data[i].value >= maxValue) {
-          maxValue = this.chartData.data[i].value;
-        }
-      }
-      return maxValue;
+
+
+      const chartWidth = svgItemWidth - margin.left - margin.right; // 235是整個svg的寬
+      // 選取div並加入svg
+      //   const svg = d3
+      //     .select(`#line-chart-${this.id}`)
+      //     .append('svg')
+      //     .attr('width', svgItemWidth)
+      //     .attr('height', svgItemHeight);
+      const svg = d3.select(this.$el.querySelector('svg'));
+
+
+      const x = d3.scaleLinear()
+        .domain([0, d3.max(data.map(e => e.value))])
+        .range([0, chartWidth]);
+
+      // 在svg中加入一個g並移到svg中間
+      const g = svg.append('g').attr('transform', `translate(${margin.right}, ${margin.top})`);
+      // 在g畫上柱體
+      console.log('start drawing');
+      g
+        .selectAll('rect')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('x', 0)
+        .attr('y', (d, i) => i * this.barChart.barMargin)
+        .attr('width', d => x(d.value))
+        .attr('height', this.barChart.barHeight)
+        .attr('fill', '#00BAB6')
+        .attr('rx', 3);
     },
   },
   watch: {
@@ -80,6 +94,12 @@ export default {
       deep: true,
 
     },
+    isSorted: {
+      handler(n, o) {
+        console.log('amurphy');
+        this.drawChart();
+      },
+    },
   },
 };
 </script>
@@ -87,3 +107,4 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
+

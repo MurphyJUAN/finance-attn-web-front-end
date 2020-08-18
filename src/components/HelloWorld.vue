@@ -21,7 +21,7 @@
 
       </div>
       <div class="word-block">
-        <DependencyGraph :data=dependencyGraphDict />
+        <DependencyGraph :data=dependencyGraphDict :isSorted=isSorted />
         <!-- <div class="text">apple</div>
         <div class="text">apple</div>
         <div class="text">apple</div>
@@ -166,14 +166,14 @@ export default {
       ],
       dependencyGraphDict: {
         nodes: [
-          { name: '', fixed: true, cx: 10, cy: 30, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 80, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 130, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 180, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 230, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 280, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 330, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 380, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 15, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 60, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 110, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 160, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 210, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 260, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 310, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 360, weight: 1 },
           // cx定位需要計算
           { name: 'apple', fixed: false, cx: 310, cy: 30, weight: 10 },
           { name: 'anna', fixed: false, cx: 280, cy: 80, weight: 30 },
@@ -207,9 +207,9 @@ export default {
     recoverDiction() {
       this.barChart = JSON.parse(JSON.stringify(this.copyData));
       this.isSorted = !this.isSorted;
-      // for (let j = 0; j < this.dependencyGraph.links.length; j += 1) {
-      //   this.dependencyGraph.links[j].target = this.dependencyLinkOrder[j].target;
-      // }
+      for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
+        this.dependencyGraphDict.links[j].target = JSON.parse(JSON.stringify(this.dependencyLinkOrder[j].target));
+      }
     },
     sortDiction() {
       // console.log(this.barChart);
@@ -217,30 +217,26 @@ export default {
       this.isSorted = !this.isSorted;
       console.log('----', this.dependencyGraphDict.links);
       // console.log('----', this.dependencyGraph.links);
-      // const tmp = [];
-      // for (let j = 0; j < this.dependencyGraph.links.length; j += 1) {
-      //   tmp.push(this.dependencyGraph.links[j]);
-      // }
+      const tmp = [];
+      for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
+        tmp.push(JSON.parse(JSON.stringify(this.dependencyGraphDict.links[j])));
+      }
       // console.log('before:', this.dependencyGraph.links);
-      // for (let i = 0; i < this.barChart.data.length; i += 1) {
-      //   const newTarget = this.barChart.data[i].name;
-      //   console.log('newTarget', newTarget);
-      //   for (let j = 0; j < this.dependencyGraph.links.length; j += 1) {
-      //     console.log('=====', this.dependencyGraph.links[j].target.index, newTarget);
-      //     console.log(typeof (this.dependencyGraph.links[j].target.index), typeof (newTarget));
-      //     if (this.dependencyGraph.links[j].target.index === newTarget) {
-      //       console.log('opop');
-      //       tmp[j].target.index = i;
-      //       console.log(j, tmp[j].target.index);
-      //     }
-      //   }
-      // }
-      // console.log('after:', tmp);
-      // console.log(tmp === this.dependencyGraph.links);
-      // for (let j = 0; j < tmp.length; j += 1) {
-      //   this.dependencyGraph.links[j] = tmp[j];
-      // }
-      // console.log(this.dependencyGraph.links);
+      for (let i = 0; i < this.barChart.data.length; i += 1) {
+        const newTarget = this.barChart.data[i].name;
+        console.log('newTarget', newTarget);
+        for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
+          console.log('=====', this.dependencyGraphDict.links[j].target, newTarget);
+          console.log(typeof (this.dependencyGraphDict.links[j].target), typeof (newTarget));
+          if (parseInt(this.dependencyGraphDict.links[j].target, 10) === parseInt(newTarget, 10)) {
+            console.log('opop');
+            tmp[j].target = i;
+            console.log(j, tmp[j].target);
+          }
+        }
+      }
+      console.log('tmp', tmp);
+      this.dependencyGraphDict.links = tmp;
     },
   },
 };
@@ -300,7 +296,7 @@ export default {
 .flex {
   display: flex;
   height: 100%;
-  padding-top: 15px;
+  /* padding-top: 15px; */
   padding-bottom: 15px;
   /* background-color: #61a0f8; */
   flex-wrap: wrap;
@@ -311,7 +307,7 @@ export default {
   /* background-color: #f08bc3; */
   margin: 2px;
   display: flex;
-  padding: 20px 5px 20px 15px;
+  padding: 0px 5px 20px 15px;
   overflow: hidden;
   /* justify-content: center; */
   /* align-items: center; */
@@ -322,7 +318,7 @@ export default {
 .word-block {
   flex: 0 0 25%;
   /* background-color: #f08bc3; */
-  margin-top: 2px;
+  /* margin-top: 2px; */
   margin-bottom: 2px;
   /* display: flex; */
   /* justify-content: center; */
@@ -341,7 +337,7 @@ export default {
   align-items: center;
   color: black;
   font-size: 2rem;
-  padding-top: 20px;
+  /* padding-top: 20px; */
   overflow: hidden;
 }
 .text {

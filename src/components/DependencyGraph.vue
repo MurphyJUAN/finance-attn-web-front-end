@@ -11,7 +11,7 @@ import shortid from 'shortid';
 
 export default {
   name: 'DependencyGraph',
-  props: ['data'],
+  props: ['data', 'isSorted'],
   data() {
     return {
       id: shortid.generate(),
@@ -21,6 +21,8 @@ export default {
       text: null,
       width: 360,
       height: 800,
+      svg: null,
+      graphData: {},
 
     };
   },
@@ -29,10 +31,14 @@ export default {
     links() { return this.data.links; },
   },
   mounted() {
+    // this.graphData = JSON.parse(JSON.stringify(this.data));
     this.drawGraph();
   },
   methods: {
     drawGraph() {
+      console.log('props data', this.data.links);
+      console.log('drawGraph graphData', this.graphData.links);
+      this.graphData = JSON.parse(JSON.stringify(this.data));
       const svgItem = document.getElementsByClassName('word-block')[0];
       if (svgItem) {
         if (svgItem.clientWidth > 0) {
@@ -44,7 +50,7 @@ export default {
         //   const y2 = (dataListLen - 1) * 50;
         //   this.height = y1 + y2;
       }
-      const svg = d3
+      this.svg = d3
         .select(`#line-chart-${this.id}`)
         .append('svg')
         .attr('width', this.width)
@@ -56,28 +62,37 @@ export default {
         .range(['green', 'steelblue'])
         .interpolate(d3.interpolateCubehelix.gamma(3));
 
+      const scaleR = d3.scaleLinear()
+        .domain([0, d3.max(this.data.nodes.map(e => e.weight))])
+        .range([3, 20]);
+
+      const maxWeight = d3.max(this.data.nodes.map(e => e.weight));
+      const scaleT = d3.scaleLinear()
+        .domain([0, maxWeight])
+        .range([12, 24]);
+
       this.simulation = d3.forceSimulation()
         .force('link', d3.forceLink())
         .force('charge', d3.forceManyBody())
         .force('center', d3.forceCenter(this.width / 2, this.height / 2));
 
-      this.link = svg.append('g')
+      this.link = this.svg.append('g')
         .attr('class', 'links')
         .selectAll('line')
-        .data(this.data.links)
+        .data(this.graphData.links)
         .enter()
         .append('line')
         .attr('stroke-width', 1)
         .attr('stroke', 'gray');
 
 
-      this.node = svg.append('g')
+      this.node = this.svg.append('g')
         .attr('class', 'nodes')
         .selectAll('circle')
-        .data(this.data.nodes)
+        .data(this.graphData.nodes)
         .enter()
         .append('circle')
-        .attr('r', 4)
+        .attr('r', d => scaleR(d.weight))
         .attr('cx', d => d.cx)
         .attr('cy', d => d.cy)
         .attr('fill', (d, i) => color(i))
@@ -88,22 +103,22 @@ export default {
           .on('drag', this.dragged)
           .on('end', this.dragended));
 
-      this.text = svg.selectAll('text')
-        .data(this.data.nodes)
+      this.text = this.svg.selectAll('text')
+        .data(this.graphData.nodes)
         .enter()
         .append('text')
         .style('fill', 'black')
         .attr('font-size', '16px')
-        .attr('dx', 12)
+        .attr('dx', d => scaleT(d.weight))
         .attr('dy', 5)
         .text(d => d.name);
 
       this.simulation
-        .nodes(this.data.nodes)
+        .nodes(this.graphData.nodes)
         .on('tick', this.ticked);
 
       this.simulation.force('link')
-        .links(this.data.links)
+        .links(this.graphData.links)
         .distance(50);
 
       this.simulation.force('charge')
@@ -184,24 +199,21 @@ export default {
       d.fy = d.cy;
     },
     updateGraph() {
-      d3.select(this.$el.querySelector('svg')).remove();
-      console.log('-----Updata-----');
-      console.log('-----', this.data.links);
+      console.log('========update graph=========');
+      console.log(this.data.links);
+      console.log(this.graphData.links);
+      d3.select(`#line-chart-${this.id}`).select('svg').remove();
+      this.svg = null;
       this.drawGraph();
     },
 
 
   },
-//   watch: {
-//     data: {
-//       handler(n, o) {
-//         console.log('omurphy');
-//         this.updateGraph();
-//       },
-//       deep: true,
-
-//     },
-//   },
+  watch: {
+    isSorted(n, o) {
+      this.updateGraph();
+    },
+  },
 
 };
 </script>

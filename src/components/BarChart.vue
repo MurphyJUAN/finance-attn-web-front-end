@@ -51,8 +51,8 @@ export default {
     barWidth(value) {
       const a = this.width / this.dataMax;
       let b = a * value;
-      if (b >= this.width - 10) {
-        b -= 10;
+      if (b >= this.width - 20) {
+        b -= 20;
       }
       return b;
     },
