@@ -2,13 +2,15 @@
   <div class="hello">
     <h1 class="title">Finance Report Name</h1>
     <div class="flex-title">
-      <h3 class="bar-title">
+      <h5 class="bar-title">
         <div>Risk Level</div>
-        <div v-if="!isSorted" class="sort-btn" v-on:click="sortDiction">sort</div>
-        <div v-if="isSorted" class="sort-btn" v-on:click="recoverDiction">unsort</div>
-      </h3>
-      <h3 class="sentence-title">Sentence</h3>
-      <h3 class="word-title">Word</h3>
+        <svg class="sort-btn" v-on:click="sortDiction" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+        <!-- <img src="./assets/filter.svg"> -->
+        <!-- <div v-if="!isSorted" class="sort-btn" v-on:click="sortDiction">sort</div>
+        <div v-if="isSorted" class="sort-btn" v-on:click="recoverDiction">unsort</div> -->
+      </h5>
+      <h5 class="sentence-title">Sentence</h5>
+      <h5 class="word-title">Word</h5>
     </div>
     <div class="flex">
       <div class="bar-block">
@@ -246,13 +248,13 @@ export default {
       dependencyGraphDict: {
         nodes: [
           { name: '', fixed: true, cx: 10, cy: 15, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 60, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 110, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 160, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 210, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 260, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 310, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 360, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 65, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 115, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 165, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 215, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 265, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 315, weight: 1 },
+          { name: '', fixed: true, cx: 10, cy: 365, weight: 1 },
           // cx定位需要計算
           { name: 'apple', fixed: false, cx: 310, cy: 30, weight: 10 },
           { name: 'anna', fixed: false, cx: 280, cy: 80, weight: 30 },
@@ -292,30 +294,37 @@ export default {
     },
     sortDiction() {
       // console.log(this.barChart);
-      this.barChart.data.sort(this.compare);
-      this.isSorted = !this.isSorted;
-      console.log('----', this.dependencyGraphDict.links);
-      // console.log('----', this.dependencyGraph.links);
-      const tmp = [];
-      for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-        tmp.push(JSON.parse(JSON.stringify(this.dependencyGraphDict.links[j])));
-      }
-      // console.log('before:', this.dependencyGraph.links);
-      for (let i = 0; i < this.barChart.data.length; i += 1) {
-        const newTarget = this.barChart.data[i].name;
-        console.log('newTarget', newTarget);
+      if (!this.isSorted) {
+        this.barChart.data.sort(this.compare);
+        console.log('----', this.dependencyGraphDict.links);
+        // console.log('----', this.dependencyGraph.links);
+        const tmp = [];
         for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-          console.log('=====', this.dependencyGraphDict.links[j].target, newTarget);
-          console.log(typeof (this.dependencyGraphDict.links[j].target), typeof (newTarget));
-          if (parseInt(this.dependencyGraphDict.links[j].target, 10) === parseInt(newTarget, 10)) {
-            console.log('opop');
-            tmp[j].target = i;
-            console.log(j, tmp[j].target);
+          tmp.push(JSON.parse(JSON.stringify(this.dependencyGraphDict.links[j])));
+        }
+        // console.log('before:', this.dependencyGraph.links);
+        for (let i = 0; i < this.barChart.data.length; i += 1) {
+          const newTarget = this.barChart.data[i].name;
+          console.log('newTarget', newTarget);
+          for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
+            console.log('=====', this.dependencyGraphDict.links[j].target, newTarget);
+            console.log(typeof (this.dependencyGraphDict.links[j].target), typeof (newTarget));
+            if (parseInt(this.dependencyGraphDict.links[j].target, 10) === parseInt(newTarget, 10)) {
+              console.log('opop');
+              tmp[j].target = i;
+              console.log(j, tmp[j].target);
+            }
           }
         }
+        console.log('tmp', tmp);
+        this.dependencyGraphDict.links = tmp;
+      } else {
+        this.barChart = JSON.parse(JSON.stringify(this.copyData));
+        for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
+          this.dependencyGraphDict.links[j].target = JSON.parse(JSON.stringify(this.dependencyLinkOrder[j].target));
+        }
       }
-      console.log('tmp', tmp);
-      this.dependencyGraphDict.links = tmp;
+      this.isSorted = !this.isSorted;
     },
     setHeatMapData(idx) {
       this.selectedHeatMapGridData = this.barChart.data[idx].words;
@@ -332,7 +341,7 @@ export default {
   margin: 0px;
 }
 .bar-title{
-  flex: 0 0 18%;
+  flex: 0 0 10%;
   /* background-color: #f08bc3; */
   margin-top: 2px;
   display: flex;
@@ -345,9 +354,9 @@ export default {
   /* font-size: 2rem; */
 }
 .word-title {
-  flex: 0 0 25%;
+  flex: 0 0 22%;
   /* background-color: #f08bc3; */
-  margin: 2px;
+  /* margin: 2px; */
   display: flex;
   /* justify-content: center; */
   /* align-items: center; */
@@ -355,13 +364,14 @@ export default {
   /* font-size: 2rem; */
 }
 .sentence-title {
-  flex: 0 0 55%;
+  flex: 0 0 68%;
   /* background-color: #f08bc3; */
-  margin: 2px;
+  /* margin: 2px; */
   /* display: flex; */
   /* justify-content: center; */
   /* align-items: center; */
   color: black;
+  padding: 0 2vw 0 2vw;
   /* font-size: 2rem; */
   /* padding-top: 20px; */
 }
@@ -386,9 +396,9 @@ export default {
   /* justify-content: space-between; */
 }
 .bar-block {
-  flex: 0 0 18%;
+  flex: 0 0 10%;
   /* background-color: #f08bc3; */
-  margin: 2px;
+  /* margin: 2px; */
   display: flex;
   padding: 0px 5px 20px 15px;
   overflow: hidden;
@@ -399,10 +409,10 @@ export default {
   /* margin-right: 30px; */
 }
 .word-block {
-  flex: 0 0 25%;
+  flex: 0 0 22%;
   /* background-color: #f08bc3; */
   /* margin-top: 2px; */
-  margin-bottom: 2px;
+  /* margin-bottom: 2px; */
   /* display: flex; */
   /* justify-content: center; */
   /* align-items: center; */
@@ -410,9 +420,9 @@ export default {
   font-size: 2rem;
 }
 .sentence-block {
-  flex: 0 0 55%;
+  flex: 0 0 68%;
   /* background-color: #f08bc3; */
-  margin: 2px;
+  /* margin: 2px; */
   /* margin-top: 2px;
   margin-bottom: 2px; */
   /* display: flex; */
@@ -422,15 +432,16 @@ export default {
   font-size: 2rem;
   /* padding-top: 20px; */
   overflow: hidden;
+  padding: 0 2vw 0 2vw;
 }
 .text {
   text-align: left;
-  height: 40px;
+  height: 30px;
 
   /* margin-top: 20px; */
-  font-size: 12px;
+  font-size: 20px;
   /* padding-top: 15px; */
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   /* background: black; */
   overflow : hidden;
   text-overflow : ellipsis;
@@ -443,6 +454,6 @@ export default {
   color: #61a0f8;
   cursor: pointer;
   font-size: 16px;
-  margin-right: 20px;
+  /* margin-right: 20px; */
 }
 </style>

@@ -19,7 +19,7 @@ export default {
       link: null,
       node: null,
       text: null,
-      width: 360,
+      width: 50,
       height: 800,
       svg: null,
       graphData: {},
@@ -42,9 +42,9 @@ export default {
       const svgItem = document.getElementsByClassName('word-block')[0];
       if (svgItem) {
         if (svgItem.clientWidth > 0) {
-          this.width = svgItem.clientWidth;
+          this.width = svgItem.clientWidth - 2;
         }
-        console.log('dw', this.width);
+        console.log('dwddd', this.width);
         //   const dataListLen = this.data.nodes.length;
         //   const y1 = dataListLen * 30;
         //   const y2 = (dataListLen - 1) * 50;

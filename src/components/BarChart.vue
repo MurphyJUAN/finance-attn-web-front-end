@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       id: shortid.generate(),
-      width: 212,
+      width: 50,
       height: 500,
     };
   },
