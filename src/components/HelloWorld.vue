@@ -17,7 +17,7 @@
       <div class="sentence-block">
         <!-- <b-button v-b-modal.modal-xl variant="primary">xl modal</b-button> -->
         <div class="text" v-for="(item, idx) in barChart.data">
-          <div v-b-modal.modal-lg @click="setHeatMapData(idx)">{{item.sentence}}</div>
+          <div style="outline: none" v-b-modal.modal-lg @click="setHeatMapData(idx)">{{item.sentence}}</div>
           <!-- {{item.sentence}} -->
         </div>
       </div>
