@@ -1,0 +1,5656 @@
+{
+    "metaInfo": {
+        "name": "Soycony Inc.",
+        "date": "20190312"
+    },
+    "sentencesData": [
+        {
+          "name": 0,
+          "sentence": [
+            "MANAGEMENT'S",
+            "DISCUSSION",
+            "AND",
+            "ANALYSIS",
+            "OF",
+            "FINANCIAL",
+            "CONDITION",
+            "AND",
+            "RESULTS",
+            "OF",
+            "OPERATIONS",
+            "The",
+            "discussion",
+            "as",
+            "follows",
+            "should",
+            "be",
+            "read",
+            "in",
+            "conjunction",
+            "with",
+            "\"Business\"",
+            "(Item",
+            "1),",
+            "\"Selected",
+            "Consolidated",
+            "Financial",
+            "Data\"",
+            "(Item",
+            "6)",
+            "and",
+            "the",
+            "Consolidated",
+            "Financial",
+            "Statements",
+            "and",
+            "Notes",
+            "(Item",
+            "8)"
+          ],
+          "value": 0.8010555758078737,
+          "words": [
+            {
+              "weight": 0.6159912329167128,
+              "word": "MANAGEMENT"
+            },
+            {
+              "weight": 0.0,
+              "word": "S"
+            },
+            {
+              "weight": 2.7493368834257126,
+              "word": "DISCUSSION"
+            },
+            {
+              "weight": 0.0,
+              "word": "AND"
+            },
+            {
+              "weight": 3.7997987121343613,
+              "word": "ANALYSIS"
+            },
+            {
+              "weight": 0.0,
+              "word": "OF"
+            },
+            {
+              "weight": 13.727059960365295,
+              "word": "FINANCIAL"
+            },
+            {
+              "weight": 1.0364050976932049,
+              "word": "CONDITION"
+            },
+            {
+              "weight": 0.0,
+              "word": "AND"
+            },
+            {
+              "weight": 1.3592906296253204,
+              "word": "RESULTS"
+            },
+            {
+              "weight": 0.0,
+              "word": "OF"
+            },
+            {
+              "weight": 0.5710563622415066,
+              "word": "OPERATIONS"
+            },
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 11.057592183351517,
+              "word": "discussion"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 11.414790153503418,
+              "word": "follows"
+            },
+            {
+              "weight": 0.0,
+              "word": "should"
+            },
+            {
+              "weight": 0.0,
+              "word": "be"
+            },
+            {
+              "weight": 5.168960615992546,
+              "word": "read"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.5241273436695337,
+              "word": "conjunction"
+            },
+            {
+              "weight": 0.0,
+              "word": "with"
+            },
+            {
+              "weight": 0.0014534727597492747,
+              "word": "Business"
+            },
+            {
+              "weight": 0.05227646906860173,
+              "word": "Item"
+            },
+            {
+              "weight": 0.022135641484055668,
+              "word": "Selected"
+            },
+            {
+              "weight": 1.5983708202838898,
+              "word": "Consolidated"
+            },
+            {
+              "weight": 9.207359701395035,
+              "word": "Financial"
+            },
+            {
+              "weight": 4.494602978229523,
+              "word": "Data"
+            },
+            {
+              "weight": 1.7910335212945938,
+              "word": "Item"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 9.130273014307022,
+              "word": "Consolidated"
+            },
+            {
+              "weight": 10.338843613862991,
+              "word": "Financial"
+            },
+            {
+              "weight": 0.028838025173172355,
+              "word": "Statements"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.03825465391855687,
+              "word": "Notes"
+            },
+            {
+              "weight": 0.04939541104249656,
+              "word": "Item"
+            }
+          ]
+        },
+        {
+          "name": 1,
+          "sentence": [
+            "1996",
+            "COMPARED",
+            "TO",
+            "1995",
+            "The",
+            "Company's",
+            "net",
+            "sales",
+            "increased",
+            "20%",
+            "to",
+            "$54,762,000",
+            "for",
+            "the",
+            "year",
+            "ended",
+            "September",
+            "28,",
+            "1996",
+            "from",
+            "$45,664,000",
+            "for",
+            "the",
+            "year",
+            "ended",
+            "September",
+            "30,",
+            "1995"
+          ],
+          "value": 1.168461558717304,
+          "words": [
+            {
+              "weight": 2.4548767134547234,
+              "word": "COMPARED"
+            },
+            {
+              "weight": 0.0,
+              "word": "TO"
+            },
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.8762422949075699,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 0.3365498501807451,
+              "word": "net"
+            },
+            {
+              "weight": 0.1395078026689589,
+              "word": "sales"
+            },
+            {
+              "weight": 0.4292342811822891,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 2.594952844083309,
+              "word": "year"
+            },
+            {
+              "weight": 2.800115756690502,
+              "word": "ended"
+            },
+            {
+              "weight": 3.420720249414444,
+              "word": "September"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 1.4380383305251598,
+              "word": "year"
+            },
+            {
+              "weight": 1.7932994291186333,
+              "word": "ended"
+            },
+            {
+              "weight": 2.9236378148198128,
+              "word": "September"
+            }
+          ]
+        },
+        {
+          "name": 2,
+          "sentence": [
+            "The",
+            "increase",
+            "was",
+            "primarily",
+            "attributable",
+            "to",
+            "a",
+            "127%",
+            "increase",
+            "in",
+            "domestic",
+            "defibrillator",
+            "sales",
+            "to",
+            "the",
+            "prehospital",
+            "market,",
+            "a",
+            "51%",
+            "increase",
+            "in",
+            "sales",
+            "to",
+            "international",
+            "markets",
+            "and",
+            "a",
+            "9%",
+            "increase",
+            "in",
+            "disposable",
+            "electrode",
+            "sales"
+          ],
+          "value": 2.012293292217442,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.002930795744759962,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.15797882806509733,
+              "word": "primarily"
+            },
+            {
+              "weight": 0.008797954797046259,
+              "word": "attributable"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.1372296130284667,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 1.0269015096127987,
+              "word": "domestic"
+            },
+            {
+              "weight": 9.513658285140991,
+              "word": "defibrillator"
+            },
+            {
+              "weight": 1.145960297435522,
+              "word": "sales"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 80.21472692489624,
+              "word": "prehospital"
+            },
+            {
+              "weight": 0.02207508368883282,
+              "word": "market"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.003280037344666198,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.010996798664564267,
+              "word": "sales"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 6.141668930649757,
+              "word": "international"
+            },
+            {
+              "weight": 0.013855934957973659,
+              "word": "markets"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.001789796442608349,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.003832075890386477,
+              "word": "disposable"
+            },
+            {
+              "weight": 0.46963547356426716,
+              "word": "electrode"
+            },
+            {
+              "weight": 0.0038655784010188654,
+              "word": "sales"
+            }
+          ]
+        },
+        {
+          "name": 3,
+          "sentence": [
+            "Gross",
+            "profit",
+            "as",
+            "a",
+            "percentage",
+            "of",
+            "sales",
+            "remained",
+            "at",
+            "55%",
+            "Selling",
+            "and",
+            "marketing",
+            "expenses",
+            "decreased",
+            "as",
+            "a",
+            "percentage",
+            "of",
+            "sales",
+            "to",
+            "30%",
+            "from",
+            "34%"
+          ],
+          "value": 0.27013824638388445,
+          "words": [
+            {
+              "weight": 0.05402913084253669,
+              "word": "Gross"
+            },
+            {
+              "weight": 0.010730019130278379,
+              "word": "profit"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 2.3798231035470963,
+              "word": "percentage"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.01967145799426362,
+              "word": "sales"
+            },
+            {
+              "weight": 0.06570765399374068,
+              "word": "remained"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 0.10188947198912501,
+              "word": "Selling"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0721936346963048,
+              "word": "marketing"
+            },
+            {
+              "weight": 0.14409282011911273,
+              "word": "expenses"
+            },
+            {
+              "weight": 78.95585298538208,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 7.327692955732346,
+              "word": "percentage"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.022226151486393064,
+              "word": "sales"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 4,
+          "sentence": [
+            "Selling",
+            "and",
+            "marketing",
+            "expenses",
+            "increased",
+            "7%",
+            "to",
+            "$16,709,000",
+            "from",
+            "$15,553,000"
+          ],
+          "value": 0.2675219999088392,
+          "words": [
+            {
+              "weight": 2.419937774538994,
+              "word": "Selling"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 2.1347394213080406,
+              "word": "marketing"
+            },
+            {
+              "weight": 0.3267501713708043,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.3558029653504491,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 5,
+          "sentence": [
+            "Of",
+            "this",
+            "increase,",
+            "$903,000",
+            "was",
+            "due",
+            "to",
+            "higher",
+            "payroll",
+            "related",
+            "costs",
+            "and",
+            "travel",
+            "expenditures",
+            "due",
+            "to",
+            "higher",
+            "staffing",
+            "levels",
+            "in",
+            "North",
+            "America;",
+            "$525,000",
+            "was",
+            "due",
+            "to",
+            "higher",
+            "international",
+            "selling",
+            "expenditures",
+            "and",
+            "$170,000",
+            "was",
+            "due",
+            "to",
+            "increased",
+            "product",
+            "services",
+            "and",
+            "support"
+          ],
+          "value": 0.5890538253215852,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "Of"
+            },
+            {
+              "weight": 0.0,
+              "word": "this"
+            },
+            {
+              "weight": 0.023305830836761743,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.4658442921936512,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0777910987380892,
+              "word": "higher"
+            },
+            {
+              "weight": 29.282307624816895,
+              "word": "payroll"
+            },
+            {
+              "weight": 0.7095395587384701,
+              "word": "related"
+            },
+            {
+              "weight": 0.19652557093650103,
+              "word": "costs"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.012607242388185114,
+              "word": "travel"
+            },
+            {
+              "weight": 0.0325585511745885,
+              "word": "expenditures"
+            },
+            {
+              "weight": 1.7616001889109612,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.1618341775611043,
+              "word": "higher"
+            },
+            {
+              "weight": 0.43075582943856716,
+              "word": "staffing"
+            },
+            {
+              "weight": 0.030876859091222286,
+              "word": "levels"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 4.746560379862785,
+              "word": "North"
+            },
+            {
+              "weight": 0.06905123591423035,
+              "word": "America"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.030031619826331735,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.015872364747337997,
+              "word": "higher"
+            },
+            {
+              "weight": 23.407381772994995,
+              "word": "international"
+            },
+            {
+              "weight": 0.01927054690895602,
+              "word": "selling"
+            },
+            {
+              "weight": 0.004997512587578967,
+              "word": "expenditures"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.08078303653746843,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.012296601198613644,
+              "word": "increased"
+            },
+            {
+              "weight": 0.02125956380041316,
+              "word": "product"
+            },
+            {
+              "weight": 0.0034833206882467493,
+              "word": "services"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.14688767259940505,
+              "word": "support"
+            }
+          ]
+        },
+        {
+          "name": 6,
+          "sentence": [
+            "These",
+            "amounts",
+            "were",
+            "partially",
+            "offset",
+            "by",
+            "a",
+            "$400,000",
+            "decline",
+            "in",
+            "marketing",
+            "related",
+            "expenses",
+            "for",
+            "promotion",
+            "and",
+            "advertising",
+            "activities,",
+            "including",
+            "the",
+            "costs",
+            "associated",
+            "with",
+            "new",
+            "product",
+            "introductions",
+            "during",
+            "1995"
+          ],
+          "value": 0.2687651237461898,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "These"
+            },
+            {
+              "weight": 0.5133582279086113,
+              "word": "amounts"
+            },
+            {
+              "weight": 0.0,
+              "word": "were"
+            },
+            {
+              "weight": 0.08510351763106883,
+              "word": "partially"
+            },
+            {
+              "weight": 1.7271554097533226,
+              "word": "offset"
+            },
+            {
+              "weight": 0.0,
+              "word": "by"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 78.18009853363037,
+              "word": "decline"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 1.353378500789404,
+              "word": "marketing"
+            },
+            {
+              "weight": 1.0734177194535732,
+              "word": "related"
+            },
+            {
+              "weight": 0.6415193434804678,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.8766194805502892,
+              "word": "promotion"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.15254063764587045,
+              "word": "advertising"
+            },
+            {
+              "weight": 1.4040624722838402,
+              "word": "activities"
+            },
+            {
+              "weight": 1.992710493505001,
+              "word": "including"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.47086775302886963,
+              "word": "costs"
+            },
+            {
+              "weight": 1.8315738067030907,
+              "word": "associated"
+            },
+            {
+              "weight": 0.0,
+              "word": "with"
+            },
+            {
+              "weight": 0.08032542536966503,
+              "word": "new"
+            },
+            {
+              "weight": 0.019767583580687642,
+              "word": "product"
+            },
+            {
+              "weight": 0.01191087721963413,
+              "word": "introductions"
+            },
+            {
+              "weight": 0.0,
+              "word": "during"
+            }
+          ]
+        },
+        {
+          "name": 7,
+          "sentence": [
+            "General",
+            "and",
+            "administrative",
+            "expenses",
+            "decreased",
+            "as",
+            "a",
+            "percentage",
+            "of",
+            "sales",
+            "to",
+            "8%",
+            "from",
+            "9%"
+          ],
+          "value": 0.26743709952218103,
+          "words": [
+            {
+              "weight": 0.008300484478240833,
+              "word": "General"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 2.0991232246160507,
+              "word": "administrative"
+            },
+            {
+              "weight": 0.7943969219923019,
+              "word": "expenses"
+            },
+            {
+              "weight": 41.34446978569031,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 10.177617520093918,
+              "word": "percentage"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.05925984005443752,
+              "word": "sales"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 8,
+          "sentence": [
+            "General",
+            "and",
+            "administrative",
+            "expenses",
+            "increased",
+            "7%",
+            "to",
+            "$4,423,000",
+            "from",
+            "$4,151,000"
+          ],
+          "value": 0.2644031117043143,
+          "words": [
+            {
+              "weight": 0.03655792388599366,
+              "word": "General"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 1.2333842925727367,
+              "word": "administrative"
+            },
+            {
+              "weight": 0.1359718618914485,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.12421595165506005,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 9,
+          "sentence": [
+            "This",
+            "increase",
+            "was",
+            "due",
+            "to",
+            "increases",
+            "in",
+            "general",
+            "operating",
+            "expenses"
+          ],
+          "value": 0.2665127497427913,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "This"
+            },
+            {
+              "weight": 0.09135286090895534,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.7937108166515827,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.08309907279908657,
+              "word": "increases"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.08665556670166552,
+              "word": "general"
+            },
+            {
+              "weight": 1.3528192415833473,
+              "word": "operating"
+            },
+            {
+              "weight": 2.2012755274772644,
+              "word": "expenses"
+            }
+          ]
+        },
+        {
+          "name": 10,
+          "sentence": [
+            "Research",
+            "&",
+            "development",
+            "expenses",
+            "decreased",
+            "as",
+            "a",
+            "percentage",
+            "of",
+            "sales",
+            "to",
+            "8%",
+            "from",
+            "10%"
+          ],
+          "value": 1.9784547736325693,
+          "words": [
+            {
+              "weight": 58.56009125709534,
+              "word": "Research"
+            },
+            {
+              "weight": 2.527528442442417,
+              "word": "development"
+            },
+            {
+              "weight": 0.329430284909904,
+              "word": "expenses"
+            },
+            {
+              "weight": 25.662007927894592,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 2.8965380042791367,
+              "word": "percentage"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.013224731083028018,
+              "word": "sales"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 11,
+          "sentence": [
+            "Research",
+            "and",
+            "development",
+            "expenses",
+            "were",
+            "essentially",
+            "unchanged",
+            "at",
+            "$4,355,000",
+            "vs"
+          ],
+          "value": 2.0064779639281,
+          "words": [
+            {
+              "weight": 36.27838492393494,
+              "word": "Research"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 1.6749508678913116,
+              "word": "development"
+            },
+            {
+              "weight": 0.01715267717372626,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.0,
+              "word": "were"
+            },
+            {
+              "weight": 0.6026995833963156,
+              "word": "essentially"
+            },
+            {
+              "weight": 1.6204651445150375,
+              "word": "unchanged"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 0.15268131392076612,
+              "word": "vs"
+            }
+          ]
+        },
+        {
+          "name": 12,
+          "sentence": [
+            "Net",
+            "investment",
+            "income",
+            "increased",
+            "to",
+            "$287,000",
+            "from",
+            "$243,000"
+          ],
+          "value": 0.265663913342652,
+          "words": [
+            {
+              "weight": 0.0628972367849201,
+              "word": "Net"
+            },
+            {
+              "weight": 0.049923238111659884,
+              "word": "investment"
+            },
+            {
+              "weight": 0.1050284132361412,
+              "word": "income"
+            },
+            {
+              "weight": 0.265152077190578,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 13,
+          "sentence": [
+            "The",
+            "increase",
+            "was",
+            "due",
+            "primarily",
+            "to",
+            "higher",
+            "returns",
+            "generated",
+            "on",
+            "the",
+            "investment",
+            "portfolios"
+          ],
+          "value": 0.26360453146169704,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.23792313877493143,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 7.3230549693107605,
+              "word": "due"
+            },
+            {
+              "weight": 13.859190046787262,
+              "word": "primarily"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.8847909048199654,
+              "word": "higher"
+            },
+            {
+              "weight": 3.0779320746660233,
+              "word": "returns"
+            },
+            {
+              "weight": 0.16214995412155986,
+              "word": "generated"
+            },
+            {
+              "weight": 0.0,
+              "word": "on"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.20109363831579685,
+              "word": "investment"
+            },
+            {
+              "weight": 0.16310953069478273,
+              "word": "portfolios"
+            }
+          ]
+        },
+        {
+          "name": 14,
+          "sentence": [
+            "At",
+            "September",
+            "28,",
+            "1996,",
+            "the",
+            "Company",
+            "has",
+            "available",
+            "tax",
+            "loss",
+            "carryforwards",
+            "of",
+            "approximately",
+            "$1,271,000",
+            "of",
+            "which",
+            "$753,000",
+            "expire",
+            "at",
+            "various",
+            "dates",
+            "through",
+            "2002",
+            "and",
+            "$518,000",
+            "of",
+            "which",
+            "have",
+            "an",
+            "indefinite",
+            "life"
+          ],
+          "value": 1.9987986893716154,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "At"
+            },
+            {
+              "weight": 0.01957835047505796,
+              "word": "September"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.0010151836249860935,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "has"
+            },
+            {
+              "weight": 0.002710735861910507,
+              "word": "available"
+            },
+            {
+              "weight": 0.015283604443538934,
+              "word": "tax"
+            },
+            {
+              "weight": 0.0655235315207392,
+              "word": "loss"
+            },
+            {
+              "weight": 0.014116319653112441,
+              "word": "carryforwards"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.26546160224825144,
+              "word": "approximately"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.0,
+              "word": "which"
+            },
+            {
+              "weight": 79.76187467575073,
+              "word": "expire"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 16.025306284427643,
+              "word": "various"
+            },
+            {
+              "weight": 2.195565216243267,
+              "word": "dates"
+            },
+            {
+              "weight": 0.0,
+              "word": "through"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.0,
+              "word": "which"
+            },
+            {
+              "weight": 0.0,
+              "word": "have"
+            },
+            {
+              "weight": 0.0,
+              "word": "an"
+            },
+            {
+              "weight": 0.006134740397101268,
+              "word": "indefinite"
+            },
+            {
+              "weight": 0.010299562563886866,
+              "word": "life"
+            }
+          ]
+        },
+        {
+          "name": 15,
+          "sentence": [
+            "Approximately",
+            "$1,118,000",
+            "of",
+            "the",
+            "tax",
+            "loss",
+            "tax",
+            "loss",
+            "carryforward",
+            "is",
+            "attributable",
+            "to",
+            "the",
+            "Company's",
+            "foreign",
+            "operations",
+            "and",
+            "is",
+            "not",
+            "available",
+            "to",
+            "offset",
+            "domestic",
+            "taxable",
+            "income"
+          ],
+          "value": 1.012837977258774,
+          "words": [
+            {
+              "weight": 0.08587292395532131,
+              "word": "Approximately"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.0111461675260216,
+              "word": "tax"
+            },
+            {
+              "weight": 0.06723382393829525,
+              "word": "loss"
+            },
+            {
+              "weight": 0.012937736755702645,
+              "word": "tax"
+            },
+            {
+              "weight": 0.04554774786811322,
+              "word": "loss"
+            },
+            {
+              "weight": 0.01034855522448197,
+              "word": "carryforward"
+            },
+            {
+              "weight": 0.0,
+              "word": "is"
+            },
+            {
+              "weight": 0.03457192215137184,
+              "word": "attributable"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.015837055980227888,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 64.20629620552063,
+              "word": "foreign"
+            },
+            {
+              "weight": 0.11101942509412766,
+              "word": "operations"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "is"
+            },
+            {
+              "weight": 0.0,
+              "word": "not"
+            },
+            {
+              "weight": 0.07451750570908189,
+              "word": "available"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 2.684161812067032,
+              "word": "offset"
+            },
+            {
+              "weight": 0.20972674246877432,
+              "word": "domestic"
+            },
+            {
+              "weight": 0.06050692172721028,
+              "word": "taxable"
+            },
+            {
+              "weight": 0.05288568208925426,
+              "word": "income"
+            }
+          ]
+        },
+        {
+          "name": 16,
+          "sentence": [
+            "14",
+            "15",
+            "1995",
+            "COMPARED",
+            "TO",
+            "1994",
+            "The",
+            "Company's",
+            "net",
+            "sales",
+            "decreased",
+            "4%",
+            "to",
+            "$45,664,000",
+            "for",
+            "the",
+            "year",
+            "ended",
+            "September",
+            "30,",
+            "1995",
+            "from",
+            "$47,553,000",
+            "for",
+            "the",
+            "year",
+            "ended",
+            "October",
+            "1,",
+            "1994"
+          ],
+          "value": 0.38830836278091935,
+          "words": [
+            {
+              "weight": 0.26821792125701904,
+              "word": "COMPARED"
+            },
+            {
+              "weight": 0.0,
+              "word": "TO"
+            },
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.11285615619271994,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 0.1385512063279748,
+              "word": "net"
+            },
+            {
+              "weight": 0.03567406674847007,
+              "word": "sales"
+            },
+            {
+              "weight": 84.74142551422119,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.41139903478324413,
+              "word": "year"
+            },
+            {
+              "weight": 0.43296325020492077,
+              "word": "ended"
+            },
+            {
+              "weight": 0.4814930260181427,
+              "word": "September"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.27218477334827185,
+              "word": "year"
+            },
+            {
+              "weight": 0.4405871033668518,
+              "word": "ended"
+            },
+            {
+              "weight": 1.8565647304058075,
+              "word": "October"
+            }
+          ]
+        },
+        {
+          "name": 17,
+          "sentence": [
+            "The",
+            "decline",
+            "was",
+            "primarily",
+            "attributable",
+            "to",
+            "a",
+            "21%",
+            "decline",
+            "in",
+            "the",
+            "volume",
+            "of",
+            "equipment",
+            "sales",
+            "to",
+            "the",
+            "domestic",
+            "hospital",
+            "market",
+            "as",
+            "a",
+            "result",
+            "of",
+            "the",
+            "nationwide",
+            "trend",
+            "toward",
+            "consolidation",
+            "and",
+            "restructuring",
+            "of",
+            "health",
+            "care",
+            "providers"
+          ],
+          "value": 0.2721373477306797,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.9642623364925385,
+              "word": "decline"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.4254850558936596,
+              "word": "primarily"
+            },
+            {
+              "weight": 0.03607198304962367,
+              "word": "attributable"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 1.070402655750513,
+              "word": "decline"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.006130943802418187,
+              "word": "volume"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.05262459744699299,
+              "word": "equipment"
+            },
+            {
+              "weight": 0.0063481624238193035,
+              "word": "sales"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.17584156012162566,
+              "word": "domestic"
+            },
+            {
+              "weight": 0.05373610183596611,
+              "word": "hospital"
+            },
+            {
+              "weight": 0.007876929157646373,
+              "word": "market"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.0010885441952268593,
+              "word": "result"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.002478877649991773,
+              "word": "nationwide"
+            },
+            {
+              "weight": 0.018646912940312177,
+              "word": "trend"
+            },
+            {
+              "weight": 0.03203060186933726,
+              "word": "toward"
+            },
+            {
+              "weight": 0.4714935552328825,
+              "word": "consolidation"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.178903853520751,
+              "word": "restructuring"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.04485041426960379,
+              "word": "health"
+            },
+            {
+              "weight": 0.18520265584811568,
+              "word": "care"
+            },
+            {
+              "weight": 0.057253084378317,
+              "word": "providers"
+            }
+          ]
+        },
+        {
+          "name": 18,
+          "sentence": [
+            "This",
+            "decline",
+            "was",
+            "partially",
+            "offset",
+            "by",
+            "a",
+            "44%",
+            "increase",
+            "in",
+            "international",
+            "sales",
+            "and",
+            "a",
+            "9%",
+            "increase",
+            "in",
+            "disposable",
+            "electrode",
+            "sales"
+          ],
+          "value": 1.9452543366089838,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "This"
+            },
+            {
+              "weight": 2.4807434529066086,
+              "word": "decline"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.007291558722499758,
+              "word": "partially"
+            },
+            {
+              "weight": 0.021117556025274098,
+              "word": "offset"
+            },
+            {
+              "weight": 0.0,
+              "word": "by"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.1134674996137619,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 51.71381235122681,
+              "word": "international"
+            },
+            {
+              "weight": 0.029341017943806946,
+              "word": "sales"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.09260773076675832,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.07660319679416716,
+              "word": "disposable"
+            },
+            {
+              "weight": 13.756963610649109,
+              "word": "electrode"
+            },
+            {
+              "weight": 0.06541234906762838,
+              "word": "sales"
+            }
+          ]
+        },
+        {
+          "name": 19,
+          "sentence": [
+            "Gross",
+            "profit",
+            "as",
+            "a",
+            "percentage",
+            "of",
+            "sales",
+            "decreased",
+            "to",
+            "55%",
+            "from",
+            "58%,",
+            "primarily",
+            "due",
+            "to",
+            "changes",
+            "in",
+            "the",
+            "mix",
+            "of",
+            "products",
+            "sold",
+            "and",
+            "lower",
+            "inventory",
+            "production",
+            "levels"
+          ],
+          "value": 0.2643769293730004,
+          "words": [
+            {
+              "weight": 0.05721005727536976,
+              "word": "Gross"
+            },
+            {
+              "weight": 0.012323084229137748,
+              "word": "profit"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 4.709957540035248,
+              "word": "percentage"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.08986555621959269,
+              "word": "sales"
+            },
+            {
+              "weight": 82.88437724113464,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            },
+            {
+              "weight": 3.078591823577881,
+              "word": "primarily"
+            },
+            {
+              "weight": 0.20803685765713453,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.18597891321405768,
+              "word": "changes"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.031093135476112366,
+              "word": "mix"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.10212818160653114,
+              "word": "products"
+            },
+            {
+              "weight": 0.025309607735835016,
+              "word": "sold"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.02631696406751871,
+              "word": "lower"
+            },
+            {
+              "weight": 0.6154787261039019,
+              "word": "inventory"
+            },
+            {
+              "weight": 0.030401046387851238,
+              "word": "production"
+            },
+            {
+              "weight": 0.01434459409210831,
+              "word": "levels"
+            }
+          ]
+        },
+        {
+          "name": 20,
+          "sentence": [
+            "Selling",
+            "and",
+            "marketing",
+            "expenses",
+            "increased",
+            "as",
+            "a",
+            "percentage",
+            "of",
+            "sales",
+            "to",
+            "34%",
+            "from",
+            "27%"
+          ],
+          "value": 0.2636731427081727,
+          "words": [
+            {
+              "weight": 0.31155417673289776,
+              "word": "Selling"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.24455287493765354,
+              "word": "marketing"
+            },
+            {
+              "weight": 0.053233682410791516,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.061799021204933524,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 17.6115944981575,
+              "word": "percentage"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.20471143070608377,
+              "word": "sales"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 21,
+          "sentence": [
+            "Selling",
+            "and",
+            "marketing",
+            "expenses",
+            "increased",
+            "21%",
+            "to",
+            "$15,553,000",
+            "from",
+            "$12,876,000"
+          ],
+          "value": 0.26384285265350305,
+          "words": [
+            {
+              "weight": 2.419937774538994,
+              "word": "Selling"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 2.1347394213080406,
+              "word": "marketing"
+            },
+            {
+              "weight": 0.3267501713708043,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.3558029653504491,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 22,
+          "sentence": [
+            "Of",
+            "this",
+            "increase,",
+            "$1,203,000",
+            "was",
+            "due",
+            "to",
+            "higher",
+            "payroll",
+            "related",
+            "costs",
+            "and",
+            "travel",
+            "expenditures",
+            "because",
+            "of",
+            "higher",
+            "staffing",
+            "levels",
+            "in",
+            "North",
+            "America;",
+            "$587,000",
+            "was",
+            "due",
+            "to",
+            "increased",
+            "product",
+            "service",
+            "and",
+            "support;",
+            "$540,000",
+            "was",
+            "due",
+            "to",
+            "higher",
+            "international",
+            "selling",
+            "expenditures;",
+            "$245,000",
+            "was",
+            "due",
+            "to",
+            "higher",
+            "marketing",
+            "related",
+            "activities",
+            "for",
+            "promotion",
+            "and",
+            "advertising",
+            "activities",
+            "related",
+            "to",
+            "the",
+            "introduction",
+            "of",
+            "two",
+            "new",
+            "lines",
+            "of",
+            "products",
+            "during",
+            "the",
+            "year"
+          ],
+          "value": 1.4905976297355514,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "Of"
+            },
+            {
+              "weight": 0.0,
+              "word": "this"
+            },
+            {
+              "weight": 0.015481663285754621,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.3091094782575965,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.05255399737507105,
+              "word": "higher"
+            },
+            {
+              "weight": 31.38834238052368,
+              "word": "payroll"
+            },
+            {
+              "weight": 0.5104890093207359,
+              "word": "related"
+            },
+            {
+              "weight": 0.2136629307642579,
+              "word": "costs"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.030221175984479487,
+              "word": "travel"
+            },
+            {
+              "weight": 0.09662237134762108,
+              "word": "expenditures"
+            },
+            {
+              "weight": 0.0,
+              "word": "because"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.259565026499331,
+              "word": "higher"
+            },
+            {
+              "weight": 0.4718158859759569,
+              "word": "staffing"
+            },
+            {
+              "weight": 0.03419151471462101,
+              "word": "levels"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 4.232539236545563,
+              "word": "North"
+            },
+            {
+              "weight": 0.028517725877463818,
+              "word": "America"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.011148247722303495,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0045448337914422154,
+              "word": "increased"
+            },
+            {
+              "weight": 0.007634758367203176,
+              "word": "product"
+            },
+            {
+              "weight": 0.0018637032553669997,
+              "word": "service"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.020879619114566594,
+              "word": "support"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.07157552754506469,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.03672427264973521,
+              "word": "higher"
+            },
+            {
+              "weight": 45.018282532691956,
+              "word": "international"
+            },
+            {
+              "weight": 0.2121271099895239,
+              "word": "selling"
+            },
+            {
+              "weight": 0.03187041147612035,
+              "word": "expenditures"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.7167692761868238,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.1842867466621101,
+              "word": "higher"
+            },
+            {
+              "weight": 0.14162941370159388,
+              "word": "marketing"
+            },
+            {
+              "weight": 0.2581526292487979,
+              "word": "related"
+            },
+            {
+              "weight": 0.3600801806896925,
+              "word": "activities"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 2.046138048171997,
+              "word": "promotion"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.2553442260250449,
+              "word": "advertising"
+            },
+            {
+              "weight": 0.3318937961012125,
+              "word": "activities"
+            },
+            {
+              "weight": 0.04342849424574524,
+              "word": "related"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.031497571035288274,
+              "word": "introduction"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 4.505588114261627,
+              "word": "two"
+            },
+            {
+              "weight": 0.04725464968942106,
+              "word": "new"
+            },
+            {
+              "weight": 1.8484381958842278,
+              "word": "lines"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.006361743726301938,
+              "word": "products"
+            },
+            {
+              "weight": 0.0,
+              "word": "during"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.006357846723403782,
+              "word": "year"
+            }
+          ]
+        },
+        {
+          "name": 23,
+          "sentence": [
+            "General",
+            "and",
+            "administrative",
+            "expenses",
+            "as",
+            "a",
+            "percentage",
+            "of",
+            "sales",
+            "remain",
+            "at",
+            "9%"
+          ],
+          "value": 0.2657286770863235,
+          "words": [
+            {
+              "weight": 0.052286183927208185,
+              "word": "General"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 1.0458062402904034,
+              "word": "administrative"
+            },
+            {
+              "weight": 0.38175354711711407,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 11.62404865026474,
+              "word": "percentage"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.10677468962967396,
+              "word": "sales"
+            },
+            {
+              "weight": 0.12994500575587153,
+              "word": "remain"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            }
+          ]
+        },
+        {
+          "name": 24,
+          "sentence": [
+            "General",
+            "and",
+            "administrative",
+            "expenses",
+            "increased",
+            "to",
+            "$4,151,000",
+            "from",
+            "$4,075,000"
+          ],
+          "value": 0.2637908352098117,
+          "words": [
+            {
+              "weight": 0.03655792388599366,
+              "word": "General"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 1.2333842925727367,
+              "word": "administrative"
+            },
+            {
+              "weight": 0.1359718618914485,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.12421595165506005,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 25,
+          "sentence": [
+            "This",
+            "increase",
+            "was",
+            "due",
+            "primarily",
+            "to",
+            "increased",
+            "payroll",
+            "and",
+            "related",
+            "costs"
+          ],
+          "value": 0.2716418622704316,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "This"
+            },
+            {
+              "weight": 0.005955130836809985,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.3619659226387739,
+              "word": "due"
+            },
+            {
+              "weight": 1.6481423750519753,
+              "word": "primarily"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.11960866395384073,
+              "word": "increased"
+            },
+            {
+              "weight": 12.838536500930786,
+              "word": "payroll"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.5011547822505236,
+              "word": "related"
+            },
+            {
+              "weight": 0.09669527062214911,
+              "word": "costs"
+            }
+          ]
+        },
+        {
+          "name": 26,
+          "sentence": [
+            "Research",
+            "and",
+            "development",
+            "expenses",
+            "as",
+            "a",
+            "percentage",
+            "of",
+            "sales",
+            "decreased",
+            "to",
+            "10%",
+            "from",
+            "11%"
+          ],
+          "value": 1.9669739551472707,
+          "words": [
+            {
+              "weight": 15.464697778224945,
+              "word": "Research"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.6389555055648088,
+              "word": "development"
+            },
+            {
+              "weight": 0.008164164319168776,
+              "word": "expenses"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.35985566210001707,
+              "word": "percentage"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.02667843655217439,
+              "word": "sales"
+            },
+            {
+              "weight": 6.910474598407745,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 27,
+          "sentence": [
+            "Research",
+            "and",
+            "development",
+            "expenses",
+            "decreased",
+            "to",
+            "$4,360,000",
+            "from",
+            "$5,253,000"
+          ],
+          "value": 1.9522474999718056,
+          "words": [
+            {
+              "weight": 28.99251878261566,
+              "word": "Research"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 1.1619762517511845,
+              "word": "development"
+            },
+            {
+              "weight": 0.09693591273389757,
+              "word": "expenses"
+            },
+            {
+              "weight": 11.720115691423416,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 28,
+          "sentence": [
+            "The",
+            "decrease",
+            "was",
+            "due",
+            "the",
+            "substantial",
+            "completion",
+            "of",
+            "research",
+            "and",
+            "development",
+            "activities",
+            "related",
+            "to",
+            "the",
+            "release",
+            "of",
+            "new",
+            "products",
+            "in",
+            "1995"
+          ],
+          "value": 2.012159768610217,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 20.529904961586,
+              "word": "decrease"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 2.2438030689954758,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.6357434205710888,
+              "word": "substantial"
+            },
+            {
+              "weight": 1.6120236366987228,
+              "word": "completion"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 62.77344822883606,
+              "word": "research"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 5.690697208046913,
+              "word": "development"
+            },
+            {
+              "weight": 2.3094715550541878,
+              "word": "activities"
+            },
+            {
+              "weight": 3.24954129755497,
+              "word": "related"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.08240651222877204,
+              "word": "release"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.013515027239918709,
+              "word": "new"
+            },
+            {
+              "weight": 0.0017966394807444885,
+              "word": "products"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            }
+          ]
+        },
+        {
+          "name": 29,
+          "sentence": [
+            "Net",
+            "investment",
+            "income",
+            "decreased",
+            "to",
+            "$243,000",
+            "from",
+            "$289,000"
+          ],
+          "value": 0.27202164000874135,
+          "words": [
+            {
+              "weight": 0.004319940126151778,
+              "word": "Net"
+            },
+            {
+              "weight": 0.0009138150744547602,
+              "word": "investment"
+            },
+            {
+              "weight": 0.006119952740846202,
+              "word": "income"
+            },
+            {
+              "weight": 28.522494435310364,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 30,
+          "sentence": [
+            "This",
+            "reduction",
+            "was",
+            "due",
+            "primarily",
+            "to",
+            "a",
+            "$65,000",
+            "increase",
+            "in",
+            "interest",
+            "expense,",
+            "due",
+            "to",
+            "higher",
+            "average",
+            "long",
+            "term",
+            "debt",
+            "outstanding",
+            "during",
+            "the",
+            "year"
+          ],
+          "value": 1.4212523163572628,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "This"
+            },
+            {
+              "weight": 2.1154919639229774,
+              "word": "reduction"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.3445634385570884,
+              "word": "due"
+            },
+            {
+              "weight": 0.08477982482872903,
+              "word": "primarily"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.013646767183672637,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.021496086264960468,
+              "word": "interest"
+            },
+            {
+              "weight": 0.010807356738951057,
+              "word": "expense"
+            },
+            {
+              "weight": 0.012278631038498133,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.001501931001257617,
+              "word": "higher"
+            },
+            {
+              "weight": 0.002501237759133801,
+              "word": "average"
+            },
+            {
+              "weight": 0.14100351836532354,
+              "word": "long"
+            },
+            {
+              "weight": 27.94809639453888,
+              "word": "term"
+            },
+            {
+              "weight": 0.3201066982001066,
+              "word": "debt"
+            },
+            {
+              "weight": 0.08228892693296075,
+              "word": "outstanding"
+            },
+            {
+              "weight": 0.0,
+              "word": "during"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.034963415237143636,
+              "word": "year"
+            }
+          ]
+        },
+        {
+          "name": 31,
+          "sentence": [
+            "The",
+            "Company's",
+            "effective",
+            "tax",
+            "rate",
+            "for",
+            "the",
+            "year",
+            "ended",
+            "September",
+            "30,",
+            "1995",
+            "decreased",
+            "to",
+            "34%",
+            "from",
+            "36%"
+          ],
+          "value": 0.3535094139015593,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.00044500420699478127,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 0.007729876961093396,
+              "word": "effective"
+            },
+            {
+              "weight": 0.0016212245100177824,
+              "word": "tax"
+            },
+            {
+              "weight": 0.09856794495135546,
+              "word": "rate"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.12038080021739006,
+              "word": "year"
+            },
+            {
+              "weight": 0.1715363352559507,
+              "word": "ended"
+            },
+            {
+              "weight": 0.19176597706973553,
+              "word": "September"
+            },
+            {
+              "weight": 5.6186579167842865,
+              "word": "decreased"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            }
+          ]
+        },
+        {
+          "name": 32,
+          "sentence": [
+            "This",
+            "was",
+            "due",
+            "to",
+            "a",
+            "decrease",
+            "in",
+            "the",
+            "Company's",
+            "marginal",
+            "tax",
+            "rate,",
+            "which",
+            "was",
+            "partially",
+            "offset",
+            "by",
+            "an",
+            "increase",
+            "in",
+            "tax",
+            "expense",
+            "from",
+            "unanticipated",
+            "foreign",
+            "losses"
+          ],
+          "value": 0.29667339618660815,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "This"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 1.0265730321407318,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 8.213429152965546,
+              "word": "decrease"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.014587507757823914,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 0.00516767286171671,
+              "word": "marginal"
+            },
+            {
+              "weight": 0.0056418099120492116,
+              "word": "tax"
+            },
+            {
+              "weight": 1.55583918094635,
+              "word": "rate"
+            },
+            {
+              "weight": 0.0,
+              "word": "which"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.06637520273216069,
+              "word": "partially"
+            },
+            {
+              "weight": 0.0617904937826097,
+              "word": "offset"
+            },
+            {
+              "weight": 0.0,
+              "word": "by"
+            },
+            {
+              "weight": 0.0,
+              "word": "an"
+            },
+            {
+              "weight": 0.05404667463153601,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.036051246570423245,
+              "word": "tax"
+            },
+            {
+              "weight": 0.05430239252746105,
+              "word": "expense"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            },
+            {
+              "weight": 0.011037197691621259,
+              "word": "unanticipated"
+            },
+            {
+              "weight": 20.375071465969086,
+              "word": "foreign"
+            },
+            {
+              "weight": 0.32524683047086,
+              "word": "losses"
+            }
+          ]
+        },
+        {
+          "name": 33,
+          "sentence": [
+            "At",
+            "September",
+            "30,",
+            "1995,",
+            "the",
+            "Company",
+            "had",
+            "available",
+            "tax",
+            "loss",
+            "carryforwards",
+            "of",
+            "approximately",
+            "$1,132,000",
+            "which",
+            "expire",
+            "at",
+            "various",
+            "dates",
+            "through",
+            "2002"
+          ],
+          "value": 2.0336343597498425,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "At"
+            },
+            {
+              "weight": 0.02562427252996713,
+              "word": "September"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.001433773559256224,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "had"
+            },
+            {
+              "weight": 0.003933218977181241,
+              "word": "available"
+            },
+            {
+              "weight": 0.012977294682059437,
+              "word": "tax"
+            },
+            {
+              "weight": 0.05670012906193733,
+              "word": "loss"
+            },
+            {
+              "weight": 0.008591663208790123,
+              "word": "carryforwards"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.17975730588659644,
+              "word": "approximately"
+            },
+            {
+              "weight": 0.0,
+              "word": "which"
+            },
+            {
+              "weight": 69.58299279212952,
+              "word": "expire"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 6.91443532705307,
+              "word": "various"
+            },
+            {
+              "weight": 3.537571430206299,
+              "word": "dates"
+            },
+            {
+              "weight": 0.0,
+              "word": "through"
+            }
+          ]
+        },
+        {
+          "name": 34,
+          "sentence": [
+            "Approximately",
+            "$935,000",
+            "of",
+            "the",
+            "tax",
+            "loss",
+            "carryforward",
+            "is",
+            "attributable",
+            "to",
+            "the",
+            "Company's",
+            "foreign",
+            "operations",
+            "and",
+            "is",
+            "not",
+            "available",
+            "to",
+            "offset",
+            "domestic",
+            "taxable",
+            "income"
+          ],
+          "value": 0.9248499594772692,
+          "words": [
+            {
+              "weight": 0.07627688464708626,
+              "word": "Approximately"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.011117394751636311,
+              "word": "tax"
+            },
+            {
+              "weight": 0.041353359119966626,
+              "word": "loss"
+            },
+            {
+              "weight": 0.00873091266839765,
+              "word": "carryforward"
+            },
+            {
+              "weight": 0.0,
+              "word": "is"
+            },
+            {
+              "weight": 0.03432829980738461,
+              "word": "attributable"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.015749507292639464,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 63.793861865997314,
+              "word": "foreign"
+            },
+            {
+              "weight": 0.10936519829556346,
+              "word": "operations"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "is"
+            },
+            {
+              "weight": 0.0,
+              "word": "not"
+            },
+            {
+              "weight": 0.07318918942473829,
+              "word": "available"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 2.735021337866783,
+              "word": "offset"
+            },
+            {
+              "weight": 0.20758872851729393,
+              "word": "domestic"
+            },
+            {
+              "weight": 0.05906859296374023,
+              "word": "taxable"
+            },
+            {
+              "weight": 0.051610893569886684,
+              "word": "income"
+            }
+          ]
+        },
+        {
+          "name": 35,
+          "sentence": [
+            "LIQUIDITY",
+            "AND",
+            "CAPITAL",
+            "RESOURCES",
+            "The",
+            "Company's",
+            "cash",
+            "and",
+            "investments",
+            "at",
+            "September",
+            "28,",
+            "1996",
+            "was",
+            "$7,927,000",
+            "compared",
+            "to",
+            "$6,645,000",
+            "at",
+            "September",
+            "30,",
+            "1995,",
+            "an",
+            "increase",
+            "of",
+            "$1,282,000"
+          ],
+          "value": 1.7612424213414655,
+          "words": [
+            {
+              "weight": 6.12797774374485,
+              "word": "LIQUIDITY"
+            },
+            {
+              "weight": 0.0,
+              "word": "AND"
+            },
+            {
+              "weight": 1.6451915726065636,
+              "word": "CAPITAL"
+            },
+            {
+              "weight": 0.29274430125951767,
+              "word": "RESOURCES"
+            },
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.5175671074539423,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 0.783963780850172,
+              "word": "cash"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.029725267086178064,
+              "word": "investments"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 0.14197087148204446,
+              "word": "September"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.2100646961480379,
+              "word": "compared"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 0.17539223190397024,
+              "word": "September"
+            },
+            {
+              "weight": 0.0,
+              "word": "an"
+            },
+            {
+              "weight": 0.1257313648238778,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            }
+          ]
+        },
+        {
+          "name": 36,
+          "sentence": [
+            "Cash",
+            "provided",
+            "by",
+            "operating",
+            "activities",
+            "for",
+            "the",
+            "year",
+            "ended",
+            "September",
+            "28,",
+            "1996",
+            "increased",
+            "$4,438,000",
+            "over",
+            "the",
+            "same",
+            "period",
+            "in",
+            "1995"
+          ],
+          "value": 0.44065153069206975,
+          "words": [
+            {
+              "weight": 0.028562668012455106,
+              "word": "Cash"
+            },
+            {
+              "weight": 0.06547343800775707,
+              "word": "provided"
+            },
+            {
+              "weight": 0.0,
+              "word": "by"
+            },
+            {
+              "weight": 0.3008802654221654,
+              "word": "operating"
+            },
+            {
+              "weight": 2.0103055983781815,
+              "word": "activities"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.04267147451173514,
+              "word": "year"
+            },
+            {
+              "weight": 0.016034531290642917,
+              "word": "ended"
+            },
+            {
+              "weight": 0.012246388359926641,
+              "word": "September"
+            },
+            {
+              "weight": 0.058064504992216825,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "over"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.0,
+              "word": "same"
+            },
+            {
+              "weight": 0.06925946800038218,
+              "word": "period"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            }
+          ]
+        },
+        {
+          "name": 37,
+          "sentence": [
+            "This",
+            "increase",
+            "was",
+            "due",
+            "to",
+            "increased",
+            "earnings"
+          ],
+          "value": 0.26353410849930026,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "This"
+            },
+            {
+              "weight": 0.47162226401269436,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 3.5443704575300217,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.502425292506814,
+              "word": "increased"
+            },
+            {
+              "weight": 0.3759507089853287,
+              "word": "earnings"
+            }
+          ]
+        },
+        {
+          "name": 38,
+          "sentence": [
+            "The",
+            "amount",
+            "of",
+            "cash",
+            "required",
+            "to",
+            "fund",
+            "investing",
+            "activities",
+            "was",
+            "$5,852,000",
+            "higher",
+            "for",
+            "the",
+            "year",
+            "ended",
+            "September",
+            "28,",
+            "1996",
+            "compared",
+            "to",
+            "the",
+            "same",
+            "period",
+            "in",
+            "1995"
+          ],
+          "value": 0.8452826104964851,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 7.611401379108429,
+              "word": "amount"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 5.640485510230064,
+              "word": "cash"
+            },
+            {
+              "weight": 0.44806073419749737,
+              "word": "required"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 3.567306324839592,
+              "word": "fund"
+            },
+            {
+              "weight": 0.3845652565360069,
+              "word": "investing"
+            },
+            {
+              "weight": 5.113207921385765,
+              "word": "activities"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.8789137937128544,
+              "word": "higher"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.46575628221035004,
+              "word": "year"
+            },
+            {
+              "weight": 0.2932968083769083,
+              "word": "ended"
+            },
+            {
+              "weight": 0.2470562933012843,
+              "word": "September"
+            },
+            {
+              "weight": 0.43830820359289646,
+              "word": "compared"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.0,
+              "word": "same"
+            },
+            {
+              "weight": 0.1950103440321982,
+              "word": "period"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            }
+          ]
+        },
+        {
+          "name": 39,
+          "sentence": [
+            "The",
+            "increase",
+            "was",
+            "primarily",
+            "due",
+            "to",
+            "increased",
+            "investments,",
+            "including",
+            "the",
+            "Company's",
+            "$2,000,000",
+            "investment",
+            "in",
+            "the",
+            "common",
+            "stock",
+            "of",
+            "Lifecor,",
+            "Inc"
+          ],
+          "value": 2.0127530925702812,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.0009273036994272843,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.10478324256837368,
+              "word": "primarily"
+            },
+            {
+              "weight": 0.03063821350224316,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.001553655783936847,
+              "word": "increased"
+            },
+            {
+              "weight": 0.002716326889640186,
+              "word": "investments"
+            },
+            {
+              "weight": 0.3016234841197729,
+              "word": "including"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.02098793920595199,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 0.02449230814818293,
+              "word": "investment"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.12797059025615454,
+              "word": "common"
+            },
+            {
+              "weight": 0.8774513378739357,
+              "word": "stock"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 94.3579912185669,
+              "word": "Lifecor"
+            },
+            {
+              "weight": 0.34266714937984943,
+              "word": "Inc"
+            }
+          ]
+        },
+        {
+          "name": 40,
+          "sentence": [
+            "Cash",
+            "provided",
+            "by",
+            "financing",
+            "activities",
+            "increased",
+            "$188,000",
+            "for",
+            "the",
+            "year",
+            "ended",
+            "September",
+            "28,",
+            "1996",
+            "primarily",
+            "due",
+            "to",
+            "an",
+            "increase",
+            "in",
+            "the",
+            "exercise",
+            "of",
+            "stock",
+            "options",
+            "in",
+            "1996",
+            "as",
+            "compared",
+            "to",
+            "1995"
+          ],
+          "value": 0.36566909997064534,
+          "words": [
+            {
+              "weight": 0.01992120232898742,
+              "word": "Cash"
+            },
+            {
+              "weight": 0.03480803861748427,
+              "word": "provided"
+            },
+            {
+              "weight": 0.0,
+              "word": "by"
+            },
+            {
+              "weight": 0.3252852242439985,
+              "word": "financing"
+            },
+            {
+              "weight": 1.621180772781372,
+              "word": "activities"
+            },
+            {
+              "weight": 0.3988437820225954,
+              "word": "increased"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.2842552727088332,
+              "word": "year"
+            },
+            {
+              "weight": 0.12821911368519068,
+              "word": "ended"
+            },
+            {
+              "weight": 0.25697951205074787,
+              "word": "September"
+            },
+            {
+              "weight": 5.074680224061012,
+              "word": "primarily"
+            },
+            {
+              "weight": 11.132986098527908,
+              "word": "due"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "an"
+            },
+            {
+              "weight": 1.8745830282568932,
+              "word": "increase"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 8.176431059837341,
+              "word": "exercise"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 1.09622897580266,
+              "word": "stock"
+            },
+            {
+              "weight": 0.22861608304083347,
+              "word": "options"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.0,
+              "word": "as"
+            },
+            {
+              "weight": 0.42999591678380966,
+              "word": "compared"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            }
+          ]
+        },
+        {
+          "name": 41,
+          "sentence": [
+            "15",
+            "16",
+            "The",
+            "Company",
+            "maintains",
+            "a",
+            "line",
+            "of",
+            "credit",
+            "with",
+            "its",
+            "bank"
+          ],
+          "value": 1.611686213046149,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.00015070261270011542,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0002286277549501392,
+              "word": "maintains"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.17512256745249033,
+              "word": "line"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.0673537899274379,
+              "word": "credit"
+            },
+            {
+              "weight": 0.0,
+              "word": "with"
+            },
+            {
+              "weight": 0.0,
+              "word": "its"
+            },
+            {
+              "weight": 0.31960969790816307,
+              "word": "bank"
+            }
+          ]
+        },
+        {
+          "name": 42,
+          "sentence": [
+            "Under",
+            "this",
+            "working",
+            "capital",
+            "line,",
+            "the",
+            "Company",
+            "may",
+            "borrow",
+            "up",
+            "to",
+            "$3,000,000",
+            "on",
+            "a",
+            "demand",
+            "basis,",
+            "and",
+            "bears",
+            "interest",
+            "at",
+            "the",
+            "bank's",
+            "base",
+            "rate",
+            "(8.25%",
+            "at",
+            "September",
+            "28,",
+            "1996)"
+          ],
+          "value": 1.5782092565306263,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "Under"
+            },
+            {
+              "weight": 0.0,
+              "word": "this"
+            },
+            {
+              "weight": 0.36277740728110075,
+              "word": "working"
+            },
+            {
+              "weight": 0.24959160946309566,
+              "word": "capital"
+            },
+            {
+              "weight": 0.488776620477438,
+              "word": "line"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.0037784429878229275,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0012982454791199416,
+              "word": "may"
+            },
+            {
+              "weight": 0.009605057130102068,
+              "word": "borrow"
+            },
+            {
+              "weight": 0.0,
+              "word": "up"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "on"
+            },
+            {
+              "weight": 0.0,
+              "word": "a"
+            },
+            {
+              "weight": 0.0003416202844164218,
+              "word": "demand"
+            },
+            {
+              "weight": 0.0014023879884916823,
+              "word": "basis"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.011763540533138439,
+              "word": "bears"
+            },
+            {
+              "weight": 0.005358343696570955,
+              "word": "interest"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.03061443567276001,
+              "word": "bank"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 0.002348142515984364,
+              "word": "base"
+            },
+            {
+              "weight": 0.16315868124365807,
+              "word": "rate"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 1.236606389284134,
+              "word": "September"
+            }
+          ]
+        },
+        {
+          "name": 43,
+          "sentence": [
+            "The",
+            "full",
+            "amount",
+            "of",
+            "the",
+            "line",
+            "was",
+            "available",
+            "to",
+            "the",
+            "Company",
+            "at",
+            "September",
+            "28,",
+            "1996"
+          ],
+          "value": 1.8292991941427201,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.567967165261507,
+              "word": "full"
+            },
+            {
+              "weight": 6.249938532710075,
+              "word": "amount"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 35.6741338968277,
+              "word": "line"
+            },
+            {
+              "weight": 0.0,
+              "word": "was"
+            },
+            {
+              "weight": 0.2667022868990898,
+              "word": "available"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.648413272574544,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "at"
+            },
+            {
+              "weight": 1.345633715391159,
+              "word": "September"
+            }
+          ]
+        },
+        {
+          "name": 44,
+          "sentence": [
+            "The",
+            "Company",
+            "expects",
+            "that",
+            "the",
+            "combination",
+            "of",
+            "existing",
+            "funds,",
+            "cash",
+            "generated",
+            "from",
+            "operations",
+            "and",
+            "its",
+            "existing",
+            "line",
+            "of",
+            "credit",
+            "will",
+            "be",
+            "adequate",
+            "to",
+            "meet",
+            "its",
+            "liquidity",
+            "and",
+            "capital",
+            "requirements,",
+            "including",
+            "its",
+            "purchase",
+            "of",
+            "Westech",
+            "Mobile",
+            "Solutions,",
+            "Inc"
+          ],
+          "value": 2.0127732024539435,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "The"
+            },
+            {
+              "weight": 0.0004651120889320737,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0002118629709002562,
+              "word": "expects"
+            },
+            {
+              "weight": 0.0,
+              "word": "that"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 1.8129875883460045,
+              "word": "combination"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.00021491309780685697,
+              "word": "existing"
+            },
+            {
+              "weight": 0.0006879790362290805,
+              "word": "funds"
+            },
+            {
+              "weight": 0.0027112968382425606,
+              "word": "cash"
+            },
+            {
+              "weight": 0.0006157002189866034,
+              "word": "generated"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            },
+            {
+              "weight": 0.001807788066798821,
+              "word": "operations"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "its"
+            },
+            {
+              "weight": 0.00019963931663369294,
+              "word": "existing"
+            },
+            {
+              "weight": 0.05337891634553671,
+              "word": "line"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.07045090314932168,
+              "word": "credit"
+            },
+            {
+              "weight": 0.0,
+              "word": "will"
+            },
+            {
+              "weight": 0.0,
+              "word": "be"
+            },
+            {
+              "weight": 0.6037039682269096,
+              "word": "adequate"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.1395452069118619,
+              "word": "meet"
+            },
+            {
+              "weight": 0.0,
+              "word": "its"
+            },
+            {
+              "weight": 0.061046594055369496,
+              "word": "liquidity"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.010450351692270488,
+              "word": "capital"
+            },
+            {
+              "weight": 0.0038515707274200395,
+              "word": "requirements"
+            },
+            {
+              "weight": 2.3498762398958206,
+              "word": "including"
+            },
+            {
+              "weight": 0.0,
+              "word": "its"
+            },
+            {
+              "weight": 0.17148915212601423,
+              "word": "purchase"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 93.68690252304077,
+              "word": "Westech"
+            },
+            {
+              "weight": 0.5169108975678682,
+              "word": "Mobile"
+            },
+            {
+              "weight": 0.13684288132935762,
+              "word": "Solutions"
+            },
+            {
+              "weight": 0.07227073656395078,
+              "word": "Inc"
+            }
+          ]
+        },
+        {
+          "name": 45,
+          "sentence": [
+            "for",
+            "the",
+            "foreseeable",
+            "future"
+          ],
+          "value": 1.4287148149480837,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.9963124059140682,
+              "word": "foreseeable"
+            },
+            {
+              "weight": 0.3683512797579169,
+              "word": "future"
+            }
+          ]
+        },
+        {
+          "name": 46,
+          "sentence": [
+            "SAFE",
+            "HARBOR",
+            "STATEMENTS",
+            "Except",
+            "for",
+            "the",
+            "historical",
+            "information",
+            "contained",
+            "herein,",
+            "the",
+            "matters",
+            "set",
+            "forth",
+            "herein",
+            "are",
+            "forward",
+            "looking",
+            "statements",
+            "that",
+            "are",
+            "subject",
+            "to",
+            "certain",
+            "risks",
+            "and",
+            "uncertainties",
+            "that",
+            "could",
+            "cause",
+            "actual",
+            "results",
+            "to",
+            "differ",
+            "materially",
+            "from",
+            "those",
+            "set",
+            "forth",
+            "in",
+            "the",
+            "forward",
+            "looking",
+            "statements"
+          ],
+          "value": 0.2636875977896825,
+          "words": [
+            {
+              "weight": 0.01676291285548359,
+              "word": "SAFE"
+            },
+            {
+              "weight": 0.06593260332010686,
+              "word": "HARBOR"
+            },
+            {
+              "weight": 0.019708508625626564,
+              "word": "STATEMENTS"
+            },
+            {
+              "weight": 0.135847891215235,
+              "word": "Except"
+            },
+            {
+              "weight": 0.0,
+              "word": "for"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.0019442541088210419,
+              "word": "historical"
+            },
+            {
+              "weight": 0.3688980359584093,
+              "word": "information"
+            },
+            {
+              "weight": 0.15827473253011703,
+              "word": "contained"
+            },
+            {
+              "weight": 0.23432825691998005,
+              "word": "herein"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.4016092512756586,
+              "word": "matters"
+            },
+            {
+              "weight": 0.19562705419957638,
+              "word": "set"
+            },
+            {
+              "weight": 1.0470903478562832,
+              "word": "forth"
+            },
+            {
+              "weight": 0.22823770996183157,
+              "word": "herein"
+            },
+            {
+              "weight": 0.0,
+              "word": "are"
+            },
+            {
+              "weight": 0.21419264376163483,
+              "word": "forward"
+            },
+            {
+              "weight": 2.700825221836567,
+              "word": "looking"
+            },
+            {
+              "weight": 0.15001746360212564,
+              "word": "statements"
+            },
+            {
+              "weight": 0.0,
+              "word": "that"
+            },
+            {
+              "weight": 0.0,
+              "word": "are"
+            },
+            {
+              "weight": 0.25115315802395344,
+              "word": "subject"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.01584767596796155,
+              "word": "certain"
+            },
+            {
+              "weight": 0.001483929190726485,
+              "word": "risks"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.011342479410814121,
+              "word": "uncertainties"
+            },
+            {
+              "weight": 0.0,
+              "word": "that"
+            },
+            {
+              "weight": 0.0022824469851912,
+              "word": "could"
+            },
+            {
+              "weight": 0.001369971414533211,
+              "word": "cause"
+            },
+            {
+              "weight": 0.03357319801580161,
+              "word": "actual"
+            },
+            {
+              "weight": 0.051191909005865455,
+              "word": "results"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.6371105089783669,
+              "word": "differ"
+            },
+            {
+              "weight": 1.8399329856038094,
+              "word": "materially"
+            },
+            {
+              "weight": 0.0,
+              "word": "from"
+            },
+            {
+              "weight": 0.0,
+              "word": "those"
+            },
+            {
+              "weight": 0.5772976204752922,
+              "word": "set"
+            },
+            {
+              "weight": 2.8055816888809204,
+              "word": "forth"
+            },
+            {
+              "weight": 0.0,
+              "word": "in"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.6411252077668905,
+              "word": "forward"
+            },
+            {
+              "weight": 5.766632407903671,
+              "word": "looking"
+            },
+            {
+              "weight": 0.28465185314416885,
+              "word": "statements"
+            }
+          ]
+        },
+        {
+          "name": 47,
+          "sentence": [
+            "Such",
+            "risks",
+            "and",
+            "uncertainties",
+            "include,",
+            "but",
+            "are",
+            "not",
+            "limited",
+            "to:",
+            "product",
+            "demand",
+            "and",
+            "market",
+            "acceptance",
+            "risks,",
+            "the",
+            "effect",
+            "of",
+            "economic",
+            "conditions,",
+            "results",
+            "of",
+            "pending",
+            "or",
+            "future",
+            "litigation,",
+            "the",
+            "impact",
+            "of",
+            "competitive",
+            "products",
+            "and",
+            "pricing,",
+            "product",
+            "development",
+            "and",
+            "commercialization,",
+            "technological",
+            "difficulties,",
+            "the",
+            "government",
+            "regulatory",
+            "environment,",
+            "trade",
+            "environment,",
+            "capacity",
+            "and",
+            "supply",
+            "constraints",
+            "or",
+            "difficulties,",
+            "the",
+            "results",
+            "of",
+            "financing",
+            "efforts,",
+            "actual",
+            "purchases",
+            "under",
+            "agreements,",
+            "and",
+            "the",
+            "effect",
+            "of",
+            "the",
+            "Company's",
+            "accounting",
+            "policies."
+          ],
+          "value": 0.2774381461378598,
+          "words": [
+            {
+              "weight": 0.0,
+              "word": "Such"
+            },
+            {
+              "weight": 0.006123172352090478,
+              "word": "risks"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 1.390709076076746,
+              "word": "uncertainties"
+            },
+            {
+              "weight": 3.654402121901512,
+              "word": "include"
+            },
+            {
+              "weight": 0.0,
+              "word": "but"
+            },
+            {
+              "weight": 0.0,
+              "word": "are"
+            },
+            {
+              "weight": 0.0,
+              "word": "not"
+            },
+            {
+              "weight": 0.05513241048902273,
+              "word": "limited"
+            },
+            {
+              "weight": 0.0,
+              "word": "to"
+            },
+            {
+              "weight": 0.0070695219619665295,
+              "word": "product"
+            },
+            {
+              "weight": 0.005059992690803483,
+              "word": "demand"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.004737371273222379,
+              "word": "market"
+            },
+            {
+              "weight": 0.002572936500655487,
+              "word": "acceptance"
+            },
+            {
+              "weight": 0.011222867760807276,
+              "word": "risks"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.13612452894449234,
+              "word": "effect"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.014642775931861252,
+              "word": "economic"
+            },
+            {
+              "weight": 0.1702698296867311,
+              "word": "conditions"
+            },
+            {
+              "weight": 0.08802346419543028,
+              "word": "results"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 11.787022650241852,
+              "word": "pending"
+            },
+            {
+              "weight": 0.0,
+              "word": "or"
+            },
+            {
+              "weight": 0.03964377683587372,
+              "word": "future"
+            },
+            {
+              "weight": 1.7567288130521774,
+              "word": "litigation"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 1.0103019885718822,
+              "word": "impact"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.192069832701236,
+              "word": "competitive"
+            },
+            {
+              "weight": 0.01381212641717866,
+              "word": "products"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.002798803325276822,
+              "word": "pricing"
+            },
+            {
+              "weight": 0.07197060622274876,
+              "word": "product"
+            },
+            {
+              "weight": 0.37526683881878853,
+              "word": "development"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0093560476670973,
+              "word": "commercialization"
+            },
+            {
+              "weight": 0.024103643954731524,
+              "word": "technological"
+            },
+            {
+              "weight": 0.0023036778657115065,
+              "word": "difficulties"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.18584915669634938,
+              "word": "government"
+            },
+            {
+              "weight": 0.322582246735692,
+              "word": "regulatory"
+            },
+            {
+              "weight": 0.019211538892704993,
+              "word": "environment"
+            },
+            {
+              "weight": 0.03173220902681351,
+              "word": "trade"
+            },
+            {
+              "weight": 0.05171967204660177,
+              "word": "environment"
+            },
+            {
+              "weight": 0.006734173803124577,
+              "word": "capacity"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0037064739444758743,
+              "word": "supply"
+            },
+            {
+              "weight": 0.006318555097095668,
+              "word": "constraints"
+            },
+            {
+              "weight": 0.0,
+              "word": "or"
+            },
+            {
+              "weight": 0.012111038086004555,
+              "word": "difficulties"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.13678608229383826,
+              "word": "results"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.19762786105275154,
+              "word": "financing"
+            },
+            {
+              "weight": 1.8946217373013496,
+              "word": "efforts"
+            },
+            {
+              "weight": 0.39374888874590397,
+              "word": "actual"
+            },
+            {
+              "weight": 0.3953905776143074,
+              "word": "purchases"
+            },
+            {
+              "weight": 0.0,
+              "word": "under"
+            },
+            {
+              "weight": 11.903230100870132,
+              "word": "agreements"
+            },
+            {
+              "weight": 0.0,
+              "word": "and"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 2.666236087679863,
+              "word": "effect"
+            },
+            {
+              "weight": 0.0,
+              "word": "of"
+            },
+            {
+              "weight": 0.0,
+              "word": "the"
+            },
+            {
+              "weight": 0.27672210708260536,
+              "word": "Company"
+            },
+            {
+              "weight": 0.0,
+              "word": "s"
+            },
+            {
+              "weight": 9.522303193807602,
+              "word": "accounting"
+            },
+            {
+              "weight": 0.037069665268063545,
+              "word": "policies"
+            }
+          ]
+        }
+      ],
+    "wordsData": [
+        {
+          "word": "expir",
+          "avgWeight": 74.67243671417236,
+          "source": 48,
+          "target": [
+            14,
+            33
+          ]
+        },
+        {
+          "word": "foreign",
+          "avgWeight": 49.45840835571289,
+          "source": 49,
+          "target": [
+            15,
+            32,
+            34
+          ]
+        },
+        {
+          "word": "research",
+          "avgWeight": 40.413827896118164,
+          "source": 50,
+          "target": [
+            10,
+            11,
+            26,
+            27,
+            28
+          ]
+        },
+        {
+          "word": "decreas",
+          "avgWeight": 35.91847202994607,
+          "source": 51,
+          "target": [
+            3,
+            7,
+            10,
+            16,
+            19,
+            26,
+            27,
+            28,
+            29,
+            31,
+            32
+          ]
+        },
+        {
+          "word": "intern",
+          "avgWeight": 31.57028555870056,
+          "source": 52,
+          "target": [
+            2,
+            5,
+            18,
+            22
+          ]
+        },
+        {
+          "word": "payrol",
+          "avgWeight": 24.50306216875712,
+          "source": 53,
+          "target": [
+            5,
+            22,
+            25
+          ]
+        },
+        {
+          "word": "declin",
+          "avgWeight": 20.673877000808716,
+          "source": 54,
+          "target": [
+            6,
+            17,
+            17,
+            18
+          ]
+        },
+        {
+          "word": "variou",
+          "avgWeight": 11.469870805740356,
+          "source": 55,
+          "target": [
+            14,
+            33
+          ]
+        },
+        {
+          "word": "financi",
+          "avgWeight": 11.091087261835735,
+          "source": 56,
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "word": "line",
+          "avgWeight": 7.6479703187942505,
+          "source": 57,
+          "target": [
+            22,
+            41,
+            42,
+            43,
+            44
+          ]
+        },
+        {
+          "word": "percentag",
+          "avgWeight": 7.135891169309616,
+          "source": 58,
+          "target": [
+            3,
+            3,
+            7,
+            10,
+            19,
+            20,
+            23,
+            26
+          ]
+        },
+        {
+          "word": "electrod",
+          "avgWeight": 7.113299518823624,
+          "source": 59,
+          "target": [
+            2,
+            18
+          ]
+        },
+        {
+          "word": "discuss",
+          "avgWeight": 6.9034643471241,
+          "source": 60,
+          "target": [
+            0,
+            0
+          ]
+        },
+        {
+          "word": "amount",
+          "avgWeight": 4.7915662328402195,
+          "source": 61,
+          "target": [
+            6,
+            38,
+            43
+          ]
+        },
+        {
+          "word": "north",
+          "avgWeight": 4.489549994468689,
+          "source": 62,
+          "target": [
+            5,
+            22
+          ]
+        },
+        {
+          "word": "look",
+          "avgWeight": 4.233728721737862,
+          "source": 63,
+          "target": [
+            46,
+            46
+          ]
+        },
+        {
+          "word": "consolid",
+          "avgWeight": 3.733379145463308,
+          "source": 64,
+          "target": [
+            0,
+            0,
+            17
+          ]
+        },
+        {
+          "word": "liquid",
+          "avgWeight": 3.0945122241973877,
+          "source": 65,
+          "target": [
+            35,
+            44
+          ]
+        },
+        {
+          "word": "primarili",
+          "avgWeight": 3.054204024374485,
+          "source": 66,
+          "target": [
+            2,
+            13,
+            17,
+            19,
+            25,
+            30,
+            39,
+            40
+          ]
+        },
+        {
+          "word": "date",
+          "avgWeight": 2.8665684163570404,
+          "source": 67,
+          "target": [
+            14,
+            33
+          ]
+        },
+        {
+          "word": "includ",
+          "avgWeight": 2.074653096497059,
+          "source": 68,
+          "target": [
+            6,
+            39,
+            44,
+            47
+          ]
+        },
+        {
+          "word": "develop",
+          "avgWeight": 2.0115625113248825,
+          "source": 69,
+          "target": [
+            10,
+            11,
+            26,
+            27,
+            28,
+            47
+          ]
+        },
+        {
+          "word": "forth",
+          "avgWeight": 1.9263360649347305,
+          "source": 70,
+          "target": [
+            46,
+            46
+          ]
+        },
+        {
+          "word": "activ",
+          "avgWeight": 1.8786004611424039,
+          "source": 71,
+          "target": [
+            6,
+            22,
+            22,
+            28,
+            36,
+            38,
+            40
+          ]
+        },
+        {
+          "word": "fund",
+          "avgWeight": 1.783997192978859,
+          "source": 72,
+          "target": [
+            38,
+            44
+          ]
+        },
+        {
+          "word": "due",
+          "avgWeight": 1.6036232835368105,
+          "source": 73,
+          "target": [
+            5,
+            5,
+            5,
+            5,
+            9,
+            13,
+            19,
+            22,
+            22,
+            22,
+            22,
+            25,
+            28,
+            30,
+            30,
+            32,
+            37,
+            39,
+            40
+          ]
+        },
+        {
+          "word": "promot",
+          "avgWeight": 1.4613787643611431,
+          "source": 74,
+          "target": [
+            6,
+            22
+          ]
+        },
+        {
+          "word": "offset",
+          "avgWeight": 1.4458493888378143,
+          "source": 75,
+          "target": [
+            6,
+            15,
+            18,
+            32,
+            34
+          ]
+        },
+        {
+          "word": "administr",
+          "avgWeight": 1.402924582362175,
+          "source": 76,
+          "target": [
+            7,
+            8,
+            23,
+            24
+          ]
+        }
+      ]
+}

@@ -88,7 +88,7 @@ export default {
   watch: {
     barChart: {
       handler(n, o) {
-        console.log('jmurphy');
+        // console.log('jmurphy');
         this.drawChart();
       },
       deep: true,
@@ -96,7 +96,7 @@ export default {
     },
     isSorted: {
       handler(n, o) {
-        console.log('amurphy');
+        // console.log('amurphy');
         this.drawChart();
       },
     },

@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <h1 class="title">Finance Report Name</h1>
+    <NavBar title="Finance Report Name" />
+    <!-- <h1 class="title">Finance Report Name</h1> -->
     <div class="flex-title">
       <h5 class="bar-title">
         <div>Risk Level</div>
@@ -9,7 +10,13 @@
         <!-- <div v-if="!isSorted" class="sort-btn" v-on:click="sortDiction">sort</div>
         <div v-if="isSorted" class="sort-btn" v-on:click="recoverDiction">unsort</div> -->
       </h5>
-      <h5 class="sentence-title">Sentence</h5>
+      <h5 class="sentence-title">
+        {{metaInfo.name}}{{metaInfo.date}}
+        <!-- <b-dropdown text="Display">
+          <b-dropdown-item href="#">An item</b-dropdown-item>
+          <b-dropdown-item href="#">Another item</b-dropdown-item>
+        </b-dropdown> -->
+      </h5>
       <h5 class="word-title">Word</h5>
     </div>
     <div class="flex">
@@ -17,29 +24,31 @@
         <BarChart :barChart=barChart  :chartMargin=chartMargin />
       </div>
       <div class="sentence-block">
-        <!-- <b-button v-b-modal.modal-xl variant="primary">xl modal</b-button> -->
-        <div class="text" v-for="(item, idx) in barChart.data">
-          <div style="outline: none" v-b-modal.modal-lg @click="setHeatMapData(idx)">{{item.sentence}}</div>
-          <!-- {{item.sentence}} -->
-        </div>
+        <div v-for="(item, idx) in barChart.data">
+            <div class="text" :id="`text-${idx}`">
+              <span :style="{ background: colorFunc(idx, word)}"  class="text-span" :id="`text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
+
+            </div>
+            <!-- {{item.sentence}} -->
+          </div>
       </div>
-      <b-modal id="modal-lg" size="lg" title="Detail">
-        <h6>Original Sentence:</h6>
-        <div class="modal-sentence">{{this.selectedHeatMapSentenceData}}</div>
-        <hr>
-        <h6>HeatMap:</h6>
-        <HeatMap :data="selectedHeatMapGridData"/>
-      </b-modal>
       <div class="word-block">
-        <DependencyGraph :data=dependencyGraphDict :isSorted=isSorted />
-        <!-- <div class="text">apple</div>
-        <div class="text">apple</div>
-        <div class="text">apple</div>
-        <div class="text">apple</div>
-        <div class="text">apple</div>
-        <div class="text">apple</div>
-        <div class="text">apple</div>
-        <div class="text">apple</div> -->
+        <!-- <DependencyGraph :data=dependencyGraphDict :isSorted=isSorted /> -->
+        <!-- <div class="word-text-block">hi</div> -->
+        <div class="word-block-inner">
+          <div class="word-text-block" >
+            <div class="word-text" v-for="(item, idx) in dependencyGraphDict.data" @click="clickWord(idx, item.word)" >{{item.word}}</div>
+          </div>
+          <div class="word-number-block" >
+            <div class="word-number" v-for="(item, idx) in dependencyGraphDict.data"  >{{item.target.length}}</div>
+          </div>
+          <div class="word-chart-outer">
+              <BarChartWord :barChart="dependencyGraphDict"  :chartMargin=chartMargin />
+          </div>
+
+        </div>
+
+
       </div>
     </div>
 
@@ -48,9 +57,13 @@
 </template>
 
 <script>
+import * as d3 from 'd3';
 import BarChart from './BarChart';
 import DependencyGraph from './DependencyGraph';
 import HeatMap from './HeatMap';
+import BarChartWord from './BarChartWord';
+import NavBar from './NavBar';
+import DataInfo from './data.json';
 
 export default {
   name: 'HelloWorld',
@@ -58,170 +71,22 @@ export default {
     BarChart,
     DependencyGraph,
     HeatMap,
+    BarChartWord,
+    NavBar,
   },
   data() {
     return {
       isSorted: false,
+      isChanged: false,
+      isHeatMapClick: false,
       selectedHeatMapSentenceData: '',
       selectedHeatMapGridData: [],
-      copyData: {
-        data: [
-          {
-            value: 10,
-            name: '0',
-            sentence: "I have also tried to manually set the node's x and y attributes each tick, but then the links continue to float out to where the node would be if it was affected by the force.Obviously I have a basic misunderstanding of how this is supposed to work. How can I fix nodes in a position, while keeping links and still allowing for them to be draggable?",
-          },
-          {
-            value: 15,
-            name: '1',
-            sentence: 'I want some of the nodes in my force-directed layout to ignore all forces and stay in fixed positions based on an attribute of the node',
-          },
-          {
-            value: 50,
-            name: '2',
-            sentence: 'while still being able to be dragged and exert repulsion on other nodes and maintain their link lines.',
-          },
-          {
-            value: 15,
-            name: '3',
-            sentence: 'Set d.fixed on the desired nodes to true, and initialize d.x and d.y to the desired position. These nodes will then still be part of the simulation,',
-          },
-          {
-            value: 10,
-            name: '4',
-            sentence: 'and you can use the normal display code (e.g., setting a transform attribute);',
-          },
-          {
-            value: 5,
-            name: '5',
-            sentence: 'however, because they are marked as fixed, they can only be moved by dragging and not by the simulation.',
-          },
-          {
-            value: 3,
-            name: '6',
-            sentence: 'See the force layout documentation for more details (v3 docs, current docs), and also see how the root node is positioned in this example.',
-          },
-          {
-            value: 1,
-            name: '7',
-            sentence: 'At the end of each tick, after the application of any forces, a node with a defined node.fx has node.x',
-          },
-        ],
-        width: 540,
-        height: 500,
-        barHeight: 30,
-        barMargin: 20,
-      },
+      sentenceHeatMapGridData: [],
+      heatMapLabel: 'text',
+      color: {},
+      metaInfo: {},
       barChart: {
-        data: [
-          {
-            value: 10,
-            name: 0,
-            sentence: "I have also tried to manually set the node's x and y attributes each tick, but then the links continue to float out to where the node would be if it was affected by the force.Obviously I have a basic misunderstanding of how this is supposed to work. How can I fix nodes in a position, while keeping links and still allowing for them to be draggable?",
-            words:
-              [{ word: 'I', weight: 98 },
-                { word: 'have', weight: 60 }, { word: 'also', weight: 34 }, { word: 'tried', weight: 45 }, { word: 'to', weight: 64 }, { word: 'manually', weight: 16 }, { word: 'set', weight: 6 }, { word: 'the', weight: 54 }, { word: "node's", weight: 27 }, { word: 'x', weight: 69 }, { word: 'and', weight: 64 }, { word: 'y', weight: 67 }, { word: 'attributes', weight: 89 }, { word: 'each', weight: 73 }, { word: 'tick,', weight: 4 }, { word: 'but', weight: 41 }, { word: 'then', weight: 56 }, { word: 'the', weight: 73 }, { word: 'links', weight: 96 }, { word: 'continue', weight: 68 }, { word: 'to', weight: 68 }, { word: 'float', weight: 18 }, { word: 'out', weight: 86 }, { word: 'to', weight: 54 }, { word: 'where', weight: 36 }, { word: 'the', weight: 2 }, { word: 'node', weight: 14 }, { word: 'would', weight: 80 }, { word: 'be', weight: 87 }, { word: 'if', weight: 5 }, { word: 'it', weight: 90 }, { word: 'was', weight: 23 }, { word: 'affected', weight: 62 }, { word: 'by', weight: 45 }, { word: 'the', weight: 93 }, { word: 'force.Obviously', weight: 91 }, { word: 'I', weight: 4 }, { word: 'have', weight: 38 }, { word: 'a', weight: 64 }, { word: 'basic', weight: 49 }, { word: 'misunderstanding', weight: 13 }, { word: 'of', weight: 91 }, { word: 'how', weight: 93 }, { word: 'this', weight: 77 }, { word: 'is', weight: 33 }, { word: 'supposed', weight: 92 }, { word: 'to', weight: 44 }, { word: 'work.', weight: 94 }, { word: 'How', weight: 54 }, { word: 'can', weight: 28 }, { word: 'I', weight: 13 }, { word: 'fix', weight: 50 }, { word: 'nodes', weight: 30 }, { word: 'in', weight: 52 }, { word: 'a', weight: 90 }, { word: 'position,', weight: 54 }, { word: 'while', weight: 6 }, { word: 'keeping', weight: 14 }, { word: 'links', weight: 95 }, { word: 'and', weight: 44 }, { word: 'still', weight: 63 }, { word: 'allowing', weight: 60 }, { word: 'for', weight: 12 }, { word: 'them', weight: 36 }, { word: 'to', weight: 57 }, { word: 'be', weight: 16 }, { word: 'draggable?', weight: 78 }]
-            ,
-          },
-          {
-            value: 15,
-            name: 1,
-            sentence: 'I want some of the nodes in my force-directed layout to ignore all forces and stay in fixed positions based on an attribute of the node',
-            words: [
-              { word: 'asd', weight: 50 },
-              { word: 'ba', weight: 10 },
-              { word: 'orangeasd', weight: 5 },
-              { word: 'textasd', weight: 1 },
-              { word: 'hellosds', weight: 4 },
-              { word: 'hiasd', weight: 5 },
-              { word: 'conversationaaa', weight: 15 },
-            ],
-          },
-          {
-            value: 50,
-            name: 2,
-            sentence: 'while still being able to be dragged and exert repulsion on other nodes and maintain their link lines.',
-            words: [
-              { word: 'asd', weight: 50 },
-              { word: 'ba', weight: 10 },
-              { word: 'orangeasd', weight: 5 },
-              { word: 'textasd', weight: 1 },
-              { word: 'hellosds', weight: 4 },
-              { word: 'hiasd', weight: 5 },
-              { word: 'conversationaaa', weight: 15 },
-            ],
-          },
-          {
-            value: 15,
-            name: 3,
-            sentence: 'Set d.fixed on the desired nodes to true, and initialize d.x and d.y to the desired position. These nodes will then still be part of the simulation,',
-            words: [
-              { word: 'asd', weight: 50 },
-              { word: 'ba', weight: 10 },
-              { word: 'orangeasd', weight: 5 },
-              { word: 'textasd', weight: 1 },
-              { word: 'hellosds', weight: 4 },
-              { word: 'hiasd', weight: 5 },
-              { word: 'conversationaaa', weight: 15 },
-            ],
-          },
-          {
-            value: 10,
-            name: 4,
-            sentence: 'and you can use the normal display code (e.g., setting a transform attribute);',
-            words: [
-              { word: 'asd', weight: 50 },
-              { word: 'ba', weight: 10 },
-              { word: 'orangeasd', weight: 5 },
-              { word: 'textasd', weight: 1 },
-              { word: 'hellosds', weight: 4 },
-              { word: 'hiasd', weight: 5 },
-              { word: 'conversationaaa', weight: 15 },
-            ],
-          },
-          {
-            value: 5,
-            name: 5,
-            sentence: 'however, because they are marked as fixed, they can only be moved by dragging and not by the simulation.',
-            words: [
-              { word: 'asd', weight: 50 },
-              { word: 'ba', weight: 10 },
-              { word: 'orangeasd', weight: 5 },
-              { word: 'textasd', weight: 1 },
-              { word: 'hellosds', weight: 4 },
-              { word: 'hiasd', weight: 5 },
-              { word: 'conversationaaa', weight: 15 },
-            ],
-          },
-          {
-            value: 3,
-            name: 6,
-            sentence: 'See the force layout documentation for more details (v3 docs, current docs), and also see how the root node is positioned in this example.',
-            words: [
-              { word: 'asd', weight: 50 },
-              { word: 'ba', weight: 10 },
-              { word: 'orangeasd', weight: 5 },
-              { word: 'textasd', weight: 1 },
-              { word: 'hellosds', weight: 4 },
-              { word: 'hiasd', weight: 5 },
-              { word: 'conversationaaa', weight: 15 },
-            ],
-          },
-          {
-            value: 1,
-            name: 7,
-            sentence: 'At the end of each tick, after the application of any forces, a node with a defined node.fx has node.x',
-            words: [
-              { word: 'asd', weight: 50 },
-              { word: 'ba', weight: 10 },
-              { word: 'orangeasd', weight: 5 },
-              { word: 'textasd', weight: 1 },
-              { word: 'hellosds', weight: 4 },
-              { word: 'hiasd', weight: 5 },
-              { word: 'conversationaaa', weight: 15 },
-            ],
-          },
-        ],
+        data: [],
         width: 540,
         height: 500,
         barHeight: 30,
@@ -233,50 +98,40 @@ export default {
         left: 5,
         right: 5,
       },
-      dependencyLinkOrder: [
-        { source: 8, target: 0 },
-        { source: 9, target: 0 },
-        { source: 9, target: 1 },
-        { source: 9, target: 2 },
-        { source: 9, target: 3 },
-        { source: 10, target: 4 },
-        { source: 10, target: 5 },
-        { source: 10, target: 6 },
-        { source: 10, target: 7 },
-
-      ],
       dependencyGraphDict: {
-        nodes: [
-          { name: '', fixed: true, cx: 10, cy: 15, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 65, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 115, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 165, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 215, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 265, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 315, weight: 1 },
-          { name: '', fixed: true, cx: 10, cy: 365, weight: 1 },
-          // cx定位需要計算
-          { name: 'apple', fixed: false, cx: 310, cy: 30, weight: 10 },
-          { name: 'anna', fixed: false, cx: 280, cy: 80, weight: 30 },
-          { name: 'hi', fixed: false, cx: 320, cy: 130, weight: 100 },
-
+        data: [
         ],
-        links: [
-          { source: 8, target: 0 },
-          { source: 9, target: 0 },
-          { source: 9, target: 1 },
-          { source: 9, target: 2 },
-          { source: 9, target: 3 },
-          { source: 10, target: 4 },
-          { source: 10, target: 5 },
-          { source: 10, target: 6 },
-          { source: 10, target: 7 },
-        ],
+        width: 540,
+        height: 500,
+        barHeight: 30,
+        barMargin: 20,
       },
     };
   },
   methods: {
-    compare(a, b) {
+    clickWord(idx, word) {
+      const targetId = this.dependencyGraphDict.data[idx].target;
+      const tmp = this.barChart.data[0];
+      let tmpA = {};
+      for (let i = 0; i < this.barChart.data.length; i += 1) {
+        if (this.barChart.data[i].name === targetId) {
+          tmpA = this.barChart.data[i];
+          break;
+        }
+      }
+      this.barChart.data[0] = tmpA;
+      this.barChart.data[targetId] = tmp;
+      this.isChanged = !this.isChanged;
+
+      const x = document.getElementById('text-0');
+      for (let i = 0; i < this.barChart.data[0].words.length; i += 1) {
+        if (this.barChart.data[0].words[i].word === word && i > 5) {
+          const offset = (i - 5) * 85;
+          x.scrollLeft = offset;
+        }
+      }
+    },
+    compareValue(a, b) {
       if (a.value < b.value) {
         return -1;
       }
@@ -285,51 +140,95 @@ export default {
       }
       return 0;
     },
-    recoverDiction() {
-      this.barChart = JSON.parse(JSON.stringify(this.copyData));
-      this.isSorted = !this.isSorted;
-      for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-        this.dependencyGraphDict.links[j].target = JSON.parse(JSON.stringify(this.dependencyLinkOrder[j].target));
+    compareName(a, b) {
+      if (a.name < b.name) {
+        return -1;
       }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
     },
+    // recoverDiction() {
+    //   this.barChart = JSON.parse(JSON.stringify(this.copyData));
+    //   this.isSorted = !this.isSorted;
+    //   for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
+    //     this.dependencyGraphDict.links[j].target = JSON.parse(JSON.stringify(this.dependencyLinkOrder[j].target));
+    //   }
+    // },
     sortDiction() {
+      console.log('isSorted', this.isSorted);
       // console.log(this.barChart);
       if (!this.isSorted) {
-        this.barChart.data.sort(this.compare);
-        console.log('----', this.dependencyGraphDict.links);
-        // console.log('----', this.dependencyGraph.links);
-        const tmp = [];
-        for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-          tmp.push(JSON.parse(JSON.stringify(this.dependencyGraphDict.links[j])));
-        }
-        // console.log('before:', this.dependencyGraph.links);
-        for (let i = 0; i < this.barChart.data.length; i += 1) {
-          const newTarget = this.barChart.data[i].name;
-          console.log('newTarget', newTarget);
-          for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-            console.log('=====', this.dependencyGraphDict.links[j].target, newTarget);
-            console.log(typeof (this.dependencyGraphDict.links[j].target), typeof (newTarget));
-            if (parseInt(this.dependencyGraphDict.links[j].target, 10) === parseInt(newTarget, 10)) {
-              console.log('opop');
-              tmp[j].target = i;
-              console.log(j, tmp[j].target);
-            }
-          }
-        }
-        console.log('tmp', tmp);
-        this.dependencyGraphDict.links = tmp;
+        this.barChart.data.sort(this.compareValue);
       } else {
-        this.barChart = JSON.parse(JSON.stringify(this.copyData));
-        for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-          this.dependencyGraphDict.links[j].target = JSON.parse(JSON.stringify(this.dependencyLinkOrder[j].target));
-        }
+        this.barChart.data.sort(this.compareName);
       }
       this.isSorted = !this.isSorted;
+      // console.log('----', this.dependencyGraphDict.links);
+      // // console.log('----', this.dependencyGraph.links);
+      // const tmp = [];
+      // for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
+      //   tmp.push(JSON.parse(JSON.stringify(this.dependencyGraphDict.links[j])));
+      // }
+      // // console.log('before:', this.dependencyGraph.links);
+      // for (let i = 0; i < this.barChart.data.length; i += 1) {
+      //   const newTarget = this.barChart.data[i].name;
+      //   console.log('newTarget', newTarget);
+      //   for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
+      //     console.log('=====', this.dependencyGraphDict.links[j].target, newTarget);
+      //     console.log(typeof (this.dependencyGraphDict.links[j].target), typeof (newTarget));
+      //     if (parseInt(this.dependencyGraphDict.links[j].target, 10) === parseInt(newTarget, 10)) {
+      //       console.log('opop');
+      //       tmp[j].target = i;
+      //       console.log(j, tmp[j].target);
+      //     }
+      //   }
+      // }
+      // console.log('tmp', tmp);
+      // this.dependencyGraphDict.links = tmp;
     },
     setHeatMapData(idx) {
+      this.heatMapLabel = 'modal';
       this.selectedHeatMapGridData = this.barChart.data[idx].words;
       this.selectedHeatMapSentenceData = this.barChart.data[idx].sentence;
     },
+    colorFunc(idx, word) {
+      let a = this.color(1);
+      for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
+        const targetItem = this.barChart.data[idx].words[j];
+        if (word.indexOf(targetItem.word) != -1) {
+          a = this.color(targetItem.weight * 100);
+          break;
+        }
+      }
+      console.log('a', a);
+      // if (a === 'rgb(247,255,255)') {
+      //   a = '#F9F7EB';
+      // }
+      return a;
+    },
+  },
+  mounted() {
+    if (DataInfo) {
+      this.barChart.data = DataInfo.sentencesData;
+      this.dependencyGraphDict.data = DataInfo.wordsData;
+      this.metaInfo = DataInfo.metaInfo;
+    }
+    let min_ = 1;
+    let max_ = 1;
+    for (let i = 0; i < this.barChart.data.length; i++) {
+      if (this.barChart.data[i].value < min_) {
+        min_ = this.barChart.data[i].value;
+      }
+      if (this.barChart.data[i].value > max_) {
+        max_ = this.barChart.data[i].value;
+      }
+    }
+    this.color = d3.scaleLinear()
+      .domain([min_ * 100, max_ * 100])
+      .range(['#F9F7EB', '#FF0001']);
+    console.log('min', min_, 'max', max_);
   },
 };
 </script>
@@ -372,6 +271,7 @@ export default {
   /* align-items: center; */
   color: black;
   padding: 0 2vw 0 2vw;
+  justify-content: space-between;
   /* font-size: 2rem; */
   /* padding-top: 20px; */
 }
@@ -414,10 +314,13 @@ export default {
   /* margin-top: 2px; */
   /* margin-bottom: 2px; */
   /* display: flex; */
+  /* display: inline-block; */
   /* justify-content: center; */
   /* align-items: center; */
   color: black;
   font-size: 2rem;
+  padding-right: 15px;
+  /* padding: 0px 5px 20px 15px; */
 }
 .sentence-block {
   flex: 0 0 68%;
@@ -429,7 +332,7 @@ export default {
   /* justify-content: center; */
   align-items: center;
   color: black;
-  font-size: 2rem;
+  font-size: 20px;
   /* padding-top: 20px; */
   overflow: hidden;
   padding: 0 2vw 0 2vw;
@@ -437,23 +340,71 @@ export default {
 .text {
   text-align: left;
   height: 30px;
-
+  width: 100%;
+  /* background: rgb(249,247,235);; */
   /* margin-top: 20px; */
   font-size: 20px;
   /* padding-top: 15px; */
   margin-bottom: 20px;
   /* background: black; */
-  overflow : hidden;
-  text-overflow : ellipsis;
+  overflow-x : scroll;
+  /* overflow-y: hidden; */
+  /* text-overflow : ellipsis; */
   cursor: pointer;
-}
-.text:hover{
-  color:#FF5C59;
 }
 .sort-btn {
   color: #61a0f8;
   cursor: pointer;
   font-size: 16px;
   /* margin-right: 20px; */
+}
+.sentence-inner {
+  position: relative;
+  overflow-x: hidden;
+  overflow-x:scroll;
+}
+.text-outer {
+  padding: 0 2vw 0 2vw;
+  position: relative;
+  overflow-x: hidden;
+}
+.word-chart-outer{
+  flex: 0 0 50%;
+  /* width: 100%; */
+  /* width: 50px; */
+}
+.word-block-inner {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.word-number-block {
+  flex: 0 0 10%;
+  font-size: 20px;
+}
+.word-text-block {
+  flex: 0 0 26%;
+  overflow: hidden;
+  font-size: 20px;
+}
+.word-text{
+  height: 30px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.word-text:hover {
+  color:#FF5C59;
+}
+.text-span {
+  padding-right : 0.5rem;
+  text-align: center;
+}
+.word-number {
+  background: #69B9B3;
+  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 100%;
 }
 </style>

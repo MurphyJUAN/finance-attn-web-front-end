@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import HelloWorld from '@/components/HelloWorld';
+import HomePage from '@/components/HomePage';
 import BarChart from '@/components/BarChart';
 import DependencyGraph from '@/components/DependencyGraph';
 import HeatMap from '@/components/HeatMap';
@@ -17,6 +18,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'HonePage',
+      component: HomePage,
+    },
+    {
+      path: '/finance-report',
       name: 'HelloWorld',
       component: HelloWorld,
     },

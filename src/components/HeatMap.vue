@@ -1,7 +1,7 @@
 /* eslint-disable vue/require-v-for-key */
 <template>
   <div :id="`map-chart-${id}`">
-      <svg :width=width :height=height></svg>
+      <!-- <svg :width=width :height=height></svg> -->
     <!-- <svg class="map" id="map" :width="width" :height="height">
         <g v-for="(item, idx) in data" :transform="`translate(${(idx%maxGridPerLine) * (gridHeight + gridMargin)},
                                         ${Math.floor((idx / maxGridPerLine)) * (gridHeight + gridMargin)})`">
@@ -21,7 +21,7 @@ export default {
     return {
       id: shortid.generate(),
       width: 800,
-      height: 300,
+      height: 30,
       gridWidth: 80,
       gridHeight: 30,
       gridMargin: 5,
@@ -45,17 +45,28 @@ export default {
       let svgItemWidth = 500;
       const svgItemHeight = 300;
       let dataListLen = 0;
-      const svgItem = document.getElementsByClassName('modal-body')[0];
-      if (svgItem) {
+      let svgItem = document.getElementsByClassName('modal-body')[0];
+      console.log('-------', this.itemLabel);
+
+      if (this.itemLabel === 'modal') {
+        svgItem = document.getElementsByClassName('modal-body')[0];
+        console.log('====heatMapWidth====', svgItem);
         if (svgItem.clientWidth > 0) {
           svgItemWidth = svgItem.clientWidth;
           this.width = svgItemWidth;
         }
+      } else {
+        svgItem = document.getElementsByClassName('text')[0];
+        this.width = 3000;
+      }
+
+      if (svgItem) {
         dataListLen = this.data.length;
         this.maxGridPerLine = Math.floor(this.width / (this.gridWidth + this.gridMargin));
         console.log('this.maxGridPerLine', this.maxGridPerLine);
         const linesCount = Math.ceil(dataListLen / this.maxGridPerLine);
-        this.height = (this.gridHeight + this.gridMargin) * linesCount;
+        if (this.itemLabel === 'modal') { this.height = (this.gridHeight + this.gridMargin) * linesCount; } else { this.height = 30; }
+
         console.log('jeje', this.width);
         console.log('grid Height', this.height);
         // console.log('keke', svgItemHeight);
@@ -69,7 +80,12 @@ export default {
       //     .append('svg')
       //     .attr('width', svgItemWidth)
       //     .attr('height', svgItemHeight);
-      const svg = d3.select(this.$el.querySelector('svg'));
+      const svg = d3
+        .select(`#map-chart-${this.id}`)
+        .append('svg')
+        .attr('width', this.width)
+        .attr('height', this.height);
+      // const svg = d3.select(this.$el.querySelector('svg'));
 
 
       //   const x = d3.scaleLinear()
@@ -86,17 +102,17 @@ export default {
         .domain([1, 100])
         .range(['#FFFFF5', '#FF0001']);
       // .interpolate(d3.interpolateHcl);
-      //   .range(['#fff', '#00f']);
+        // .range(['#fff', '#00f']);
 
-      console.log(this.data);
-
+      // console.log(this.data);
+      console.log('----append');
       const g = svg.selectAll('.gridClass')
         .data(this.data)
         .enter()
         .append('g')
         .attr('class', 'gridClass')
-        .attr('transform', (d, i) => `translate(${(i % this.maxGridPerLine) * (this.gridWidth + this.gridMargin)},
-                                        ${Math.floor((i / this.maxGridPerLine)) * (this.gridHeight + this.gridMargin)})`);
+        .attr('transform', (d, i) => `translate(${(i % this.maxGridPerLine) * (this.gridWidth)},
+                                        ${Math.floor((i / this.maxGridPerLine)) * (this.gridHeight)})`);
       g.append('rect')
         .attr('width', this.gridWidth)
         .attr('height', this.gridHeight)
@@ -113,12 +129,10 @@ export default {
         .attr('dx', (d) => {
           const wordLength = this.wordPerWidth * this.ruleOne(d.word);
           let x = this.gridPadding / 2;
-          console.log('wordLength', wordLength);
-          console.log('this.gridWidth - this.gridPadding', this.gridWidth - this.gridPadding);
+          // console.log('wordLength', wordLength);
+          // console.log('this.gridWidth - this.gridPadding', this.gridWidth - this.gridPadding);
           if (wordLength <= this.gridWidth - this.gridPadding) {
             x = (this.gridWidth - this.gridPadding - wordLength) / 2;
-            console.log('d-woed', d.word);
-            console.log('x', x);
           } else {
             const maxWordLength = Math.floor((this.gridWidth - this.gridPadding) / this.wordPerWidth);
             d.word = d.word.slice(0, maxWordLength + 1);
@@ -142,9 +156,25 @@ export default {
       const valueLength = chinese + value.length;
       return valueLength;
     },
+    updateMap() {
+      console.log('========update Map=========');
+      console.log('---id---', this.id);
+      d3.select(`#map-chart-${this.id}`).select('svg').remove();
+      this.drawMap();
+    },
+  },
+  watch: {
+    data: {
+      handler(n, o) {
+        console.log('=============', this.data);
+        // d3.select(this.$el.querySelector('svg')).remove();
+        this.updateMap();
+      },
+      deep: true,
+    },
   },
 
-  props: ['data'],
+  props: ['data', 'itemLabel', 'isChanged', 'isSorted'],
 };
 </script>
 
