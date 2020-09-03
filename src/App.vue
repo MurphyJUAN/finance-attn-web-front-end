@@ -6,12 +6,14 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
 };
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet');
 * {
   box-sizing: border-box;
 }

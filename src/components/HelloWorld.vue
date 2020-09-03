@@ -132,10 +132,10 @@ export default {
       }
     },
     compareValue(a, b) {
-      if (a.value < b.value) {
+      if (a.value > b.value) {
         return -1;
       }
-      if (a.vlue > b.value) {
+      if (a.vlue < b.value) {
         return 1;
       }
       return 0;
@@ -202,7 +202,6 @@ export default {
           break;
         }
       }
-      console.log('a', a);
       // if (a === 'rgb(247,255,255)') {
       //   a = '#F9F7EB';
       // }
