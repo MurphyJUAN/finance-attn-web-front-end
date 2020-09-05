@@ -91,6 +91,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .chart rect {
-  fill:rgb(105,185,180);
+  fill:rgb(245, 161, 66);
 }
 </style>

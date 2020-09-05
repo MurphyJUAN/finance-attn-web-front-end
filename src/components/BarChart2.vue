@@ -81,7 +81,7 @@ export default {
         .attr('y', (d, i) => i * this.barChart.barMargin)
         .attr('width', d => x(d.value))
         .attr('height', this.barChart.barHeight)
-        .attr('fill', '#00BAB6')
+        .attr('fill', '#f5a142')
         .attr('rx', 3);
     },
   },

@@ -2,14 +2,14 @@
 
 <template>
   <div>
-  <b-navbar type="light" variant="light">
+  <b-navbar >
     <b-navbar-nav class="nav-outer">
       <b-nav-item href="#">
           <img class="logo" src="../assets/lg_black.png">
       </b-nav-item>
 
       <!-- Navbar dropdowns -->
-      <div class="nav-input-block">
+      <div class="nav-input-block" style="margin-top:2vh;">
         <b-nav-item-dropdown text="year" right class="year-input">
             <b-dropdown-item href="#">2020</b-dropdown-item>
             <b-dropdown-item href="#">2019</b-dropdown-item>
@@ -22,7 +22,7 @@
             id="file-default"
             v-model="file"></b-form-file>
         </b-form-group>
-        <b-button type="submit" variant="dark" class="submit-btn">Submit</b-button>
+        <b-button type="submit" style="background-color:#737373;" class="submit-btn">Submit</b-button>
       </div>
 
 
