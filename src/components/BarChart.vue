@@ -22,7 +22,7 @@ export default {
       height: 500,
     };
   },
-  props: ['barChart', 'chartMargin'],
+  props: ['barChart', 'chartMargin', 'clickedNumber'],
   mounted() {
     this.drawChart();
   },
@@ -43,40 +43,47 @@ export default {
         const y2 = (dataListLen - 1) * this.barChart.barMargin;
         svgItemHeight = y1 + y2;
         this.height = svgItemHeight;
-        console.log(dataListLen);
-        console.log('jeje', svgItemWidth);
-        console.log('keke', svgItemHeight);
       }
     },
     barWidth(value) {
+      // console.log('value', value);
       const a = this.width / this.dataMax;
-      let b = a * value;
-      if (b >= this.width - 20) {
-        b -= 20;
-      }
+      const b = a * Math.log(value + 1.3);
+      // if (b >= this.width - 20) {
+      //   b -= 20;
+      // }
       return b;
     },
   },
   computed: {
     dataMax() {
       let maxValue = 0;
-      for (let i = 0; i < this.barChart.data.length; i++) {
+      for (let i = 0; i < this.barChart.data.length; i += 1) {
         if (this.barChart.data[i].value >= maxValue) {
           maxValue = this.barChart.data[i].value;
         }
       }
+      maxValue = Math.log(maxValue + 1.3);
       return maxValue;
     },
   },
   watch: {
-    barChart: {
+    'barChart.data': {
       handler(n, o) {
-        console.log('jmurphy');
+        console.log('========jmurphy===========');
         this.drawChart();
       },
       deep: true,
 
     },
+    // clickedNumber: {
+    //   handler(n, o) {
+    //     console.log('========jmurphy===========');
+    //     console.log(this.barChart.data);
+    //     this.drawChart();
+    //   },
+    //   deep: true,
+    // },
   },
 };
 </script>
@@ -84,6 +91,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .chart rect {
-  fill:rgb(245, 161, 66);
+  fill:rgb(255, 130, 20);
 }
 </style>

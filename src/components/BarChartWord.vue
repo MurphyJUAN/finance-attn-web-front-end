@@ -3,8 +3,9 @@
   <div :id="`line-chart-${id}`">
     <svg class="chart" id="chart" :width="smallWidth" :height="height" >
         <g v-for="(item, idx) in barChart.data" :transform="`translate(0, ${(idx) * (barChart.barHeight + barChart.barMargin)})`">
-            <rect :height="barChart.barHeight" :width="barWidth(item.avgWeight)" rx="2"></rect>
-            <!-- <text x="0" y="20">TEXT</text> -->
+
+            <rect :height="barChart.barHeight" :width="barWidth(item.avgWeight)" :style="{ fill: barColorFunc(item.avgWeight)}" rx="2"></rect>
+
         </g>
     </svg>
   </div>
@@ -64,6 +65,12 @@ export default {
       }
       return b;
     },
+    barColorFunc(weight) {
+      const color = d3.scaleLinear()
+        .domain([0, 100])
+        .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
+      return color(weight);
+    },
   },
   computed: {
     dataMax() {
@@ -90,7 +97,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.chart rect {
-  fill:rgb(245, 161, 66);
-}
+/* .chart rect {
+  fill:rgb(255, 165, 20);
+} */
 </style>

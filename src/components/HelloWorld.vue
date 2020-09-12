@@ -1,6 +1,6 @@
 <template>
 <div class="hello">
-    <NavBar title="Finance Report Name" />
+    <NavBar title="Finance Report Name" v-on:companyIdFromNav="companyIdFromNav" />
     <!-- <h1 class="title">Finance Report Name</h1> -->
     <div class="flex-title">
         <h5 class="bar-title">
@@ -13,28 +13,51 @@
         <div v-if="isSorted" class="sort-btn" v-on:click="recoverDiction">unsort</div> -->
         </h5>
         <h5 class="sentence-title">
-            {{metaInfo.name}}{{metaInfo.date}}
-            <!-- <b-dropdown text="Display">
-          <b-dropdown-item href="#">An item</b-dropdown-item>
-          <b-dropdown-item href="#">Another item</b-dropdown-item>
-        </b-dropdown> -->
+            <div class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Post event volatility: {{metaInfo.volatility}}</div>
+            <div>
+              <img v-if="isHeatMap" class="invisible-img" @click="hideHeatMap" src="../assets/invisible.svg">
+              <img v-if="!isHeatMap" class="invisible-img" @click="showHeatMap" src="../assets/eye.svg">
+              <img class="invisible-img" @click="setScroll" src="../assets/quote.svg">
+            </div>
         </h5>
-        <h5 class="word-title">Word</h5>
+        <div class="word-title">
+          <h5 class="word-small-title">Word</h5>
+          <h5 class="df-small-title">DF</h5>
+          <h5 class="aw-small-title">AW</h5>
+        </div>
 
 
     </div>
     <div class="flex">
         <div class="bar-block">
 
-            <BarChart :barChart=barChart :chartMargin=chartMargin />
+            <BarChart :barChart=barChart :chartMargin=chartMargin :clickedNumber=clickedWordNumber />
         </div>
         <div class="sentence-block">
-            <div v-for="(item, idx) in barChart.data">
-                <div class="text" :id="`text-${idx}`">
-                    <span :style="{ background: colorFunc(idx, word)}" class="text-span" :id="`text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
+            <div class="color-axis-block">
+              <div class="triangle"></div>
+              <div class="color-axis-inner">
+                <div class="color-axis color-axis-0"></div>
+                <div class="color-axis color-axis-25"></div>
+                <div class="color-axis color-axis-50"></div>
+                <div class="color-axis color-axis-75"></div>
+              </div>
+              <div class="color-text-inner">
+                <div class="color-text color-text-0">0</div>
+                <div class="color-text color-text-25">25</div>
+                <div class="color-text color-text-50">50</div>
+                <div class="color-text color-text-75">75</div>
+                <div class="color-text">100</div>
+              </div>
 
+            </div>
+            <div v-for="(item, idx) in barChart.data">
+              <div class="text-outer">
+                <div class="text" :id="`text-${idx}`">
+                    <span v-if="isHeatMap" :style="{ background: colorFunc(idx, word, true), fontWeight:  checkSelected(idx, id)? 900: 10}" class="text-span" :id="`text-${idx}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
+                    <span v-if="!isHeatMap" :style="{ background: colorFunc(idx, word, false), borderBottom: checkSelected(idx, id)}" class="text-span" :id="`text-${idx}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
                 </div>
-                <!-- {{item.sentence}} -->
+              </div>
             </div>
         </div>
         <div class="word-block">
@@ -42,7 +65,7 @@
             <!-- <div class="word-text-block">hi</div> -->
             <div class="word-block-inner">
                 <div class="word-text-block">
-                    <div class="word-text" v-for="(item, idx) in dependencyGraphDict.data" @click="clickWord(idx, item.word)">{{item.word}}</div>
+                    <div class="word-text" v-for="(item, idx) in dependencyGraphDict.data" @click="clickWord(idx, item.word)" :style="{color: clickedWordNumber===idx? '#FF5C59' : 'black'}">{{item.word}}</div>
                 </div>
                 <div class="word-number-block">
                     <div class="word-number" v-for="(item, idx) in dependencyGraphDict.data">{{item.target.length}}</div>
@@ -67,7 +90,9 @@ import HeatMap from './HeatMap';
 import BarChartWord from './BarChartWord';
 import NavBar from './NavBar';
 import DataInfo from './data.json';
+import axios from 'axios';
 
+const baseURL = 'https://clip.csie.org/HIVE/api';
 export default {
   name: 'HelloWorld',
   components: {
@@ -80,14 +105,20 @@ export default {
   data() {
     return {
       isSorted: false,
-      isChanged: false,
+      isHeatMap: true,
+      isScroll: false,
+      clickedWordNumber: -1,
       isHeatMapClick: false,
+      targetIdList: [],
       selectedHeatMapSentenceData: '',
       selectedHeatMapGridData: [],
       sentenceHeatMapGridData: [],
+      clickedSentenceansWord: {},
       heatMapLabel: 'text',
+      selectedCompanyIdFromNav: '',
       color: {},
       metaInfo: {},
+      DataInfo: {},
       barChart: {
         data: [],
         width: 540,
@@ -111,25 +142,110 @@ export default {
     };
   },
   methods: {
-    clickWord(idx, word) {
-      const targetId = this.dependencyGraphDict.data[idx].target;
-      const tmp = this.barChart.data[0];
-      let tmpA = {};
-      for (let i = 0; i < this.barChart.data.length; i += 1) {
-        if (this.barChart.data[i].name === targetId) {
-          tmpA = this.barChart.data[i];
-          break;
+    // 點擊的單字變色(ok)
+    // 點擊的句子往上跑(ok)
+    // 關鍵字跑到中間（ok)
+    // 字變成粗體、變色(ok)
+    // 點擊別的字、別的按鈕，字的底線會變回來(ok)
+    // 其他句子飽和度降低(ok)
+    // 不要讓字跑到下面 (ok)
+    // 點擊別的按鈕，整個句子的 opacity, 關鍵字的底線會消失
+    // initFunc(){
+
+    // },
+    checkSelected(textId, wordId) {
+      const a = Object.keys(this.clickedSentenceansWord);
+      // console.log('a', a);
+      for (let i = 0; i < a.length; i++) {
+        if (parseInt(a[i]) === textId && this.clickedSentenceansWord[a[i].toString()] === wordId) {
+          return true;
         }
       }
-      this.barChart.data[0] = tmpA;
-      this.barChart.data[targetId] = tmp;
-      this.isChanged = !this.isChanged;
+      return false;
+    },
+    clickWord(idx, word) {
+      if (this.clickedWordNumber !== idx) {
+        this.clickedSentenceansWord = {};
+        this.clickedWordNumber = idx;
+        this.targetIdList = this.dependencyGraphDict.data[idx].target;
+        console.log(this.targetIdList.length, this.targetIdList);
+        let tmpA = {};
+        let tmpB = {};
+        for (let j = 0; j < this.targetIdList.length; j += 1) {
+          for (let i = 0; i < this.barChart.data.length; i += 1) {
+            if (this.barChart.data[i].name === this.targetIdList[j]) {
+              tmpA = this.barChart.data[i]; // name6的實體，i是name6的位置
+              tmpB = this.barChart.data[j];
+              console.log('tmpA(目標) name is', tmpA.name, '在第', i, '個位置');
+              console.log('tmpB(原本在上面的) name is ', tmpB.name, '在第', j, '個位置');
+              this.barChart.data[j] = tmpA;// 0->name6的實體
+              this.barChart.data[i] = tmpB;
+              console.log('j', j, this.barChart.data[j].name);
+              console.log('i', i, this.barChart.data[i].name);
 
-      const x = document.getElementById('text-0');
-      for (let i = 0; i < this.barChart.data[0].words.length; i += 1) {
-        if (this.barChart.data[0].words[i].word === word && i > 5) {
-          const offset = (i - 5) * 85;
-          x.scrollLeft = offset;
+              const x = document.getElementById(`text-${j}`);
+              const centerWord = document.getElementById(`text-${j}-text-span-8`);
+              console.log('center', centerWord);
+              const centerWordOffset = document.getElementById(`text-${j}-text-span-8`).offsetLeft;
+              // console.log('_-----', document.getElementById(`text-${j}-text-span-0`), document.getElementById(`text-${j}-text-span-0`).offsetLeft);
+              for (let k = 0; k < this.barChart.data[j].sentence.length; k += 1) {
+                // console.log('a', this.barChart.data[j].sentence[k].toLowerCase());
+                if (this.barChart.data[j].sentence[k].toLowerCase().indexOf(word) !== -1) {
+                  console.log('koko');
+                  const wordTarget = document.getElementById(`text-${j}-text-span-${k}`);
+                  console.log('---', wordTarget);
+                  if (wordTarget) {
+                    console.log(`text-${j}-text-span-${k}`);
+                    console.log('word', wordTarget);
+                    // console.log('=====', wordTarget, wordTarget.offsetLeft);
+                    if (k > 5) {
+                    // const a = x.scrollWidth / this.barChart.data[i].sentence.length;
+                      this.isScroll = true;
+                      const offset = wordTarget.offsetLeft - centerWordOffset;
+                      x.scrollLeft = offset;
+                      console.log(wordTarget.offsetLeft, centerWordOffset);
+                    } else {
+                      x.scrollLeft = 0;
+                    }
+                    // console.log('l', l);
+
+                    this.clickedSentenceansWord[j.toString()] = k;
+                    console.log('===', this.clickedSentenceansWord);
+                    // console.log('ko', this.clickedSentenceansWord, Object.keys(this.clickedSentenceansWord).length);
+                    // const y = document.getElementById(`text-${j}-text-span-${k}`);
+                    // y.style.styleWeight = 900;
+                    // y.style.borderBottom = 'solid 1px black';
+                    // y.setAttribute('style', 'font-weight:900;border-bottom:solid 1px black;');
+                    break;
+                  }
+                }
+              }
+              break;
+            }
+          }
+        }
+        this.barChart.data = JSON.parse(JSON.stringify(this.barChart.data));
+
+        for (let i = 0; i < this.barChart.data.length; i += 1) {
+          const targetStr = `text-${i}`;
+          // targetStr = targetStr;
+          // console.log('d', targetStr);
+          const item = document.getElementById(targetStr);
+          if (i >= this.targetIdList.length) {
+            item.setAttribute('style', 'opacity:0.2');
+          } else {
+            item.setAttribute('style', 'opacity:1');
+          }
+        }
+      } else {
+        this.clickedWordNumber = -1;
+        this.clickedSentenceansWord = {};
+        for (let i = 0; i < this.barChart.data.length; i += 1) {
+          const targetStr = `text-${i}`;
+          // targetStr = targetStr;
+          // console.log('d', targetStr);
+          const item = document.getElementById(targetStr);
+          item.setAttribute('style', 'opacity:1');
         }
       }
     },
@@ -159,7 +275,7 @@ export default {
     //   }
     // },
     sortDiction() {
-      console.log('isSorted', this.isSorted);
+      // console.log('isSorted', this.isSorted);
       // console.log(this.barChart);
       if (!this.isSorted) {
         this.barChart.data.sort(this.compareValue);
@@ -167,54 +283,105 @@ export default {
         this.barChart.data.sort(this.compareName);
       }
       this.isSorted = !this.isSorted;
-      // console.log('----', this.dependencyGraphDict.links);
-      // // console.log('----', this.dependencyGraph.links);
-      // const tmp = [];
-      // for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-      //   tmp.push(JSON.parse(JSON.stringify(this.dependencyGraphDict.links[j])));
-      // }
-      // // console.log('before:', this.dependencyGraph.links);
-      // for (let i = 0; i < this.barChart.data.length; i += 1) {
-      //   const newTarget = this.barChart.data[i].name;
-      //   console.log('newTarget', newTarget);
-      //   for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-      //     console.log('=====', this.dependencyGraphDict.links[j].target, newTarget);
-      //     console.log(typeof (this.dependencyGraphDict.links[j].target), typeof (newTarget));
-      //     if (parseInt(this.dependencyGraphDict.links[j].target, 10) === parseInt(newTarget, 10)) {
-      //       console.log('opop');
-      //       tmp[j].target = i;
-      //       console.log(j, tmp[j].target);
-      //     }
-      //   }
-      // }
-      // console.log('tmp', tmp);
-      // this.dependencyGraphDict.links = tmp;
     },
     setHeatMapData(idx) {
       this.heatMapLabel = 'modal';
       this.selectedHeatMapGridData = this.barChart.data[idx].words;
       this.selectedHeatMapSentenceData = this.barChart.data[idx].sentence;
     },
-    colorFunc(idx, word) {
+    colorFunc(idx, word, flag) {
       let a = this.color(1);
-      for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
-        const targetItem = this.barChart.data[idx].words[j];
-        if (word.indexOf(targetItem.word) != -1) {
-          a = this.color(targetItem.weight);
-          break;
+      if (flag) {
+        for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
+          const targetItem = this.barChart.data[idx].words[j];
+          if (word.indexOf(targetItem.word) != -1) {
+            a = this.color(targetItem.weight);
+            break;
+          }
         }
+      } else {
+        a = this.color(0);
       }
-      console.log('a', a);
+
+      // console.log('a', a);
       // if (a === 'rgb(247,255,255)') {
       //   a = '#F9F7EB';
       // }
       return a;
     },
+    hideHeatMap() {
+      this.isHeatMap = false;
+    },
+    showHeatMap() {
+      console.log('showHeatMap');
+      this.isHeatMap = true;
+    },
+    setScroll() {
+      if (this.isScroll) {
+        for (let i = 0; i < this.barChart.data.length; i += 1) {
+          const targetStr = `text-${i}`;
+          // targetStr = targetStr;
+          // console.log('d', targetStr);
+          const item = document.getElementById(targetStr);
+          item.scrollLeft = 0;
+        }
+      }
+      this.isScroll = !this.isScroll;
+    },
+    companyIdFromNav(selectedCompanyId) {
+      // childValue就是子组件传过来的值
+      this.selectedCompanyId = selectedCompanyId;
+
+      if (this.selectedCompanyId.length > 0) {
+        const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
+        axios
+          .get(path)
+          .then((response) => {
+            const a = response.data.metaInfo;
+            a.volatility = response.data.volatility;
+            this.DataInfo.metaInfo = a;
+            axios
+              .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
+              .then((responseSentence) => {
+                this.DataInfo.sentencesData = responseSentence.data.sentencesData;
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            axios
+              .get(`${baseURL}/wordsData?filename=${this.selectedCompanyId}`)
+              .then((responseWord) => {
+                this.DataInfo.wordsData = responseWord.data.wordsData;
+                console.log('----this.DataInfo---', this.DataInfo);
+
+                if (this.DataInfo) {
+                  console.log(this.DataInfo, 'opp');
+                  this.barChart.data = this.DataInfo.sentencesData;
+                  this.dependencyGraphDict.data = [];
+                  for (let i = 0; i < 20; i += 1) {
+                    this.dependencyGraphDict.data.push(this.DataInfo.wordsData[i]);
+                  }
+                  this.metaInfo = this.DataInfo.metaInfo;
+                  console.log(this.metaInfo, 'meta');
+                  console.log(this.barChart.data, 'barchart');
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
   },
   mounted() {
     if (DataInfo) {
       this.barChart.data = DataInfo.sentencesData;
-      this.dependencyGraphDict.data = DataInfo.wordsData;
+      for (let i = 0; i < 20; i += 1) {
+        this.dependencyGraphDict.data.push(DataInfo.wordsData[i]);
+      }
       this.metaInfo = DataInfo.metaInfo;
     }
     // let min_ = 1;
@@ -231,6 +398,16 @@ export default {
       .domain([0, 100])
       .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
     // console.log('min', min_, 'max', max_);
+    console.log('===', this.color(50), this.color(75));
+  },
+  watch: {
+    selectedCompanyId: {
+      handler(n, o) {
+        console.log('========DatInfo===========');
+      },
+      deep: true,
+
+    },
   },
 };
 </script>
@@ -259,13 +436,15 @@ export default {
  }
 
  .word-title {
-     flex: 0 0 16%;
+     flex: 0 0 22%;
      /* background-color: #f08bc3; */
      /* margin: 2px; */
      display: flex;
      /* justify-content: center; */
      /* align-items: center; */
      color: black;
+     padding-right: 15px;
+     justify-content: space-between;
      /* font-size: 2rem; */
  }
 
@@ -274,14 +453,20 @@ export default {
      width: 60vw;
      /* background-color: #f08bc3; */
      /* margin: 2px; */
-     /* display: flex; */
-     /* justify-content: center; */
+     display: flex;
+     justify-content: space-between;
      /* align-items: center; */
      color: black;
      padding: 0 2vw 0 2vw;
      justify-content: space-between;
      /* font-size: 2rem; */
      /* padding-top: 20px; */
+ }
+ .invisible-img {
+   width: 20px;
+   height: 20px;
+   cursor: pointer;
+   margin-right: 5px;
  }
 
  .flex-title {
@@ -310,6 +495,7 @@ export default {
 
  .bar-block {
      /*flex: 0 0 10%;*/
+     margin-top: 36px;
      width: 12vw;
      /* background-color: #f08bc3; */
      /* margin: 2px; */
@@ -325,6 +511,7 @@ export default {
 
  .word-block {
      flex: 0 0 22%;
+     margin-top: 36px;
      /* background-color: #f08bc3; */
      /* margin-top: 2px; */
      /* margin-bottom: 2px; */
@@ -352,12 +539,12 @@ export default {
      font-size: 20px;
      /* padding-top: 20px; */
      overflow: hidden;
-     padding: 0 2vw 0 2vw;
+     padding: 0 2vw 0 1.745vw;
  }
 
  .text {
      text-align: left;
-     height: 25px;
+     max-height: 25px;
      width: 100%;
      /* background: rgb(249,247,235);; */
      /* margin-top: 20px; */
@@ -365,13 +552,26 @@ export default {
      /* padding-top: 15px; */
      margin-bottom: 7px;
      /* background: black; */
-     overflow-x: scroll;
-     /* overflow-x: hidden; */
-     overflow-y: hidden;
+     /* overflow-x: scroll; */
+     overflow-x: hidden;
+     /* overflow-y: hidden; */
      /* text-overflow : ellipsis; */
      cursor: pointer;
      font-family: 'Assistant', sans-serif;
+     transition: all 0.3s linear;
+
  }
+.text:hover {
+  overflow-x: scroll;
+  scrollbar-width: thin;
+
+}
+.text::-webkit-scrollbar-track-piece {
+  background-color:transparent;
+}
+.text-outer {
+  white-space:nowrap;
+}
 
  .sort-btn {
      color: #61a0f8;
@@ -384,12 +584,6 @@ export default {
      position: relative;
      overflow-x: hidden;
      overflow-x: scroll;
- }
-
- .text-outer {
-     padding: 0 2vw 0 2vw;
-     position: relative;
-     overflow-x: hidden;
  }
 
  .word-chart-outer {
@@ -431,7 +625,8 @@ export default {
  }
 
  .text-span {
-     padding-right: 0.5rem;
+     padding-right: 0.255vw;
+     padding-left: 0.255vw;
      text-align: center;
  }
 
@@ -442,5 +637,75 @@ export default {
      text-align: center;
      margin-bottom: 7px;
      border-radius: 100%;
+ }
+ .word-small-title {
+   flex: 0 0 26%;
+ }
+ .df-small-title {
+   flex: 0 0 10%;
+ }
+ .aw-small-title {
+   flex: 0 0 50%;
+ }
+ .color-axis-block {
+   height: 36px;
+   width: 100%;
+
+ }
+ .triangle {
+   margin-left: 20%;
+   width: 0;
+   height: 0;
+   border-width: 5px;
+   border-style: solid;
+   border-color: #6D6D6D transparent transparent transparent;
+   }
+ .color-axis-inner {
+   display: flex;
+   justify-content: space-around;
+ }
+ .color-text-inner {
+   display: flex;
+   justify-content: space-between;
+ }
+ .color-text {
+   height: 10px;
+   font-size: 5px;
+   color: #6D6D6D;
+   /* margin-right: 2px; */
+   padding-left: 5px;
+ }
+ /* .color-text-0 {
+   margin-right: 2px;
+ }
+ .color-text-25 {
+   margin-right: 6px;
+ }
+ .color-text-50 {
+   margin-right: 10px;
+ } */
+ /* .color-text-75 {
+   width: calc(25% - 1px);
+ } */
+ .color-axis {
+   height: 10px;
+   width: calc(25% - 2px);
+   margin-right: 2px;
+ }
+ .color-axis-0 {
+   background-color: rgb(255, 255, 255); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(255, 255, 255) , rgb(253, 214, 214));
+ }
+ .color-axis-25 {
+   background-color: rgb(253, 214, 214); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(253, 214, 214) , rgb(250, 173, 173));
+ }
+  .color-axis-50 {
+   background-color: rgb(250, 173, 173); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(250, 173, 173) , rgb(248, 132, 132));
+ }
+ .color-axis-75 {
+   background-color: rgb(248, 132, 132); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(248, 132, 132) , rgb(245, 91, 91));
  }
 </style>
