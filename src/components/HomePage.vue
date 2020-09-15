@@ -38,20 +38,17 @@
     <div class="form-block">
         <h1 class="text-light product-name">HIVE</h1>
         <div class="nav-input-block">
-        <b-form-select v-model="selected" :options="options" class="year-input">
+        <b-form-select v-model="selectedYear" :options="yearList" class="year-input">
         <template v-slot:first>
-            <b-form-select-option :value="year" >year</b-form-select-option>
+            <b-form-select-option :value="selectedYear" >year</b-form-select-option>
         </template>
-        <b-form-select-option value="C">Option C</b-form-select-option>
-        <b-form-select-option value="D">Option D</b-form-select-option>
         </b-form-select>
 
-        <b-form-select v-model="companySelected" :options="options" class="company-input">
+        <b-form-select v-model="selectedCompany" :options="reportList" class="company-input">
         <template v-slot:first>
-            <b-form-select-option :value="company" >company</b-form-select-option>
+            <b-form-select-option :value="selectedCompany" >company</b-form-select-option>
         </template>
-        <b-form-select-option value="C">Option C</b-form-select-option>
-        <b-form-select-option value="D">Option D</b-form-select-option>
+            <!-- <b-form-select-option>hi</b-form-select-option> -->
         </b-form-select>
 
         <!-- <b-form-input class="company-input" v-model="company" placeholder="Company"></b-form-input> -->
@@ -60,8 +57,8 @@
             id="file-default"
             v-model="file"></b-form-file>
         </b-form-group>
-        <b-button type="submit" class="submit-btn" style="background-color:#737373;" >
-            <router-link to='/finance-report' style="text-decoration:none; color:white;">Submit</router-link>
+        <b-button @click="submitMeta" type="submit" class="submit-btn" style="background-color:#737373;" >
+            <div style="text-decoration:none; color:white;">Submit</div>
         </b-button>
       </div>
     </div>
@@ -72,22 +69,20 @@
 <script>
 import shortid from 'shortid';
 import * as d3 from 'd3';
+import axios from 'axios';
 
+const baseURL = 'https://clip.csie.org/HIVE/api';
 export default {
   name: 'HomePage',
   data() {
     return {
       id: shortid.generate(),
-      year: 'year',
-      companySelected: '',
-      options: [
-        { value: null, text: 'year' },
-        { value: 'a', text: '2020' },
-        { value: 'b', text: '2019' },
-        { value: 'd', text: '2018' },
-      ],
-      selected: null,
-      company: '',
+      selectedCompany: 'Company',
+      selectedYear: 'Year',
+      selectedCompanyId: '',
+      yearList: ['1996', '1997', '1998', '1999', '2000'],
+      reportList: {},
+      companyName: [],
       file: null,
     };
   },
@@ -122,9 +117,39 @@ export default {
     // document.getElementsByTagName('head')[0].appendChild(cssAnimation);
   },
   methods: {
+    submitMeta() {
+      this.$router.push({ name: 'HelloWorld', params: { reportId: '87160G107-10-K-19991229' } });
+    //   this.$router.push({ name: 'HelloWorld', params: { reportId: this.selectedCompanyId } });
+    },
   },
   watch: {
-
+    selectedYear: {
+      handler(n, o) {
+        console.log('jmurphy');
+        console.log(n);
+        if (n != 'year') {
+          const path = `${baseURL}/reportList?year=${this.selectedYear}`;
+          axios
+            .get(path)
+            .then((response) => {
+              // console.log(Object.keys(response.data.reportList));
+              this.reportList = response.data.reportList;
+              this.companyName = Object.keys(response.data.reportList);
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      },
+    },
+    selectedCompany: {
+      handler(n, o) {
+        if (n !== 'company') {
+          this.selectedCompanyId = this.reportList[n];
+        }
+      },
+    },
   },
   props: ['title'],
 };

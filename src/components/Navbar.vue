@@ -4,17 +4,17 @@
   <div>
   <b-navbar >
     <b-navbar-nav class="nav-outer">
-      <b-nav-item href="#">
-          <router-link to='/'><img class="logo" src="../assets/lg_black.png"></router-link>
+      <b-nav-item href="#" class="nav-logo-block">
+          <router-link to='/' style="display: inline-flex;"><img class="logo" src="../assets/lg_black.png"></router-link>
+          <router-link to='/' class="hive" style="display: inline-flex;">
+            <div>HIVE</div>
+          </router-link>
       </b-nav-item>
 
       <!-- Navbar dropdowns -->
       <div class="nav-input-block" style="margin-top:2vh;">
         <b-nav-item-dropdown :text="selectedYear" right class="year-input">
             <b-dropdown-item v-for="(year) in yearList" @click="setYear(year)">{{year}}</b-dropdown-item>
-            <!-- <b-dropdown-item href="#">2019</b-dropdown-item>
-            <b-dropdown-item href="#">2018</b-dropdown-item>
-            <b-dropdown-item href="#">2017</b-dropdown-item> -->
         </b-nav-item-dropdown>
         <b-nav-item-dropdown :text="selectedCompany" right class="company-input">
             <b-dropdown-item v-for="(company_) in companyName" @click="setCompany(company_)" >{{company_}}</b-dropdown-item>
@@ -49,8 +49,8 @@ export default {
   data() {
     return {
       id: shortid.generate(),
-      selectedCompany: 'company',
-      selectedYear: 'year',
+      selectedCompany: 'Company',
+      selectedYear: 'Year',
       selectedCompanyId: '',
       yearList: ['1996', '1997', '1998', '1999', '2000'],
       reportList: {},
@@ -102,6 +102,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
 .logo {
     width: 2rem;
     height: 2rem;
@@ -136,6 +137,17 @@ export default {
 }
 .submit-btn {
     height: 2.5rem;
+}
+.hive {
+  font-family: 'Oswald', sans-serif;
+  color: black;
+  font-size: 2rem;
+}
+.nav-logo-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: inline-block;
 }
 </style>
 

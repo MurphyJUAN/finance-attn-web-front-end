@@ -15,6 +15,7 @@ Vue.config.devtools = true;
 Vue.use(BootstrapVue);
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',

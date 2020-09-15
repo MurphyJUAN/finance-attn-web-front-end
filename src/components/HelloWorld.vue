@@ -13,7 +13,9 @@
         <div v-if="isSorted" class="sort-btn" v-on:click="recoverDiction">unsort</div> -->
         </h5>
         <h5 class="sentence-title">
-            <div class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Post event volatility: {{metaInfo.volatility}}</div>
+            <div class="meta-info" v-if="!barChart.data.length">Error! No this financial report!</div>
+
+            <div class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Annual volatility: 30%</div>
             <div>
               <img v-if="isHeatMap" class="invisible-img" @click="hideHeatMap" src="../assets/invisible.svg">
               <img v-if="!isHeatMap" class="invisible-img" @click="showHeatMap" src="../assets/eye.svg">
@@ -30,12 +32,11 @@
     </div>
     <div class="flex">
         <div class="bar-block">
-
-            <BarChart :barChart=barChart :chartMargin=chartMargin :clickedNumber=clickedWordNumber />
+            <BarChart v-if="barChart.data.length" :barChart=barChart :chartMargin=chartMargin :clickedNumber=clickedWordNumber />
         </div>
         <div class="sentence-block">
             <div class="color-axis-block">
-              <div class="triangle"></div>
+              <div class="triangle" :style="{marginLeft: this.triangleOffset}"></div>
               <div class="color-axis-inner">
                 <div class="color-axis color-axis-0"></div>
                 <div class="color-axis color-axis-25"></div>
@@ -53,9 +54,16 @@
             </div>
             <div v-for="(item, idx) in barChart.data">
               <div class="text-outer">
-                <div class="text" :id="`text-${idx}`">
-                    <span v-if="isHeatMap" :style="{ background: colorFunc(idx, word, true), fontWeight:  checkSelected(idx, id)? 900: 10}" class="text-span" :id="`text-${idx}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
-                    <span v-if="!isHeatMap" :style="{ background: colorFunc(idx, word, false), borderBottom: checkSelected(idx, id)}" class="text-span" :id="`text-${idx}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
+                <div class="text" :ref="`text-${item.name}`" :id="`text-${item.name}`"
+                :style="{opacity: item.opacity}">
+                    <span v-if="isHeatMap"
+                    :style="{ background: colorFunc(idx, word, true),
+                    fontWeight:  checkSelected(idx, id)? 900: 10}"
+                    class="text-span"
+                    :ref="`text-${item.name}-text-span-${id}`"
+                    :id="`text-${item.name}-text-span-${id}`"
+                    v-for="(word, id) in item.sentence">{{word}}</span>
+                    <span v-if="!isHeatMap" :style="{ background: colorFunc(idx, word, false), borderBottom: checkSelected(idx, id)}" class="text-span" :ref="`text-${item.name}-text-span-${id}`" :id="`text-${item.name}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
                 </div>
               </div>
             </div>
@@ -71,7 +79,7 @@
                     <div class="word-number" v-for="(item, idx) in dependencyGraphDict.data">{{item.target.length}}</div>
                 </div>
                 <div class="word-chart-outer">
-                    <BarChartWord :barChart="dependencyGraphDict" :chartMargin=chartMargin />
+                    <BarChartWord v-if="barChart.data.length" :barChart="dependencyGraphDict" :chartMargin=chartMargin />
                 </div>
 
             </div>
@@ -119,6 +127,7 @@ export default {
       color: {},
       metaInfo: {},
       DataInfo: {},
+      triangleOffset: 30,
       barChart: {
         data: [],
         width: 540,
@@ -180,26 +189,22 @@ export default {
               console.log('tmpB(原本在上面的) name is ', tmpB.name, '在第', j, '個位置');
               this.barChart.data[j] = tmpA;// 0->name6的實體
               this.barChart.data[i] = tmpB;
-              console.log('j', j, this.barChart.data[j].name);
-              console.log('i', i, this.barChart.data[i].name);
+              console.log('j', j, this.barChart.data[j].name, this.barChart.data[j].sentence);
+              console.log('i', i, this.barChart.data[i].name, this.barChart.data[i].sentence);
 
-              const x = document.getElementById(`text-${j}`);
-              const centerWord = document.getElementById(`text-${j}-text-span-8`);
-              console.log('center', centerWord);
-              const centerWordOffset = document.getElementById(`text-${j}-text-span-8`).offsetLeft;
-              // console.log('_-----', document.getElementById(`text-${j}-text-span-0`), document.getElementById(`text-${j}-text-span-0`).offsetLeft);
+              console.log('_-----', document.getElementById(`text-${j}-text-span-0`), document.getElementById(`text-${j}-text-span-0`).offsetLeft);
               for (let k = 0; k < this.barChart.data[j].sentence.length; k += 1) {
                 // console.log('a', this.barChart.data[j].sentence[k].toLowerCase());
                 if (this.barChart.data[j].sentence[k].toLowerCase().indexOf(word) !== -1) {
                   console.log('koko');
-                  const wordTarget = document.getElementById(`text-${j}-text-span-${k}`);
+                  const centerWordOffset = document.getElementById(`text-${this.targetIdList[j]}-text-span-${6}`).offsetLeft;
+                  const wordTarget = document.getElementById(`text-${this.targetIdList[j]}-text-span-${k}`);
+                  const x = document.getElementById(`text-${this.targetIdList[j]}`);
                   console.log('---', wordTarget);
                   if (wordTarget) {
-                    console.log(`text-${j}-text-span-${k}`);
+                    console.log(`text-${this.targetIdList[j]}-text-span-${k}`);
                     console.log('word', wordTarget);
-                    // console.log('=====', wordTarget, wordTarget.offsetLeft);
                     if (k > 5) {
-                    // const a = x.scrollWidth / this.barChart.data[i].sentence.length;
                       this.isScroll = true;
                       const offset = wordTarget.offsetLeft - centerWordOffset;
                       x.scrollLeft = offset;
@@ -209,7 +214,7 @@ export default {
                     }
                     // console.log('l', l);
 
-                    this.clickedSentenceansWord[j.toString()] = k;
+                    this.clickedSentenceansWord[this.targetIdList[j].toString()] = k;
                     console.log('===', this.clickedSentenceansWord);
                     // console.log('ko', this.clickedSentenceansWord, Object.keys(this.clickedSentenceansWord).length);
                     // const y = document.getElementById(`text-${j}-text-span-${k}`);
@@ -227,25 +232,20 @@ export default {
         this.barChart.data = JSON.parse(JSON.stringify(this.barChart.data));
 
         for (let i = 0; i < this.barChart.data.length; i += 1) {
-          const targetStr = `text-${i}`;
-          // targetStr = targetStr;
-          // console.log('d', targetStr);
-          const item = document.getElementById(targetStr);
-          if (i >= this.targetIdList.length) {
-            item.setAttribute('style', 'opacity:0.2');
-          } else {
-            item.setAttribute('style', 'opacity:1');
+          this.barChart.data[i].opacity = 0.2;
+        }
+        for (let j = 0; j < this.targetIdList.length; j += 1) {
+          for (let i = 0; i < this.barChart.data.length; i += 1) {
+            if (this.barChart.data[i].name === this.targetIdList[j]) {
+              this.barChart.data[i].opacity = 1.0;
+            }
           }
         }
       } else {
         this.clickedWordNumber = -1;
         this.clickedSentenceansWord = {};
         for (let i = 0; i < this.barChart.data.length; i += 1) {
-          const targetStr = `text-${i}`;
-          // targetStr = targetStr;
-          // console.log('d', targetStr);
-          const item = document.getElementById(targetStr);
-          item.setAttribute('style', 'opacity:1');
+          this.barChart.data[i].opacity = 1;
         }
       }
     },
@@ -289,6 +289,22 @@ export default {
       this.selectedHeatMapGridData = this.barChart.data[idx].words;
       this.selectedHeatMapSentenceData = this.barChart.data[idx].sentence;
     },
+    mouseOver(idx, word, flag) {
+      console.log('mouseOver');
+      if (flag) {
+        for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
+          const targetItem = this.barChart.data[idx].words[j];
+          if (word.indexOf(targetItem.word) != -1) {
+            this.triangleOffset = targetItem.weight / 100;
+            break;
+          }
+        }
+      } else {
+        this.triangleOffset = 0;
+      }
+      console.log('triangle', this.triangleOffset);
+      return this.triangleOffset;
+    },
     colorFunc(idx, word, flag) {
       let a = this.color(1);
       if (flag) {
@@ -328,10 +344,7 @@ export default {
       }
       this.isScroll = !this.isScroll;
     },
-    companyIdFromNav(selectedCompanyId) {
-      // childValue就是子组件传过来的值
-      this.selectedCompanyId = selectedCompanyId;
-
+    getDataInfo() {
       if (this.selectedCompanyId.length > 0) {
         const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
         axios
@@ -375,30 +388,34 @@ export default {
           });
       }
     },
+    companyIdFromNav(selectedCompanyId) {
+      // childValue就是子组件传过来的值
+      this.selectedCompanyId = selectedCompanyId;
+      this.getDataInfo();
+    },
+  },
+  created() {
+    this.selectedCompanyId = this.$route.params.reportId;
+    console.log('-----', this.selectedCompanyId);
+    this.getDataInfo();
   },
   mounted() {
     if (DataInfo) {
       this.barChart.data = DataInfo.sentencesData;
+      for (let i = 0; i < this.barChart.data.length; i += 1) {
+        this.barChart.data[i].opacity = 1;
+      }
+      this.dependencyGraphDict.data = [];
       for (let i = 0; i < 20; i += 1) {
         this.dependencyGraphDict.data.push(DataInfo.wordsData[i]);
       }
       this.metaInfo = DataInfo.metaInfo;
     }
-    // let min_ = 1;
-    // let max_ = 1;
-    // for (let i = 0; i < this.barChart.data.length; i++) {
-    //   if (this.barChart.data[i].value < min_) {
-    //     min_ = this.barChart.data[i].value;
-    //   }
-    //   if (this.barChart.data[i].value > max_) {
-    //     max_ = this.barChart.data[i].value;
-    //   }
-    // }
     this.color = d3.scaleLinear()
       .domain([0, 100])
       .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
     // console.log('min', min_, 'max', max_);
-    console.log('===', this.color(50), this.color(75));
+    // console.log('===', this.color(25), this.color(50), this.color(75));
   },
   watch: {
     selectedCompanyId: {
@@ -631,12 +648,13 @@ export default {
  }
 
  .word-number {
-     background: #f5a142;
+     background: #c4c4c4;
      font-size: 18px;
      height: 25px;
      text-align: center;
      margin-bottom: 7px;
      border-radius: 100%;
+     color: white;
  }
  .word-small-title {
    flex: 0 0 26%;
@@ -653,7 +671,7 @@ export default {
 
  }
  .triangle {
-   margin-left: 20%;
+   margin-left: 30%;
    width: 0;
    height: 0;
    border-width: 5px;
@@ -694,18 +712,18 @@ export default {
  }
  .color-axis-0 {
    background-color: rgb(255, 255, 255); /* For browsers that do not support gradients */
-   background-image: linear-gradient(to right, rgb(255, 255, 255) , rgb(253, 214, 214));
+   background-image: linear-gradient(to right, rgb(255, 255, 255) , rgb(255, 222, 212));
  }
  .color-axis-25 {
-   background-color: rgb(253, 214, 214); /* For browsers that do not support gradients */
-   background-image: linear-gradient(to right, rgb(253, 214, 214) , rgb(250, 173, 173));
+   background-color: rgb(255, 222, 212); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(255, 222, 212) , rgb(255, 189, 169));
  }
   .color-axis-50 {
-   background-color: rgb(250, 173, 173); /* For browsers that do not support gradients */
-   background-image: linear-gradient(to right, rgb(250, 173, 173) , rgb(248, 132, 132));
+   background-color: rgb(255, 189, 169); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(255, 189, 169) , rgb(255, 155, 125));
  }
  .color-axis-75 {
-   background-color: rgb(248, 132, 132); /* For browsers that do not support gradients */
-   background-image: linear-gradient(to right, rgb(248, 132, 132) , rgb(245, 91, 91));
+   background-color: rgb(255, 155, 125); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(255, 155, 125) , rgb(255,122,82));
  }
 </style>
