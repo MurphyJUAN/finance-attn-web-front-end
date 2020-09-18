@@ -56,14 +56,15 @@
               <div class="text-outer">
                 <div class="text" :ref="`text-${item.name}`" :id="`text-${item.name}`"
                 :style="{opacity: item.opacity}">
-                    <span v-if="isHeatMap"
-                    :style="{ background: colorFunc(idx, word, true),
+                    <span
+                    v-if="isHeatMap"
+                    :style="{ background: colorFunc(idx, word, id, true),
                     fontWeight:  checkSelected(idx, id)? 900: 10}"
                     class="text-span"
                     :ref="`text-${item.name}-text-span-${id}`"
                     :id="`text-${item.name}-text-span-${id}`"
                     v-for="(word, id) in item.sentence">{{word}}</span>
-                    <span v-if="!isHeatMap" :style="{ background: colorFunc(idx, word, false), borderBottom: checkSelected(idx, id)}" class="text-span" :ref="`text-${item.name}-text-span-${id}`" :id="`text-${item.name}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
+                    <span v-if="!isHeatMap" :style="{ background: colorFunc(idx, word,id,  false), borderBottom: checkSelected(idx, id)}" class="text-span" :ref="`text-${item.name}-text-span-${id}`" :id="`text-${item.name}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
                 </div>
               </div>
             </div>
@@ -295,24 +296,20 @@ export default {
       this.selectedHeatMapGridData = this.barChart.data[idx].words;
       this.selectedHeatMapSentenceData = this.barChart.data[idx].sentence;
     },
-    colorFunc(idx, word, flag) {
-      let a = this.color(1);
+    colorFunc(idx, word, id, flag) {
+      let a = this.color(0);
       if (flag) {
-        for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
-          const targetItem = this.barChart.data[idx].words[j];
-          if (word.indexOf(targetItem.word) != -1) {
-            a = this.color(targetItem.weight);
-            break;
-          }
-        }
+        a = this.barChart.data[idx].wordDetail[id];
+        // for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
+        //   const targetItem = this.barChart.data[idx].words[j];
+        //   if (word.indexOf(targetItem.word) != -1) {
+        //     a = this.color(targetItem.weight);
+        //     break;
+        //   }
+        // }
       } else {
         a = this.color(0);
       }
-
-      // console.log('a', a);
-      // if (a === 'rgb(247,255,255)') {
-      //   a = '#F9F7EB';
-      // }
       return a;
     },
     hideHeatMap() {
@@ -374,7 +371,7 @@ export default {
     },
     getDataInfo() {
       this.isLoading = true;
-      if (this.selectedCompanyId.length > 0) {
+      if (this.selectedCompanyId) {
         const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
         axios
           .get(path)
@@ -401,6 +398,25 @@ export default {
                 if (this.DataInfo) {
                   console.log(this.DataInfo, 'opp');
                   this.barChart.data = this.DataInfo.sentencesData;
+                  let a = this.color(0);
+                  for (let i = 0; i < this.barChart.data.length; i += 1) {
+                    this.barChart.data[i].wordDetail = [];
+                    for (let j = 0; j < this.barChart.data[i].sentence.length; j += 1) {
+                      let flag = 0;
+                      for (let k = 0; k < this.barChart.data[i].words.length; k += 1) {
+                        const targetItem = this.barChart.data[i].words[k];
+                        if (this.barChart.data[i].sentence[j].indexOf(targetItem.word) != -1) {
+                          a = this.color(targetItem.weight);
+                          this.barChart.data[i].wordDetail.push(a);
+                          flag = 1;
+                          break;
+                        }
+                      }
+                      if (!flag) {
+                        this.barChart.data[i].wordDetail.push(a);
+                      }
+                    }
+                  }
                   this.dependencyGraphDict.data = [];
                   for (let i = 0; i < 20; i += 1) {
                     this.dependencyGraphDict.data.push(this.DataInfo.wordsData[i]);
@@ -429,6 +445,9 @@ export default {
     },
   },
   created() {
+    this.color = d3.scaleLinear()
+      .domain([0, 100])
+      .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
     this.selectedCompanyId = this.$route.params.reportId;
     console.log('-----', this.selectedCompanyId);
     this.getDataInfo();
@@ -445,9 +464,9 @@ export default {
     //   }
     //   this.metaInfo = DataInfo.metaInfo;
     // }
-    this.color = d3.scaleLinear()
-      .domain([0, 100])
-      .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
+    // this.color = d3.scaleLinear()
+    //   .domain([0, 100])
+    //   .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
     // console.log('min', min_, 'max', max_);
     console.log('===', this.color(25), this.color(50), this.color(75));
   },
@@ -466,6 +485,12 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap');
 </style><style scoped>
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
 .title {
      padding: 15px;
      margin: 0px;
