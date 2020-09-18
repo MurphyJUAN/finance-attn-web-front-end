@@ -15,7 +15,7 @@
         <h5 class="sentence-title">
             <div class="meta-info" v-if="!barChart.data.length||isLoading"><Loading /></div>
 
-            <div class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Annual volatility: {{metaInfo.volatility}}%</div>
+            <div v-if="!isLoading" class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Annual volatility: {{metaInfo.volatility}}%</div>
             <div>
               <img v-if="isHeatMap" class="invisible-img" @click="hideHeatMap" src="../assets/invisible.svg">
               <img v-if="!isHeatMap" class="invisible-img" @click="showHeatMap" src="../assets/eye.svg">
@@ -30,7 +30,7 @@
 
 
     </div>
-    <div class="flex">
+    <div class="flex" v-if="!isLoading">
         <div class="bar-block">
             <BarChart v-if="barChart.data.length" :barChart=barChart :chartMargin=chartMargin :clickedNumber=clickedWordNumber />
         </div>
