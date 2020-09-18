@@ -13,7 +13,7 @@
         <div v-if="isSorted" class="sort-btn" v-on:click="recoverDiction">unsort</div> -->
         </h5>
         <h5 class="sentence-title">
-            <div class="meta-info" v-if="!barChart.data.length">Error! No this financial report!</div>
+            <div class="meta-info" v-if="!barChart.data.length||isLoading"><Loading /></div>
 
             <div class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Annual volatility: {{metaInfo.volatility}}%</div>
             <div>
@@ -24,8 +24,8 @@
         </h5>
         <div class="word-title">
           <h5 class="word-small-title">Word</h5>
-          <h5 class="df-small-title">WF</h5>
-          <h5 class="aw-small-title">AW</h5>
+          <h5 class="df-small-title" v-b-popover.hover.top="'Every word listed is accompanied with a number on its rightindicating the number of sentences that the word has been used.'" title="Sentence Frequency">SF</h5>
+          <h5 class="aw-small-title" v-b-popover.hover.top="'The average of normalized attention weights for this word in the reportand is indicated by the length of bar on the right.'" title="Attention Weight">AW</h5>
         </div>
 
 
@@ -73,7 +73,7 @@
             <!-- <div class="word-text-block">hi</div> -->
             <div class="word-block-inner">
                 <div class="word-text-block">
-                    <div class="word-text" v-for="(item, idx) in dependencyGraphDict.data" @click="clickWord(idx, item.word)" :style="{color: clickedWordNumber===idx? '#FF5C59' : 'black'}">{{item.word}}</div>
+                    <div class="word-text" :class="{wordRed: clickedWordNumber===idx , wordBlack:  clickedWordNumber!==idx}" v-for="(item, idx) in dependencyGraphDict.data" @click="clickWord(idx, item.word)">{{item.word}}</div>
                 </div>
                 <div class="word-number-block">
                     <div class="word-number" v-for="(item, idx) in dependencyGraphDict.data">{{item.target.length}}</div>
@@ -97,7 +97,8 @@ import DependencyGraph from './DependencyGraph';
 import HeatMap from './HeatMap';
 import BarChartWord from './BarChartWord';
 import NavBar from './NavBar';
-import DataInfo from './data.json';
+import Loading from './Loading';
+// import DataInfo from './data.json';
 import axios from 'axios';
 
 const baseURL = 'https://clip.csie.org/HIVEBACK/api';
@@ -109,15 +110,18 @@ export default {
     HeatMap,
     BarChartWord,
     NavBar,
+    Loading,
   },
   data() {
     return {
       isSorted: false,
       isHeatMap: true,
       isScroll: false,
+      isLoading: true,
       clickedWordNumber: -1,
       isHeatMapClick: false,
       targetIdList: [],
+      loadingMessage: 'Loading...',
       selectedHeatMapSentenceData: '',
       selectedHeatMapGridData: [],
       sentenceHeatMapGridData: [],
@@ -127,7 +131,7 @@ export default {
       color: {},
       metaInfo: {},
       DataInfo: {},
-      triangleOffset: 30,
+      triangleOffset: '30%',
       barChart: {
         data: [],
         width: 540,
@@ -180,9 +184,11 @@ export default {
         console.log(this.targetIdList.length, this.targetIdList);
         let tmpA = {};
         let tmpB = {};
+
         for (let j = 0; j < this.targetIdList.length; j += 1) {
           for (let i = 0; i < this.barChart.data.length; i += 1) {
             if (this.barChart.data[i].name === this.targetIdList[j]) {
+              console.log('sentnece', this.barChart.data[i].sentence);
               tmpA = this.barChart.data[i]; // name6的實體，i是name6的位置
               tmpB = this.barChart.data[j];
               console.log('tmpA(目標) name is', tmpA.name, '在第', i, '個位置');
@@ -289,22 +295,6 @@ export default {
       this.selectedHeatMapGridData = this.barChart.data[idx].words;
       this.selectedHeatMapSentenceData = this.barChart.data[idx].sentence;
     },
-    mouseOver(idx, word, flag) {
-      console.log('mouseOver');
-      if (flag) {
-        for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
-          const targetItem = this.barChart.data[idx].words[j];
-          if (word.indexOf(targetItem.word) != -1) {
-            this.triangleOffset = targetItem.weight / 100;
-            break;
-          }
-        }
-      } else {
-        this.triangleOffset = 0;
-      }
-      console.log('triangle', this.triangleOffset);
-      return this.triangleOffset;
-    },
     colorFunc(idx, word, flag) {
       let a = this.color(1);
       if (flag) {
@@ -367,8 +357,9 @@ export default {
               if (this.barChart.data[i].sentence.length > 6) {
                 a = 6;
               } else {
-                a = this.barChart.data[i].sentence.length / 2;
+                a = Math.floor(this.barChart.data[i].sentence.length / 2);
               }
+              console.log('a', a);
               const centerWord = document.getElementById(`text-${this.barChart.data[i].name}-text-span-${a}`);
               console.log('centerWord', centerWord);
               const offset = item.offsetLeft - centerWord.offsetLeft;
@@ -382,6 +373,7 @@ export default {
       this.isScroll = !this.isScroll;
     },
     getDataInfo() {
+      this.isLoading = true;
       if (this.selectedCompanyId.length > 0) {
         const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
         axios
@@ -389,6 +381,8 @@ export default {
           .then((response) => {
             const a = response.data.metaInfo;
             a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility)) * 100);
+            this.triangleOffset = `${a.volatility.toString()}%`;
+            console.log('----this.triangleOffset---', this.triangleOffset);
             this.DataInfo.metaInfo = a;
             axios
               .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
@@ -414,6 +408,9 @@ export default {
                   this.metaInfo = this.DataInfo.metaInfo;
                   console.log(this.metaInfo, 'meta');
                   console.log(this.barChart.data, 'barchart');
+                  this.isLoading = false;
+                } else {
+                  this.loadingMessage = 'Error! No this Financial Report!';
                 }
               })
               .catch((error) => {
@@ -437,22 +434,22 @@ export default {
     this.getDataInfo();
   },
   mounted() {
-    if (DataInfo) {
-      this.barChart.data = DataInfo.sentencesData;
-      for (let i = 0; i < this.barChart.data.length; i += 1) {
-        this.barChart.data[i].opacity = 1;
-      }
-      this.dependencyGraphDict.data = [];
-      for (let i = 0; i < 20; i += 1) {
-        this.dependencyGraphDict.data.push(DataInfo.wordsData[i]);
-      }
-      this.metaInfo = DataInfo.metaInfo;
-    }
+    // if (DataInfo) {
+    //   this.barChart.data = DataInfo.sentencesData;
+    //   for (let i = 0; i < this.barChart.data.length; i += 1) {
+    //     this.barChart.data[i].opacity = 1;
+    //   }
+    //   this.dependencyGraphDict.data = [];
+    //   for (let i = 0; i < 20; i += 1) {
+    //     this.dependencyGraphDict.data.push(DataInfo.wordsData[i]);
+    //   }
+    //   this.metaInfo = DataInfo.metaInfo;
+    // }
     this.color = d3.scaleLinear()
       .domain([0, 100])
-      .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
+      .range(['rgb(255, 255, 255)', 'rgb(185, 51, 242)']);
     // console.log('min', min_, 'max', max_);
-    // console.log('===', this.color(25), this.color(50), this.color(75));
+    console.log('===', this.color(25), this.color(50), this.color(75));
   },
   watch: {
     selectedCompanyId: {
@@ -678,6 +675,13 @@ export default {
      color: #FF5C59;
  }
 
+ .wordRed {
+   color: #FF5C59;
+ }
+ .wordBlack {
+   color: black;
+ }
+
  .text-span {
      padding-right: 0.255vw;
      padding-left: 0.255vw;
@@ -708,7 +712,6 @@ export default {
 
  }
  .triangle {
-   margin-left: 30%;
    width: 0;
    height: 0;
    border-width: 5px;
@@ -749,18 +752,18 @@ export default {
  }
  .color-axis-0 {
    background-color: rgb(255, 255, 255); /* For browsers that do not support gradients */
-   background-image: linear-gradient(to right, rgb(255, 255, 255) , rgb(255, 222, 212));
+   background-image: linear-gradient(to right, rgb(255, 255, 255) , rgb(238, 204, 252));
  }
  .color-axis-25 {
-   background-color: rgb(255, 222, 212); /* For browsers that do not support gradients */
-   background-image: linear-gradient(to right, rgb(255, 222, 212) , rgb(255, 189, 169));
+   background-color: rgb(238, 204, 252); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(238, 204, 252) , rgb(220, 153, 249));
  }
   .color-axis-50 {
-   background-color: rgb(255, 189, 169); /* For browsers that do not support gradients */
-   background-image: linear-gradient(to right, rgb(255, 189, 169) , rgb(255, 155, 125));
+   background-color: rgb(220, 153, 249); /* For browsers that do not support gradients */
+   background-image: linear-gradient(to right, rgb(220, 153, 249) , rgb(203, 102, 245));
  }
  .color-axis-75 {
    background-color: rgb(255, 155, 125); /* For browsers that do not support gradients */
-   background-image: linear-gradient(to right, rgb(255, 155, 125) , rgb(255,122,82));
+   background-image: linear-gradient(to right, rgb(203, 102, 245) , rgb(185, 51, 242));
  }
 </style>

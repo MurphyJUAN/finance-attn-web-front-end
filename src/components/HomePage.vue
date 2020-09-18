@@ -118,8 +118,8 @@ export default {
   },
   methods: {
     submitMeta() {
-      this.$router.push({ name: 'HelloWorld', params: { reportId: '87160G107-10-K-19991229' } });
-    //   this.$router.push({ name: 'HelloWorld', params: { reportId: this.selectedCompanyId } });
+    //   this.$router.push({ name: 'HelloWorld', params: { reportId: '87160G107-10-K-19991229' } });
+      this.$router.push({ name: 'HelloWorld', params: { reportId: this.selectedCompanyId } });
     },
   },
   watch: {
