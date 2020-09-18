@@ -447,7 +447,7 @@ export default {
     // }
     this.color = d3.scaleLinear()
       .domain([0, 100])
-      .range(['rgb(255, 255, 255)', 'rgb(185, 51, 242)']);
+      .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
     // console.log('min', min_, 'max', max_);
     console.log('===', this.color(25), this.color(50), this.color(75));
   },
