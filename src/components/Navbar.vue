@@ -102,7 +102,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
 .logo {
     width: 2rem;
@@ -149,6 +149,10 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   display: inline-block;
+}
+.dropdown-menu {
+  max-height: 450px;
+  overflow-y: scroll;
 }
 </style>
 

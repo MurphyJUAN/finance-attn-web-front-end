@@ -52,22 +52,24 @@
               </div>
 
             </div>
-            <div v-for="(item, idx) in barChart.data">
-              <div class="text-outer">
-                <div class="text" :ref="`text-${item.name}`" :id="`text-${item.name}`"
-                :style="{opacity: item.opacity}">
+            <!-- <div > -->
+              <!-- <div class="text-outer"> -->
+                <div class="text text-outer" :ref="`ref-text-${item.name}`" :id="`text-${idx}`"
+                :style="{opacity: item.opacity}"
+                v-for="(item, idx) in barChart.data"
+                >
                     <span
                     v-if="isHeatMap"
                     :style="{ background: colorFunc(idx, word, id, true),
-                    fontWeight:  checkSelected(idx, id)? 900: 10}"
+                    fontWeight:  checkSelected(item.name, id)? 900: 10}"
                     class="text-span"
-                    :ref="`text-${item.name}-text-span-${id}`"
+                    :ref="`ref-text-${item.name}-text-span-${id}`"
                     :id="`text-${item.name}-text-span-${id}`"
                     v-for="(word, id) in item.sentence">{{word}}</span>
-                    <span v-if="!isHeatMap" :style="{ background: colorFunc(idx, word,id,  false), borderBottom: checkSelected(idx, id)}" class="text-span" :ref="`text-${item.name}-text-span-${id}`" :id="`text-${item.name}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
+                    <span v-if="!isHeatMap" :style="{ background: colorFunc(idx, word,id,  false), borderBottom: checkSelected(item.name, id)}" class="text-span" :ref="`text-${item.name}-text-span-${id}`" :id="`text-${item.name}-text-span-${id}`" v-for="(word, id) in item.sentence">{{word}}</span>
                 </div>
-              </div>
-            </div>
+              <!-- </div> -->
+            <!-- </div> -->
         </div>
         <div class="word-block">
             <!-- <DependencyGraph :data=dependencyGraphDict :isSorted=isSorted /> -->
@@ -203,25 +205,35 @@ export default {
               for (let k = 0; k < this.barChart.data[j].sentence.length; k += 1) {
                 // console.log('a', this.barChart.data[j].sentence[k].toLowerCase());
                 if (this.barChart.data[j].sentence[k].toLowerCase().indexOf(word) !== -1) {
-                  console.log('koko');
-                  const centerWordOffset = document.getElementById(`text-${this.targetIdList[j]}-text-span-${6}`).offsetLeft;
-                  const wordTarget = document.getElementById(`text-${this.targetIdList[j]}-text-span-${k}`);
-                  const x = document.getElementById(`text-${this.targetIdList[j]}`);
-                  console.log('---', wordTarget);
+                  console.log('----Debug Click Word---');
+                  console.log(word, this.barChart.data[j].sentence[k].toLowerCase());
+                  const centerWordOffset = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-6`][0].offsetLeft;
+                  const wordTarget = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-${k}`][0];
+                  // const moveX = this.$refs[`ref-text-${this.barChart.data[j].name}`];
+                  // const targetX = moveX[0];
+                  // console.log('x', moveX, targetX, moveX.scrollLeft, moveX[0], this.barChart.data[j].name);
+                  const moveX = document.getElementById(`text-${j}`);
+                  console.log('moveX', moveX, moveX.scrollLeft);
+                  console.log('---wordTarget---', wordTarget);
                   if (wordTarget) {
-                    console.log(`text-${this.targetIdList[j]}-text-span-${k}`);
+                    console.log(`text-${this.barChart.data[j].name}-text-span-${k}`);
                     console.log('word', wordTarget);
                     if (k > 5) {
                       this.isScroll = true;
                       const offset = wordTarget.offsetLeft - centerWordOffset;
-                      x.scrollLeft = offset;
-                      console.log(wordTarget.offsetLeft, centerWordOffset);
+                      moveX.scrollLeft = offset;
+                      if (moveX.scrollLeft !== offset) {
+                        console.log('strange!');
+                        moveX.scrollLeft = offset;
+                      }
+                      console.log(wordTarget.offsetLeft, centerWordOffset, offset);
+                      console.log('new movex', moveX.scrollLeft);
                     } else {
-                      x.scrollLeft = 0;
+                      moveX.scrollLeft = 0;
                     }
                     // console.log('l', l);
 
-                    this.clickedSentenceansWord[this.targetIdList[j].toString()] = k;
+                    this.clickedSentenceansWord[this.barChart.data[j].name.toString()] = k;
                     console.log('===', this.clickedSentenceansWord);
                     // console.log('ko', this.clickedSentenceansWord, Object.keys(this.clickedSentenceansWord).length);
                     // const y = document.getElementById(`text-${j}-text-span-${k}`);
