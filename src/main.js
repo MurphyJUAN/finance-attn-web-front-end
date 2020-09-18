@@ -5,6 +5,9 @@ import Vue from 'vue';
 // import axios from 'axios';
 import App from './App';
 import router from './router';
+import vSelect from 'vue-select';
+
+Vue.component('v-select', vSelect);
 
 
 // Vue.use(VueAxios, axios);

@@ -5,8 +5,8 @@
   <b-navbar >
     <b-navbar-nav class="nav-outer">
       <b-nav-item href="#" class="nav-logo-block">
-          <router-link to='/' style="display: inline-flex;"><img class="logo" src="../assets/lg_black.png"></router-link>
-          <router-link to='/' class="hive" style="display: inline-flex;">
+          <router-link to='/home' style="display: inline-flex;"><img class="logo" src="../assets/lg_black.png"></router-link>
+          <router-link to='/home' class="hive" style="display: inline-flex;">
             <div>HIVE</div>
           </router-link>
       </b-nav-item>
@@ -16,10 +16,11 @@
         <b-nav-item-dropdown :text="selectedYear" right class="year-input">
             <b-dropdown-item v-for="(year) in yearList" @click="setYear(year)">{{year}}</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item-dropdown :text="selectedCompany" right class="company-input">
+        <!-- <b-nav-item-dropdown :text="selectedCompany" right class="company-input">
             <b-dropdown-item v-for="(company_) in companyName" @click="setCompany(company_)" >{{company_}}</b-dropdown-item>
-        </b-nav-item-dropdown>
+        </b-nav-item-dropdown> -->
         <!-- <b-form-input class="company-input" v-model="company" placeholder="Company"></b-form-input> -->
+        <vSelect :options="companyName" v-model="selectedCompany" class="company-input" />
         <b-form-group class="file-input">
             <b-form-file
             id="file-default"
@@ -41,21 +42,27 @@
 <script>
 import shortid from 'shortid';
 import * as d3 from 'd3';
+import vSelect from 'vue-select';
 import axios from 'axios';
 
 const baseURL = 'https://clip.csie.org/HIVEBACK/api';
 export default {
   name: 'NavBar',
+  components: {
+    vSelect,
+  },
   data() {
     return {
       id: shortid.generate(),
-      selectedCompany: 'Company',
+      selectedCompany: 'Company Name',
       selectedYear: 'Year',
       selectedCompanyId: '',
       yearList: ['1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'],
       reportList: {},
       companyName: [],
       file: null,
+      options: ['apple', 'lplp'],
+      selected: '',
     };
   },
   mounted() {
@@ -67,7 +74,7 @@ export default {
     setCompany(company) {
       this.selectedCompany = company;
       this.selectedCompanyId = this.reportList[company];
-      console.log(this.selectedCompanyId);
+      console.log('ID', this.selectedCompanyId);
     },
     submitMeta() {
       this.$emit('companyIdFromNav', this.selectedCompanyId);
@@ -96,6 +103,14 @@ export default {
       },
 
     },
+    selectedCompany: {
+      handler(n, o) {
+        // console.log('jmurphy');
+        if (n != 'Company Name') {
+          this.setCompany(n);
+        }
+      },
+    },
   },
   props: ['title'],
 };
@@ -104,6 +119,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
+@import 'vue-select/dist/vue-select.css';
 .logo {
     width: 2rem;
     height: 2rem;
@@ -127,10 +143,14 @@ export default {
 .company-input {
     /* width: 8rem; */
     margin-right: 1rem;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
+    /* border: 1px solid #ced4da; */
+    /* border-radius: 0.25rem; */
     height: 2.5rem;
+    min-width: 8rem;
     text-align: center;
+}
+.vs__dropdown-toggle {
+  height: 2.5rem;
 }
 .file-input {
     width: 15rem;
@@ -153,6 +173,9 @@ export default {
 .dropdown-menu {
   max-height: 450px;
   overflow-y: scroll;
+}
+.vs__selected-options {
+  min-width: 300px;
 }
 </style>
 

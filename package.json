@@ -18,7 +18,8 @@
     "shortid": "^2.2.15",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-select": "^3.10.8"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

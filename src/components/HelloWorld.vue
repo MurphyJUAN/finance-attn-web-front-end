@@ -13,8 +13,10 @@
         <div v-if="isSorted" class="sort-btn" v-on:click="recoverDiction">unsort</div> -->
         </h5>
         <h5 class="sentence-title">
-            <div class="meta-info" v-if="!barChart.data.length||isLoading"><Loading /></div>
-
+            <div class="meta-info" v-if="(!barChart.data.length||isLoading)&&!isError"><Loading /></div>
+            <!-- <div class="meta-info" v-if="!barChart.data.length&&isError"> -->
+              <b-alert :show="isError" variant="danger">Oops!Error! Please search the financial report again or choose another one.</b-alert>
+            <!-- </div> -->
             <div v-if="!isLoading" class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Annual volatility: {{metaInfo.volatility}}%</div>
             <div>
               <img v-if="isHeatMap" class="invisible-img" @click="hideHeatMap" src="../assets/invisible.svg">
@@ -101,6 +103,7 @@ import HeatMap from './HeatMap';
 import BarChartWord from './BarChartWord';
 import NavBar from './NavBar';
 import Loading from './Loading';
+
 // import DataInfo from './data.json';
 import axios from 'axios';
 
@@ -121,6 +124,7 @@ export default {
       isHeatMap: true,
       isScroll: false,
       isLoading: true,
+      isError: false,
       clickedWordNumber: -1,
       isHeatMapClick: false,
       targetIdList: [],
@@ -383,6 +387,7 @@ export default {
     },
     getDataInfo() {
       this.isLoading = true;
+      this.isError = false;
       if (this.selectedCompanyId) {
         const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
         axios
@@ -397,56 +402,71 @@ export default {
               .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
               .then((responseSentence) => {
                 this.DataInfo.sentencesData = responseSentence.data.sentencesData;
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-            axios
-              .get(`${baseURL}/wordsData?filename=${this.selectedCompanyId}`)
-              .then((responseWord) => {
-                this.DataInfo.wordsData = responseWord.data.wordsData;
-                console.log('----this.DataInfo---', this.DataInfo);
+                axios
+                  .get(`${baseURL}/wordsData?filename=${this.selectedCompanyId}`)
+                  .then((responseWord) => {
+                    this.DataInfo.wordsData = responseWord.data.wordsData;
+                    console.log('----this.DataInfo---', this.DataInfo);
 
-                if (this.DataInfo) {
-                  console.log(this.DataInfo, 'opp');
-                  this.barChart.data = this.DataInfo.sentencesData;
-                  let a = this.color(0);
-                  for (let i = 0; i < this.barChart.data.length; i += 1) {
-                    this.barChart.data[i].wordDetail = [];
-                    for (let j = 0; j < this.barChart.data[i].sentence.length; j += 1) {
-                      let flag = 0;
-                      for (let k = 0; k < this.barChart.data[i].words.length; k += 1) {
-                        const targetItem = this.barChart.data[i].words[k];
-                        if (this.barChart.data[i].sentence[j].indexOf(targetItem.word) != -1) {
-                          a = this.color(targetItem.weight);
-                          this.barChart.data[i].wordDetail.push(a);
-                          flag = 1;
-                          break;
+                    if (this.DataInfo) {
+                      console.log('--Before1---', this.barChart.data);
+                      this.isError = false;
+                      console.log(this.DataInfo, this.DataInfo.sentencesData, 'opp');
+                      // for (let k = 0; k < this.DataInfo.sentencesData.length; k += 1) {
+                      //   this.barChart.data.push(this.DataInfo.sentencesData[k]);
+                      // }
+                      this.barChart.data = this.DataInfo.sentencesData;
+                      console.log('--a--');
+                      console.log('--Before---', this.barChart.data);
+                      let a = this.color(0);
+                      if (this.barChart.data.length > 0) {
+                        for (let i = 0; i < this.barChart.data.length; i += 1) {
+                          this.barChart.data[i].wordDetail = [];
+                          for (let j = 0; j < this.barChart.data[i].sentence.length; j += 1) {
+                            let flag = 0;
+                            for (let k = 0; k < this.barChart.data[i].words.length; k += 1) {
+                              const targetItem = this.barChart.data[i].words[k];
+                              if (this.barChart.data[i].sentence[j].indexOf(targetItem.word) != -1) {
+                                a = this.color(targetItem.weight);
+                                this.barChart.data[i].wordDetail.push(a);
+                                flag = 1;
+                                break;
+                              }
+                            }
+                            if (!flag) {
+                              this.barChart.data[i].wordDetail.push(a);
+                            }
+                          }
                         }
+                      } else {
+                        this.isError = true;
                       }
-                      if (!flag) {
-                        this.barChart.data[i].wordDetail.push(a);
+
+                      this.dependencyGraphDict.data = [];
+                      for (let i = 0; i < 20; i += 1) {
+                        this.dependencyGraphDict.data.push(this.DataInfo.wordsData[i]);
                       }
+                      this.metaInfo = this.DataInfo.metaInfo;
+                      console.log(this.metaInfo, 'meta');
+                      console.log(this.barChart.data, 'barchart');
+                      this.isLoading = false;
+                    } else {
+                      this.loadingMessage = 'Error! No this Financial Report!';
                     }
-                  }
-                  this.dependencyGraphDict.data = [];
-                  for (let i = 0; i < 20; i += 1) {
-                    this.dependencyGraphDict.data.push(this.DataInfo.wordsData[i]);
-                  }
-                  this.metaInfo = this.DataInfo.metaInfo;
-                  console.log(this.metaInfo, 'meta');
-                  console.log(this.barChart.data, 'barchart');
-                  this.isLoading = false;
-                } else {
-                  this.loadingMessage = 'Error! No this Financial Report!';
-                }
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    this.isError = true;
+                  });
               })
               .catch((error) => {
                 console.log(error);
+                this.isError = true;
               });
           })
           .catch((error) => {
             console.log(error);
+            this.isError = true;
           });
       }
     },

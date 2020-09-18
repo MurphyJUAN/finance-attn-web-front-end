@@ -35,6 +35,7 @@
                 </mask>
     </svg>
     <div style="opacity: 0">hi</div>
+    <b-alert :show="isError" variant="danger">Please choose year and company name before submit.</b-alert>
     <div class="form-block">
         <h1 class="text-light product-name hive" style="font-size:65px;">HIVE</h1>
         <div class="nav-input-block">
@@ -44,12 +45,12 @@
         </template>
         </b-form-select>
 
-        <b-form-select v-model="selectedCompany" :options="companyName" class="company-input">
+        <!-- <b-form-select v-model="selectedCompany" :options="companyName" class="company-input">
         <template v-slot:first>
             <b-form-select-option :value="selectedCompany" >{{selectedCompany}}</b-form-select-option>
         </template>
-            <!-- <b-form-select-option>hi</b-form-select-option> -->
-        </b-form-select>
+        </b-form-select> -->
+        <v-select :options="companyName" v-model="selectedCompany" class="company-input-home" />
 
         <!-- <b-form-input class="company-input" v-model="company" placeholder="Company"></b-form-input> -->
         <b-form-group class="file-input">
@@ -69,16 +70,21 @@
 <script>
 import shortid from 'shortid';
 import * as d3 from 'd3';
+// import vSelect from 'vue-select';
 import axios from 'axios';
 
 const baseURL = 'https://clip.csie.org/HIVEBACK/api';
 export default {
   name: 'HomePage',
+  components: {
+    // vSelect,
+  },
   data() {
     return {
       id: shortid.generate(),
       selectedCompany: 'Company',
       selectedYear: 'Year',
+      isError: false,
       selectedCompanyId: '',
       yearList: ['1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'],
       reportList: {},
@@ -119,7 +125,13 @@ export default {
   methods: {
     submitMeta() {
     //   this.$router.push({ name: 'HelloWorld', params: { reportId: '87160G107-10-K-19991229' } });
-      this.$router.push({ name: 'HelloWorld', params: { reportId: this.selectedCompanyId } });
+      if (this.selectedCompanyId) {
+        this.isError = false;
+        this.$router.push({ name: 'HelloWorld', params: { reportId: this.selectedCompanyId } });
+      } else {
+        this.isError = true;
+      }
+      console.log(this.isError);
     },
   },
   watch: {
@@ -158,6 +170,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
+@import 'vue-select/dist/vue-select.css';
 
 body {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -166,6 +179,12 @@ body {
     width: 100%;
     height: 100%;
 }
+
+/* .company-input .vs__search::placeholder,
+.company-input .vs__dropdown-toggle,
+.company-input .vs__dropdown-menu {
+    background: white;
+} */
 
 @keyframes gradient {
     0% {
@@ -186,10 +205,15 @@ body {
     width: 8rem;
     margin-right: 1rem;
 }
-.company-input {
-    width: 8rem;
+/* .company-input {
     margin-right: 1rem;
+    height: 2.5rem;
+    min-width: 8rem;
+    text-align: center;
 }
+.vs__dropdown-toggle {
+  height: 2.5rem;
+} */
 .file-input {
     width: 15rem;
     margin-right: 1rem;
