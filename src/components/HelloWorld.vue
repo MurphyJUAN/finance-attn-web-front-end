@@ -24,7 +24,7 @@
         </h5>
         <div class="word-title">
           <h5 class="word-small-title">Word</h5>
-          <h5 class="df-small-title">DF</h5>
+          <h5 class="df-small-title">WF</h5>
           <h5 class="aw-small-title">AW</h5>
         </div>
 
