@@ -333,13 +333,50 @@ export default {
       this.isHeatMap = true;
     },
     setScroll() {
+      console.log(scroll, this.isScroll);
       if (this.isScroll) {
         for (let i = 0; i < this.barChart.data.length; i += 1) {
-          const targetStr = `text-${i}`;
+          const targetStr = `text-${this.barChart.data[i].name}`;
           // targetStr = targetStr;
           // console.log('d', targetStr);
           const item = document.getElementById(targetStr);
           item.scrollLeft = 0;
+        }
+      } else {
+        console.log('START');
+        for (let i = 0; i < this.barChart.data.length; i += 1) {
+          let maxCount = 0;
+          let maxWord = '';
+
+          for (let j = 0; j < this.barChart.data[i].words.length; j += 1) {
+            if (this.barChart.data[i].words[j].weight > maxCount) {
+              maxCount = this.barChart.data[i].words[j].weight;
+              maxWord = this.barChart.data[i].words[j].word;
+            }
+          }
+          console.log('maxWord', maxWord);
+          let wordIndex = 0;
+          for (let k = 0; k < this.barChart.data[i].sentence.length; k += 1) {
+            if (this.barChart.data[i].sentence[k].indexOf(maxWord) !== -1) {
+              wordIndex = k;
+              const targetStr = `text-${this.barChart.data[i].name}-text-span-${wordIndex}`;
+              const item = document.getElementById(targetStr);
+              const x = document.getElementById(`text-${this.barChart.data[i].name}`);
+              console.log('item', item);
+              let a = 0;
+              if (this.barChart.data[i].sentence.length > 6) {
+                a = 6;
+              } else {
+                a = this.barChart.data[i].sentence.length / 2;
+              }
+              const centerWord = document.getElementById(`text-${this.barChart.data[i].name}-text-span-${a}`);
+              console.log('centerWord', centerWord);
+              const offset = item.offsetLeft - centerWord.offsetLeft;
+              console.log('offset', item.offsetLeft, centerWord.offsetLeft, offset);
+              x.scrollLeft = offset;
+              break;
+            }
+          }
         }
       }
       this.isScroll = !this.isScroll;
@@ -351,7 +388,7 @@ export default {
           .get(path)
           .then((response) => {
             const a = response.data.metaInfo;
-            a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility))*100);
+            a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility)) * 100);
             this.DataInfo.metaInfo = a;
             axios
               .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)

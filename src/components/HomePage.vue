@@ -40,13 +40,13 @@
         <div class="nav-input-block">
         <b-form-select v-model="selectedYear" :options="yearList" class="year-input">
         <template v-slot:first>
-            <b-form-select-option :value="selectedYear" >year</b-form-select-option>
+            <b-form-select-option :value="selectedYear" >{{selectedYear}}</b-form-select-option>
         </template>
         </b-form-select>
 
-        <b-form-select v-model="selectedCompany" :options="reportList" class="company-input">
+        <b-form-select v-model="selectedCompany" :options="companyName" class="company-input">
         <template v-slot:first>
-            <b-form-select-option :value="selectedCompany" >company</b-form-select-option>
+            <b-form-select-option :value="selectedCompany" >{{selectedCompany}}</b-form-select-option>
         </template>
             <!-- <b-form-select-option>hi</b-form-select-option> -->
         </b-form-select>
@@ -135,7 +135,7 @@ export default {
               // console.log(Object.keys(response.data.reportList));
               this.reportList = response.data.reportList;
               this.companyName = Object.keys(response.data.reportList);
-              console.log(response);
+              console.log('companyName', this.companyName);
             })
             .catch((error) => {
               console.log(error);

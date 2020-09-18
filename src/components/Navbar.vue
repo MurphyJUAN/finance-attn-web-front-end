@@ -85,6 +85,7 @@ export default {
             .get(path)
             .then((response) => {
               // console.log(Object.keys(response.data.reportList));
+              console.log('Year', response);
               this.reportList = response.data.reportList;
               this.companyName = Object.keys(response.data.reportList);
             })
