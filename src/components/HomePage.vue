@@ -4,7 +4,7 @@
 <div class="homepage">
     <div class="bgImage"></div>
     <svg class="blobCont">
-            <image xlink:href="https://images.unsplash.com/photo-1533158326339-7f3cf2404354?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1004&q=80" mask="url(#mask)" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+            <image xlink:href="https://images.unsplash.com/photo-1588097281266-310cead47879?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80" mask="url(#mask)" width="100%" height="100%" style="filter:hue-rotate(20deg);" preserveAspectRatio="xMidYMid slice" />
         <defs>
         <filter id="gooey" height="130%">
                     <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
@@ -36,7 +36,7 @@
     </svg>
     <div style="opacity: 0">hi</div>
     <div class="form-block">
-        <h1 class="text-light product-name">HIVE</h1>
+        <h1 class="text-light product-name hive" style="font-size:65px;">HIVE</h1>
         <div class="nav-input-block">
         <b-form-select v-model="selectedYear" :options="yearList" class="year-input">
         <template v-slot:first>
@@ -71,7 +71,7 @@ import shortid from 'shortid';
 import * as d3 from 'd3';
 import axios from 'axios';
 
-const baseURL = 'https://clip.csie.org/HIVE/api';
+const baseURL = 'https://clip.csie.org/HIVEBACK/api';
 export default {
   name: 'HomePage',
   data() {
@@ -80,7 +80,7 @@ export default {
       selectedCompany: 'Company',
       selectedYear: 'Year',
       selectedCompanyId: '',
-      yearList: ['1996', '1997', '1998', '1999', '2000'],
+      yearList: ['1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'],
       reportList: {},
       companyName: [],
       file: null,
@@ -157,6 +157,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
+
 body {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
@@ -215,7 +217,7 @@ body,
 
 .bgImage {
   position: absolute;
-  background-image: url(https://images.unsplash.com/photo-1533158326339-7f3cf2404354?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1004&q=80);
+  background-image: url(https://images.unsplash.com/photo-1588097281266-310cead47879?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80);
   background-size: cover;
   background-position: top;
   -webkit-filter: grayscale(70%);
@@ -446,5 +448,12 @@ body,
     transform: rotate(1980deg) translate(200px, 0.1px) rotate(-1980deg);
   }
 }
+
+.hive {
+  font-family: 'Oswald', sans-serif;
+  color: black;
+  font-size: 2rem;
+}
+
 </style>
 

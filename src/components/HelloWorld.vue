@@ -15,7 +15,7 @@
         <h5 class="sentence-title">
             <div class="meta-info" v-if="!barChart.data.length">Error! No this financial report!</div>
 
-            <div class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Annual volatility: 30%</div>
+            <div class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Annual volatility: {{metaInfo.volatility}}%</div>
             <div>
               <img v-if="isHeatMap" class="invisible-img" @click="hideHeatMap" src="../assets/invisible.svg">
               <img v-if="!isHeatMap" class="invisible-img" @click="showHeatMap" src="../assets/eye.svg">
@@ -100,7 +100,7 @@ import NavBar from './NavBar';
 import DataInfo from './data.json';
 import axios from 'axios';
 
-const baseURL = 'https://clip.csie.org/HIVE/api';
+const baseURL = 'https://clip.csie.org/HIVEBACK/api';
 export default {
   name: 'HelloWorld',
   components: {
@@ -351,7 +351,7 @@ export default {
           .get(path)
           .then((response) => {
             const a = response.data.metaInfo;
-            a.volatility = response.data.volatility;
+            a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility))*100);
             this.DataInfo.metaInfo = a;
             axios
               .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
