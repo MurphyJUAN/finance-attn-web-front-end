@@ -5,6 +5,7 @@ import HomePage from '@/components/HomePage';
 import BarChart from '@/components/BarChart';
 import DependencyGraph from '@/components/DependencyGraph';
 import HeatMap from '@/components/HeatMap';
+import Demo from '@/components/Demo';
 import Loading from '@/components/Loading';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -33,11 +34,11 @@ export default new Router({
       name: 'Loading',
       component: Loading,
     },
-    // {
-    //   path: '/',
-    //   name: 'DependencyGraph',
-    //   component: DependencyGraph,
-    // },
+    {
+      path: '/demo',
+      name: 'Demo',
+      component: Demo,
+    },
     // {
     //   path: '/',
     //   name: 'HeatMap',
