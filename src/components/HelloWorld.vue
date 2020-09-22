@@ -67,7 +67,11 @@
                     class="text-span"
                     :ref="`ref-text-${item.name}-text-span-${id}`"
                     :id="`text-${item.name}-text-span-${id}`"
-                    v-for="(word, id) in item.sentence">{{word}}</span>
+                    v-for="(word, id) in item.sentence">
+                    {{word}}
+                    <span v-if="id === item.sentence.length - 1">.</span>
+                    </span>
+
                     <span
                     v-if="!isHeatMap"
                     :style="{ background: colorFunc(idx, word,id,  false),
@@ -75,7 +79,10 @@
                     class="text-span"
                     :ref="`ref-text-${item.name}-text-span-${id}`"
                     :id="`text-${item.name}-text-span-${id}`"
-                    v-for="(word, id) in item.sentence">{{word}}</span>
+                    v-for="(word, id) in item.sentence">
+                    {{word}}
+                    <span v-if="id === item.sentence.length - 1">.</span>
+                    </span>
                 </div>
               <!-- </div> -->
             <!-- </div> -->
