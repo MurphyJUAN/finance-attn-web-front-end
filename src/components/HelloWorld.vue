@@ -233,55 +233,105 @@ export default {
               console.log('i', i, this.barChart.data[i].name, this.barChart.data[i].sentence);
 
               console.log('_-----', document.getElementById(`text-${j}-text-span-0`), document.getElementById(`text-${j}-text-span-0`).offsetLeft);
-              for (let k = 0; k < this.barChart.data[j].sentence.length; k += 1) {
-                // console.log('a', this.barChart.data[j].sentence[k].toLowerCase());
-                if (this.barChart.data[j].sentence[k].toLowerCase().indexOf(word) !== -1) {
-                  console.log('----Debug Click Word---');
-                  console.log(word, this.barChart.data[j].sentence[k].toLowerCase());
-                  const centerWordOffset = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-0`][0].offsetLeft;
-                  console.log('before word Target', `ref-text-${this.barChart.data[j].name}-text-span-${k}`);
-                  const wordTarget = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-${k}`][0];
-                  // const wordTarget = document.getElementById(`text-${j}-text-span-${k}`);
-                  // const moveX = this.$refs[`ref-text-${this.barChart.data[j].name}`];
-                  // const targetX = moveX[0];
-                  // console.log('x', moveX, targetX, moveX.scrollLeft, moveX[0], this.barChart.data[j].name);
-                  const moveX = document.getElementById(`text-${j}`);
-                  console.log('moveX', moveX, moveX.scrollLeft);
-                  console.log('---wordTarget---', wordTarget);
-                  if (wordTarget) {
-                    console.log(`text-${this.barChart.data[j].name}-text-span-${k}`);
-                    console.log('word', wordTarget);
-                    if (k > 5) {
-                      this.isScroll = true;
-                      const offset = wordTarget.offsetLeft - centerWordOffset;
-                      console.log('offset', offset);
-                      moveX.scrollLeft = offset;
-                      if (moveX.scrollLeft !== offset) {
-                        console.log('strange!');
-                        moveX.scrollLeft = offset;
-                      }
-                      console.log(wordTarget.offsetLeft, centerWordOffset, offset);
-                      console.log('new movex', moveX.scrollLeft);
-                    } else {
-                      moveX.scrollLeft = 0;
-                    }
-                    // console.log('l', l);
+              // for (let k = 0; k < this.barChart.data[j].sentence.length; k += 1) {
+              //   // console.log('a', this.barChart.data[j].sentence[k].toLowerCase());
+              //   if (this.barChart.data[j].sentence[k].toLowerCase().indexOf(word) !== -1) {
+              //     console.log('----Debug Click Word---');
+              //     console.log(word, this.barChart.data[j].sentence[k].toLowerCase());
+              //     const centerWordOffset = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-0`][0].offsetLeft;
+              //     console.log('before word Target', `ref-text-${this.barChart.data[j].name}-text-span-${k}`);
+              //     const wordTarget = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-${k}`][0];
+              //     // const wordTarget = document.getElementById(`text-${j}-text-span-${k}`);
+              //     // const moveX = this.$refs[`ref-text-${this.barChart.data[j].name}`];
+              //     // const targetX = moveX[0];
+              //     // console.log('x', moveX, targetX, moveX.scrollLeft, moveX[0], this.barChart.data[j].name);
+              //     const moveX = document.getElementById(`text-${j}`);
+              //     console.log('moveX', moveX, moveX.scrollLeft);
+              //     console.log('---wordTarget---', wordTarget);
+              //     if (wordTarget) {
+              //       console.log(`text-${this.barChart.data[j].name}-text-span-${k}`);
+              //       console.log('word', wordTarget);
+              //       if (k > 5) {
+              //         this.isScroll = true;
+              //         const offset = wordTarget.offsetLeft - centerWordOffset;
+              //         console.log('offset', offset);
+              //         moveX.scrollLeft = offset;
+              //         if (moveX.scrollLeft !== offset) {
+              //           console.log('strange!');
+              //           moveX.scrollLeft = offset;
+              //         }
+              //         console.log(wordTarget.offsetLeft, centerWordOffset, offset);
+              //         console.log('new movex', moveX.scrollLeft);
+              //       } else {
+              //         moveX.scrollLeft = 0;
+              //       }
+              //       // console.log('l', l);
 
-                    this.clickedSentenceansWord[this.barChart.data[j].name.toString()] = k;
-                    console.log('===', this.clickedSentenceansWord);
-                    // console.log('ko', this.clickedSentenceansWord, Object.keys(this.clickedSentenceansWord).length);
-                    // const y = document.getElementById(`text-${j}-text-span-${k}`);
-                    // y.style.styleWeight = 900;
-                    // y.style.borderBottom = 'solid 1px black';
-                    // y.setAttribute('style', 'font-weight:900;border-bottom:solid 1px black;');
-                    break;
-                  }
-                }
-              }
+              //       this.clickedSentenceansWord[this.barChart.data[j].name.toString()] = k;
+              //       console.log('===', this.clickedSentenceansWord);
+              //       // console.log('ko', this.clickedSentenceansWord, Object.keys(this.clickedSentenceansWord).length);
+              //       // const y = document.getElementById(`text-${j}-text-span-${k}`);
+              //       // y.style.styleWeight = 900;
+              //       // y.style.borderBottom = 'solid 1px black';
+              //       // y.setAttribute('style', 'font-weight:900;border-bottom:solid 1px black;');
+              //       break;
+              //     }
+              //   }
+              // }
               break;
             }
           }
         }
+        for (let j = 0; j < this.targetIdList.length; j += 1) {
+          for (let k = 0; k < this.barChart.data[j].sentence.length; k += 1) {
+          // console.log('a', this.barChart.data[j].sentence[k].toLowerCase());
+            if (this.barChart.data[j].sentence[k].toLowerCase().indexOf(word) !== -1) {
+              console.log('----Debug Click Word---');
+              console.log(word, this.barChart.data[j].sentence[k].toLowerCase());
+              const centerWordOffset = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-0`][0].offsetLeft;
+              console.log('before word Target', `ref-text-${this.barChart.data[j].name}-text-span-${k}`);
+              const wordTarget = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-${k}`][0];
+              // const wordTarget = document.getElementById(`text-${j}-text-span-${k}`);
+              // const moveX = this.$refs[`ref-text-${this.barChart.data[j].name}`];
+              // const targetX = moveX[0];
+              // console.log('x', moveX, targetX, moveX.scrollLeft, moveX[0], this.barChart.data[j].name);
+              let moveX = document.getElementById(`text-${j}`);
+              this.$nextTick(() => {
+                moveX = document.getElementById(`text-${j}`);
+              });
+
+              console.log('moveX', moveX, moveX.scrollLeft, moveX.offsetWidth);
+              console.log('---wordTarget---', wordTarget);
+              let offset = 0;
+              if (wordTarget) {
+                console.log(`text-${this.barChart.data[j].name}-text-span-${k}`);
+                console.log('word', wordTarget);
+                if (k > 5) {
+                  this.isScroll = true;
+                  offset = wordTarget.offsetLeft - centerWordOffset;
+                  console.log('offset', offset);
+                  moveX.scrollLeft = offset;
+                  if (moveX.scrollLeft !== offset) {
+                    console.log('strange!');
+                    console.log(moveX);
+                    const timeoutID = window.setTimeout((() => moveX.scrollLeft = offset), 100);
+                    moveX.scrollLeft = offset;
+                  }
+                  console.log(wordTarget.offsetLeft, centerWordOffset, offset);
+                  console.log('new movex', moveX.scrollLeft);
+                } else {
+                  moveX.scrollLeft = 0;
+                }
+                // console.log('l', l);
+
+                this.clickedSentenceansWord[this.barChart.data[j].name.toString()] = k;
+                console.log('===', this.clickedSentenceansWord);
+                break;
+              }
+            }
+          }
+        }
+
         this.barChart.data = JSON.parse(JSON.stringify(this.barChart.data));
 
         for (let i = 0; i < this.barChart.data.length; i += 1) {

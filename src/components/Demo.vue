@@ -255,7 +255,7 @@ export default {
                       moveX.scrollLeft = offset;
                       if (moveX.scrollLeft !== offset) {
                         console.log('strange!');
-                        moveX.scrollLeft = offset;
+                        const timeoutID = window.setTimeout((() => moveX.scrollLeft = offset), 300);
                       }
                       console.log(wordTarget.offsetLeft, centerWordOffset, offset);
                       console.log('new movex', moveX.scrollLeft);
