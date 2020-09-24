@@ -15,7 +15,8 @@
         <h5 class="sentence-title">
             <div class="meta-info" v-if="(!barChart.data.length||isLoading)&&!isError"><Loading /></div>
             <!-- <div class="meta-info" v-if="!barChart.data.length&&isError"> -->
-              <b-alert :show="isError" variant="danger">Oops!Error! Please search the financial report again or choose another one.</b-alert>
+              <b-alert :show="isError&&!isSelectorError" variant="danger">Oops!Error! Please search the financial report again or choose another one.</b-alert>
+              <b-alert :show="isSelectorError" variant="danger">Oops!Please Choose year and company name before submit.</b-alert>
             <!-- </div> -->
             <div v-if="!isLoading" class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp
               <h5 style="display: inline-block" class="df-small-title" v-b-popover.hover.top="'Post-event return volatility is a widely used financial risk proxy; by following the definition in (Loughran and McDonald 2011), it is defined as the root-mean-square error from a Fama and French three-factor model for days 162 [6, 252] after the report filing date.'" title="Annual volatility">
@@ -140,6 +141,7 @@ export default {
   },
   data() {
     return {
+      isSelectorError: false,
       isSorted: false,
       isHeatMap: true,
       isScroll: false,
@@ -160,6 +162,8 @@ export default {
       metaInfo: {},
       DataInfo: {},
       triangleOffset: '30%',
+      file: null,
+      routeFlag: 'id',
       barChart: {
         data: [],
         width: 540,
@@ -468,93 +472,112 @@ export default {
     getDataInfo() {
       this.isLoading = true;
       this.isError = false;
-      if (this.selectedCompanyId) {
-        const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
-        axios
-          .get(path)
-          .then((response) => {
-            const a = response.data.metaInfo;
-            a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility)) * 100);
-            a.pr = response.data.PR;
-            this.triangleOffset = `${a.pr.toString()}%`;
-            console.log('----this.triangleOffset---', this.triangleOffset);
-            this.DataInfo.metaInfo = a;
-            axios
-              .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
-              .then((responseSentence) => {
-                this.DataInfo.sentencesData = responseSentence.data.sentencesData;
-                axios
-                  .get(`${baseURL}/wordsData?filename=${this.selectedCompanyId}`)
-                  .then((responseWord) => {
-                    this.DataInfo.wordsData = responseWord.data.wordsData;
-                    console.log('----this.DataInfo---', this.DataInfo);
+      if (this.routeFlag === 'id') {
+        if (this.selectedCompanyId) {
+          const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
+          axios
+            .get(path)
+            .then((response) => {
+              const a = response.data.metaInfo;
+              a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility)) * 100);
+              a.pr = response.data.PR;
+              this.triangleOffset = `${a.pr.toString()}%`;
+              console.log('----this.triangleOffset---', this.triangleOffset);
+              this.DataInfo.metaInfo = a;
+              axios
+                .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
+                .then((responseSentence) => {
+                  this.DataInfo.sentencesData = responseSentence.data.sentencesData;
+                  axios
+                    .get(`${baseURL}/wordsData?filename=${this.selectedCompanyId}`)
+                    .then((responseWord) => {
+                      this.DataInfo.wordsData = responseWord.data.wordsData;
+                      console.log('----this.DataInfo---', this.DataInfo);
 
-                    if (this.DataInfo) {
-                      console.log('--Before1---', this.barChart.data);
-                      this.isError = false;
-                      console.log(this.DataInfo, this.DataInfo.sentencesData, 'opp');
-                      // for (let k = 0; k < this.DataInfo.sentencesData.length; k += 1) {
-                      //   this.barChart.data.push(this.DataInfo.sentencesData[k]);
-                      // }
-                      this.barChart.data = this.DataInfo.sentencesData;
-                      console.log('--a--');
-                      console.log('--Before---', this.barChart.data);
-                      let a = this.color(0);
-                      if (this.barChart.data.length > 0) {
-                        for (let i = 0; i < this.barChart.data.length; i += 1) {
-                          this.barChart.data[i].wordDetail = [];
-                          for (let j = 0; j < this.barChart.data[i].sentence.length; j += 1) {
-                            let flag = 0;
-                            for (let k = 0; k < this.barChart.data[i].words.length; k += 1) {
-                              const targetItem = this.barChart.data[i].words[k];
-                              if (this.barChart.data[i].sentence[j].indexOf(targetItem.word) != -1) {
-                                a = this.color(targetItem.weight);
+                      if (this.DataInfo) {
+                        console.log('--Before1---', this.barChart.data);
+                        this.isError = false;
+                        console.log(this.DataInfo, this.DataInfo.sentencesData, 'opp');
+                        // for (let k = 0; k < this.DataInfo.sentencesData.length; k += 1) {
+                        //   this.barChart.data.push(this.DataInfo.sentencesData[k]);
+                        // }
+                        this.barChart.data = this.DataInfo.sentencesData;
+                        console.log('--a--');
+                        console.log('--Before---', this.barChart.data);
+                        let a = this.color(0);
+                        if (this.barChart.data.length > 0) {
+                          for (let i = 0; i < this.barChart.data.length; i += 1) {
+                            this.barChart.data[i].wordDetail = [];
+                            for (let j = 0; j < this.barChart.data[i].sentence.length; j += 1) {
+                              let flag = 0;
+                              for (let k = 0; k < this.barChart.data[i].words.length; k += 1) {
+                                const targetItem = this.barChart.data[i].words[k];
+                                if (this.barChart.data[i].sentence[j].indexOf(targetItem.word) != -1) {
+                                  a = this.color(targetItem.weight);
+                                  this.barChart.data[i].wordDetail.push(a);
+                                  flag = 1;
+                                  break;
+                                }
+                              }
+                              if (!flag) {
                                 this.barChart.data[i].wordDetail.push(a);
-                                flag = 1;
-                                break;
                               }
                             }
-                            if (!flag) {
-                              this.barChart.data[i].wordDetail.push(a);
-                            }
                           }
+                        } else {
+                          this.isError = true;
                         }
-                      } else {
-                        this.isError = true;
-                      }
 
-                      this.dependencyGraphDict.data = [];
-                      for (let i = 0; i < 20; i += 1) {
-                        this.dependencyGraphDict.data.push(this.DataInfo.wordsData[i]);
+                        this.dependencyGraphDict.data = [];
+                        for (let i = 0; i < 20; i += 1) {
+                          this.dependencyGraphDict.data.push(this.DataInfo.wordsData[i]);
+                        }
+                        this.metaInfo = this.DataInfo.metaInfo;
+                        console.log(this.metaInfo, 'meta');
+                        console.log(this.barChart.data, 'barchart');
+                        this.isLoading = false;
+                      } else {
+                        this.loadingMessage = 'Error! No this Financial Report!';
                       }
-                      this.metaInfo = this.DataInfo.metaInfo;
-                      console.log(this.metaInfo, 'meta');
-                      console.log(this.barChart.data, 'barchart');
-                      this.isLoading = false;
-                    } else {
-                      this.loadingMessage = 'Error! No this Financial Report!';
-                    }
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                    this.isError = true;
-                  });
-              })
-              .catch((error) => {
-                console.log(error);
-                this.isError = true;
-              });
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                      this.isError = true;
+                    });
+                })
+                .catch((error) => {
+                  console.log(error);
+                  this.isError = true;
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+              this.isError = true;
+            });
+        }
+      } else {
+        console.log('-----File-----', this.file);
+        const path = 'https://clip.csie.org/HIVETEST/api/uploadFile';
+        axios
+          .post(path, { file: this.file })
+          .then((response) => {
+            console.log('----Response-----', response);
           })
           .catch((error) => {
             console.log(error);
-            this.isError = true;
           });
       }
     },
     companyIdFromNav(selectedCompanyId) {
       // childValue就是子组件传过来的值
       this.selectedCompanyId = selectedCompanyId;
-      this.getDataInfo();
+      if (this.selectedCompanyId) {
+        this.isSelectorError = false;
+        this.getDataInfo();
+      } else {
+        this.isSelectorError = true;
+        this.isError = true;
+      }
     },
   },
   created() {
@@ -562,6 +585,10 @@ export default {
       .domain([0, 100])
       .range(['rgb(255, 255, 255)', 'rgb(245, 91, 91)']);
     this.selectedCompanyId = this.$route.params.reportId;
+    this.file = this.$route.params.file;
+
+    this.routeFlag = this.$route.params.flag;
+    console.log('----Get file----', this.file, this.routeFlag);
     console.log('-----', this.selectedCompanyId);
     this.getDataInfo();
   },
@@ -856,7 +883,8 @@ export default {
    border-width: 5px;
    border-style: solid;
    border-color: #fa39aa transparent transparent transparent;
-   cursor: hover;
+   cursor: pointer;
+   transition: all 0.3s linear;
    }
   .pred {
     color: #fa39aa;

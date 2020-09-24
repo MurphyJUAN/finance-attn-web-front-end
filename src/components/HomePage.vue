@@ -127,7 +127,11 @@ export default {
     //   this.$router.push({ name: 'HelloWorld', params: { reportId: '87160G107-10-K-19991229' } });
       if (this.selectedCompanyId) {
         this.isError = false;
-        this.$router.push({ name: 'HelloWorld', params: { reportId: this.selectedCompanyId } });
+        this.$router.push({ name: 'HelloWorld', params: { reportId: this.selectedCompanyId, file: this.file, flag: 'id' } });
+      } else if (this.file) {
+        console.log('---Click file---', this.file);
+        this.isError = false;
+        this.$router.push({ name: 'HelloWorld', params: { reportId: this.selectedCompanyId, file: this.file, flag: 'file' } });
       } else {
         this.isError = true;
       }
