@@ -38,14 +38,21 @@ html, body {
     height: 2.5rem;
     min-width: 350px;
     text-align: center;
+    cursor: pointer;
 }
 .company-input-home .vs__dropdown-toggle {
   height: 2.5rem;
+  cursor: pointer;
 }
 .company-input-home .vs__dropdown-toggle,
 .company-input-home .vs__dropdown-menu {
   background: white;
   min-width: 350px;
+  cursor: pointer;
+}
+.company-input-home .vs__selected-options,
+.company-input-home .vs__search {
+  cursor: pointer;
 }
 .company-input-home .vs__dropdown-menu {
   min-width: 350px;

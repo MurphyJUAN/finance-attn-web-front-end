@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       id: shortid.generate(),
-      selectedCompany: 'Company',
+      selectedCompany: 'Company Name',
       selectedYear: 'Year',
       isError: false,
       selectedCompanyId: '',
@@ -220,6 +220,9 @@ body {
 }
 .submit-btn {
     height: 2.5rem;
+}
+.company-input-home {
+  cursor: pointer;
 }
 .form-block {
     position: absolute;

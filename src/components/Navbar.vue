@@ -6,7 +6,7 @@
     <b-navbar-nav class="nav-outer">
       <b-nav-item href="#" class="nav-logo-block">
           <router-link to='/home' style="display: inline-flex;"><img class="logo" src="../assets/lg_black.png"></router-link>
-          <router-link to='/home' class="hive" style="display: inline-flex;">
+          <router-link to='/home' class="hive" style="display: inline-flex; text-decoration:none;">
             <div>HIVE</div>
           </router-link>
       </b-nav-item>
@@ -152,6 +152,10 @@ export default {
 .vs__dropdown-toggle {
   height: 2.5rem;
 }
+.company-input .vs__selected-options,
+.company-input .vs__search {
+  cursor: pointer;
+}
 .file-input {
     width: 15rem;
     margin-right: 1rem;
@@ -163,6 +167,9 @@ export default {
   font-family: 'Oswald', sans-serif;
   color: black;
   font-size: 2rem;
+}
+.hive:hover {
+  color: black;
 }
 .nav-logo-block {
   display: flex;

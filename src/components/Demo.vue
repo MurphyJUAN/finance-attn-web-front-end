@@ -17,7 +17,11 @@
             <!-- <div class="meta-info" v-if="!barChart.data.length&&isError"> -->
               <b-alert :show="isError" variant="danger">Oops!Error! Please search the financial report again or choose another one.</b-alert>
             <!-- </div> -->
-            <div v-if="!isLoading" class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp Annual volatility: {{metaInfo.volatility}}%</div>
+            <div v-if="!isLoading" class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp
+                <h5 style="display: inline-block" class="df-small-title" v-b-popover.hover.top="'Post-event return volatility is a widely used financial risk proxy; by following the definition in (Loughran and McDonald 2011), it is defined as the root-mean-square error from a Fama and French three-factor model for days 162 [6, 252] after the report filing date.'" title="Annual volatility">
+                    Annual volatility: {{metaInfo.volatility}}%
+                </h5>
+                </div>
             <div>
               <img v-if="isHeatMap" class="invisible-img" @click="hideHeatMap" src="../assets/invisible.svg">
               <img v-if="!isHeatMap" class="invisible-img" @click="showHeatMap" src="../assets/eye.svg">
@@ -26,8 +30,8 @@
         </h5>
         <div class="word-title">
           <h5 class="word-small-title">Word</h5>
-          <h5 class="df-small-title" v-b-popover.hover.top="'Every word listed is accompanied with a number on its rightindicating the number of sentences that the word has been used.'" title="Sentence Frequency">SF</h5>
-          <h5 class="aw-small-title" v-b-popover.hover.top="'The average of normalized attention weights for this word in the reportand is indicated by the length of bar on the right.'" title="Attention Weight">AW</h5>
+          <h5 class="df-small-title" v-b-popover.hover.top="'Every word listed is accompanied with a number on its right indicating the number of sentences that the word has been used.'" title="Sentence Frequency">SF</h5>
+          <h5 class="aw-small-title" v-b-popover.hover.top="'The average of normalized attention weights for this word in the report.'" title="Attention Weight">AW</h5>
         </div>
 
 
@@ -37,8 +41,10 @@
             <BarChart v-if="barChart.data.length" :barChart=barChart :chartMargin=chartMargin :clickedNumber=clickedWordNumber />
         </div>
         <div class="sentence-block">
-            <div class="color-axis-block">
-              <div class="triangle" :style="{marginLeft: this.triangleOffset}"></div>
+            <div class="color-axis-block" @mouseover="mouseOver" @mouseleave="mouseLeave">
+              <div class="triangle" :style="{marginLeft: this.triangleOffset}">
+                  <div class="pred" v-if="isShowPredText">Predicted relative risk level</div>
+              </div>
               <div class="color-axis-inner">
                 <div class="color-axis color-axis-0"></div>
                 <div class="color-axis color-axis-25"></div>
@@ -139,6 +145,7 @@ export default {
       isScroll: false,
       isLoading: true,
       isError: false,
+      isShowPredText: false,
       clickedWordNumber: -1,
       isHeatMapClick: false,
       targetIdList: [],
@@ -176,6 +183,12 @@ export default {
     };
   },
   methods: {
+    mouseOver() {
+      this.isShowPredText = true;
+    },
+    mouseLeave() {
+      this.isShowPredText = false;
+    },
     // 點擊的單字變色(ok)
     // 點擊的句子往上跑(ok)
     // 關鍵字跑到中間（ok)
@@ -409,7 +422,8 @@ export default {
           .then((response) => {
             const a = response.data.metaInfo;
             a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility)) * 100);
-            this.triangleOffset = `${a.volatility.toString()}%`;
+            a.pr = response.data.PR;
+            this.triangleOffset = `${a.pr.toString()}%`;
             console.log('----this.triangleOffset---', this.triangleOffset);
             this.DataInfo.metaInfo = a;
             axios
@@ -532,7 +546,7 @@ export default {
       }
       const info = DataInfo.metaInfo;
       info.volatility = Math.round(Math.exp(parseFloat(DataInfo.metaInfo.volatility)) * 100);
-      this.triangleOffset = `${info.volatility.toString()}%`;
+      this.triangleOffset = `${info.PR.toString()}%`;
       this.DataInfo.metaInfo = info;
 
       this.metaInfo = DataInfo.metaInfo;
@@ -690,7 +704,7 @@ export default {
      color: black;
      font-size: 20px;
      /* padding-top: 20px; */
-     overflow: hidden;
+     /* overflow: hidden; */
      padding: 0 2vw 0 1.745vw;
  }
 
@@ -817,8 +831,19 @@ export default {
    height: 0;
    border-width: 5px;
    border-style: solid;
-   border-color: #6D6D6D transparent transparent transparent;
+   border-color: #fa39aa transparent transparent transparent;
+   position: relative;
    }
+.pred {
+    color: #fa39aa;
+    font-size: 15px;
+    position: absolute;
+    top: -11px;
+    left: 10px;
+    cursor: hover;
+    width: 500px;
+    z-index: 100;
+  }
  .color-axis-inner {
    display: flex;
    justify-content: space-around;
