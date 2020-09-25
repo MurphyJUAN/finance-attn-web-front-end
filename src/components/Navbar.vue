@@ -117,6 +117,7 @@ export default {
         // console.log('jmurphy');
         this.selectedCompany = 'Company Name';
         this.selectedYear = 'Year';
+        this.selectedCompanyId = '';
       },
     },
   },

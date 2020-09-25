@@ -167,6 +167,13 @@ export default {
         }
       },
     },
+    file: {
+      handler(n, o) {
+        this.selectedYear = 'Year';
+        this.selectedCompany = 'Company Name';
+        this.selectedCompanyId = '';
+      },
+    },
   },
   props: ['title'],
 };
