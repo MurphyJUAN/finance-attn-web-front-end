@@ -143,6 +143,7 @@ export default {
       handler(n, o) {
         console.log('jmurphy');
         console.log(n);
+        this.file = null;
         if (n != 'year') {
           const path = `${baseURL}/reportList?year=${this.selectedYear}`;
           axios

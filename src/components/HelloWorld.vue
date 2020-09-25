@@ -163,6 +163,7 @@ export default {
       DataInfo: {},
       triangleOffset: '30%',
       file: null,
+      filedata: new FormData(),
       routeFlag: 'id',
       barChart: {
         data: [],
@@ -472,6 +473,9 @@ export default {
     getDataInfo() {
       this.isLoading = true;
       this.isError = false;
+      this.DataInfo = {};
+      this.metaInfo = {};
+      this.barChart.data = [];
       if (this.routeFlag === 'id') {
         if (this.selectedCompanyId) {
           const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
@@ -556,22 +560,84 @@ export default {
             });
         }
       } else {
+        this.isLoading = true;
         console.log('-----File-----', this.file);
         const path = 'https://clip.csie.org/HIVETEST/api/uploadFile';
+        this.filedata.append('file', this.file);
+        console.log('--FileData---', this.filedata);
         axios
-          .post(path, { file: this.file })
+          .post(path, this.filedata)
           .then((response) => {
             console.log('----Response-----', response);
+            console.log(response.data.sentencesData);
+            console.log(response.data.wordsData);
+            this.DataInfo.sentencesData = response.data.sentencesData;
+            this.DataInfo.wordsData = response.data.wordsData;
+            if (this.DataInfo) {
+              console.log('--Before1---', this.barChart.data);
+              this.isError = false;
+              console.log(this.DataInfo, this.DataInfo.sentencesData, 'opp');
+              // for (let k = 0; k < this.DataInfo.sentencesData.length; k += 1) {
+              //   this.barChart.data.push(this.DataInfo.sentencesData[k]);
+              // }
+              this.barChart.data = this.DataInfo.sentencesData;
+              console.log('--a--', this.barChart.data.length);
+              console.log('--Before---', this.barChart.data);
+              let a = this.color(0);
+              if (this.barChart.data.length > 0) {
+                for (let i = 0; i < this.barChart.data.length; i += 1) {
+                  this.barChart.data[i].wordDetail = [];
+                  for (let j = 0; j < this.barChart.data[i].sentence.length; j += 1) {
+                    let flag = 0;
+                    for (let k = 0; k < this.barChart.data[i].words.length; k += 1) {
+                      const targetItem = this.barChart.data[i].words[k];
+                      if (this.barChart.data[i].sentence[j].indexOf(targetItem.word) != -1) {
+                        a = this.color(targetItem.weight);
+                        this.barChart.data[i].wordDetail.push(a);
+                        flag = 1;
+                        break;
+                      }
+                    }
+                    if (!flag) {
+                      this.barChart.data[i].wordDetail.push(a);
+                    }
+                  }
+                }
+              } else {
+                this.isError = true;
+              }
+
+              this.dependencyGraphDict.data = [];
+              for (let i = 0; i < 20; i += 1) {
+                this.dependencyGraphDict.data.push(this.DataInfo.wordsData[i]);
+              }
+              console.log(this.barChart.data, 'barchart');
+              console.log(this.DataInfo, 'DataInfo');
+              console.log('debug1');
+              this.isLoading = false;
+              console.log('debug2', this.isLoading);
+            } else {
+              this.loadingMessage = 'Error! No this Financial Report!';
+            }
           })
           .catch((error) => {
             console.log(error);
+            this.isError = true;
           });
       }
     },
-    companyIdFromNav(selectedCompanyId) {
+    companyIdFromNav(selectedCompanyId, navFile) {
       // childValue就是子组件传过来的值
       this.selectedCompanyId = selectedCompanyId;
-      if (this.selectedCompanyId) {
+      console.log(navFile);
+      if (navFile) {
+        this.routeFlag = 'file';
+        this.file = navFile;
+        this.isSelectorError = false;
+        console.log('---Get file from NavBar-----');
+        this.getDataInfo();
+      } else if (this.selectedCompanyId) {
+        this.routeFlag = 'id';
         this.isSelectorError = false;
         this.getDataInfo();
       } else {

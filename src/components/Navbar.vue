@@ -70,6 +70,7 @@ export default {
   methods: {
     setYear(year) {
       this.selectedYear = year;
+      this.file = null;
     },
     setCompany(company) {
       this.selectedCompany = company;
@@ -77,7 +78,7 @@ export default {
       console.log('ID', this.selectedCompanyId);
     },
     submitMeta() {
-      this.$emit('companyIdFromNav', this.selectedCompanyId);
+      this.$emit('companyIdFromNav', this.selectedCompanyId, this.file);
       console.log('change');
     },
 
@@ -109,6 +110,13 @@ export default {
         if (n != 'Company Name') {
           this.setCompany(n);
         }
+      },
+    },
+    file: {
+      handler(n, o) {
+        // console.log('jmurphy');
+        this.selectedCompany = 'Company Name';
+        this.selectedYear = 'Year';
       },
     },
   },
