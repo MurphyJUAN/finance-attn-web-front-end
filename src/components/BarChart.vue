@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     drawChart() {
-      const data = this.barChart.data;
+      const data = JSON.parse(JSON.stringify(this.barChart.data));
       let svgItemWidth = 212;
       let svgItemHeight = 500;
       let dataListLen = 0;

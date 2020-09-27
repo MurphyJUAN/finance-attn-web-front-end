@@ -308,6 +308,15 @@ export default {
       }
       return 0;
     },
+    compareValueFireFox(a, b) {
+      if (a.value < b.value) {
+        return 1;
+      }
+      if (a.vlue > b.value) {
+        return -1;
+      }
+      return 0;
+    },
     compareName(a, b) {
       if (a.name < b.name) {
         return -1;
@@ -317,21 +326,21 @@ export default {
       }
       return 0;
     },
-    // recoverDiction() {
-    //   this.barChart = JSON.parse(JSON.stringify(this.copyData));
-    //   this.isSorted = !this.isSorted;
-    //   for (let j = 0; j < this.dependencyGraphDict.links.length; j += 1) {
-    //     this.dependencyGraphDict.links[j].target = JSON.parse(JSON.stringify(this.dependencyLinkOrder[j].target));
-    //   }
-    // },
     sortDiction() {
       // console.log('isSorted', this.isSorted);
       // console.log(this.barChart);
+      console.log('----Sort----');
       if (!this.isSorted) {
-        this.barChart.data.sort(this.compareValue);
+        if (navigator.userAgent.match('Firefox')) {
+          console.log('---FireFox---');
+          this.barChart.data.sort(this.compareValueFireFox);
+        } else {
+          this.barChart.data.sort(this.compareValue);
+        }
       } else {
         this.barChart.data.sort(this.compareName);
       }
+      console.log('---sort---', this.barChart.data);
       this.isSorted = !this.isSorted;
     },
     setHeatMapData(idx) {
