@@ -19,7 +19,7 @@
               <b-alert :show="isSelectorError" variant="danger">Oops!Please Choose year and company name before submit.</b-alert>
             <!-- </div> -->
             <div v-if="!isLoading" class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp
-              <h5 style="display: inline-block" class="df-small-title" v-b-popover.hover.top="'Post-event return volatility is a widely used financial risk proxy; by following the definition in (Loughran and McDonald 2011), it is defined as the root-mean-square error from a Fama and French three-factor model for days 162 [6, 252] after the report filing date.'" title="Annual volatility">
+              <h5 style="display: inline-block" class="df-small-title" v-b-popover.hover.top="'Post-event return volatility is a widely used financial risk proxy and is defined as the root-mean-square error from a Fama and French three-factor model for days 162 [6, 252] after the report filing date  (Loughran and McDonald 2011).'" title="Annual volatility">
                     Annual volatility: {{metaInfo.volatility}}%
                 </h5>
             </div>
@@ -67,29 +67,32 @@
                 :style="{opacity: item.opacity}"
                 v-for="(item, idx) in barChart.data"
                 >
-                    <span
+                    <div
                     v-if="isHeatMap"
                     :style="{ background: colorFunc(idx, word, id, true),
-                    fontWeight:  checkSelected(item.name, id)? 900: 10}"
+                    fontWeight:  checkSelected(item.name, id)? 900: 10,
+                    padding: paddingSet(word)}"
                     class="text-span"
                     :ref="`ref-text-${item.name}-text-span-${id}`"
                     :id="`text-${item.name}-text-span-${id}`"
                     v-for="(word, id) in item.sentence">
                     {{word}}
-                    <span v-if="id === item.sentence.length - 1">.</span>
-                    </span>
+                    <!-- <span v-if="id === item.sentence.length - 1 && isHeatMap">.</span> -->
+                    </div>
 
-                    <span
+
+                    <div
                     v-if="!isHeatMap"
                     :style="{ background: colorFunc(idx, word,id,  false),
-                    fontWeight:  checkSelected(item.name, id)? 900: 10}"
+                    fontWeight:  checkSelected(item.name, id)? 900: 10,
+                    padding: paddingSet(word)}"
                     class="text-span"
                     :ref="`ref-text-${item.name}-text-span-${id}`"
                     :id="`text-${item.name}-text-span-${id}`"
                     v-for="(word, id) in item.sentence">
                     {{word}}
-                    <span v-if="id === item.sentence.length - 1">.</span>
-                    </span>
+                    <!-- <span v-if="id === item.sentence.length - 1">.</span> -->
+                    </div>
                 </div>
               <!-- </div> -->
             <!-- </div> -->
@@ -194,17 +197,12 @@ export default {
     mouseLeave() {
       this.isShowPredText = false;
     },
-    // 點擊的單字變色(ok)
-    // 點擊的句子往上跑(ok)
-    // 關鍵字跑到中間（ok)
-    // 字變成粗體、變色(ok)
-    // 點擊別的字、別的按鈕，字的底線會變回來(ok)
-    // 其他句子飽和度降低(ok)
-    // 不要讓字跑到下面 (ok)
-    // 點擊別的按鈕，整個句子的 opacity, 關鍵字的底線會消失
-    // initFunc(){
-
-    // },
+    paddingSet(word) {
+      if (word === ',' || word === '.' || word === '!' || word === ';') {
+        return '0 0 0 0';
+      }
+      return '0 0.255vw 0 0.255vw';
+    },
     checkSelected(textId, wordId) {
       const a = Object.keys(this.clickedSentenceansWord);
       // console.log('a', a);
@@ -238,51 +236,6 @@ export default {
               console.log('i', i, this.barChart.data[i].name, this.barChart.data[i].sentence);
 
               console.log('_-----', document.getElementById(`text-${j}-text-span-0`), document.getElementById(`text-${j}-text-span-0`).offsetLeft);
-              // for (let k = 0; k < this.barChart.data[j].sentence.length; k += 1) {
-              //   // console.log('a', this.barChart.data[j].sentence[k].toLowerCase());
-              //   if (this.barChart.data[j].sentence[k].toLowerCase().indexOf(word) !== -1) {
-              //     console.log('----Debug Click Word---');
-              //     console.log(word, this.barChart.data[j].sentence[k].toLowerCase());
-              //     const centerWordOffset = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-0`][0].offsetLeft;
-              //     console.log('before word Target', `ref-text-${this.barChart.data[j].name}-text-span-${k}`);
-              //     const wordTarget = this.$refs[`ref-text-${this.barChart.data[j].name}-text-span-${k}`][0];
-              //     // const wordTarget = document.getElementById(`text-${j}-text-span-${k}`);
-              //     // const moveX = this.$refs[`ref-text-${this.barChart.data[j].name}`];
-              //     // const targetX = moveX[0];
-              //     // console.log('x', moveX, targetX, moveX.scrollLeft, moveX[0], this.barChart.data[j].name);
-              //     const moveX = document.getElementById(`text-${j}`);
-              //     console.log('moveX', moveX, moveX.scrollLeft);
-              //     console.log('---wordTarget---', wordTarget);
-              //     if (wordTarget) {
-              //       console.log(`text-${this.barChart.data[j].name}-text-span-${k}`);
-              //       console.log('word', wordTarget);
-              //       if (k > 5) {
-              //         this.isScroll = true;
-              //         const offset = wordTarget.offsetLeft - centerWordOffset;
-              //         console.log('offset', offset);
-              //         moveX.scrollLeft = offset;
-              //         if (moveX.scrollLeft !== offset) {
-              //           console.log('strange!');
-              //           moveX.scrollLeft = offset;
-              //         }
-              //         console.log(wordTarget.offsetLeft, centerWordOffset, offset);
-              //         console.log('new movex', moveX.scrollLeft);
-              //       } else {
-              //         moveX.scrollLeft = 0;
-              //       }
-              //       // console.log('l', l);
-
-              //       this.clickedSentenceansWord[this.barChart.data[j].name.toString()] = k;
-              //       console.log('===', this.clickedSentenceansWord);
-              //       // console.log('ko', this.clickedSentenceansWord, Object.keys(this.clickedSentenceansWord).length);
-              //       // const y = document.getElementById(`text-${j}-text-span-${k}`);
-              //       // y.style.styleWeight = 900;
-              //       // y.style.borderBottom = 'solid 1px black';
-              //       // y.setAttribute('style', 'font-weight:900;border-bottom:solid 1px black;');
-              //       break;
-              //     }
-              //   }
-              // }
               break;
             }
           }
@@ -401,13 +354,9 @@ export default {
       let a = this.color(0);
       if (flag) {
         a = this.barChart.data[idx].wordDetail[id];
-        // for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
-        //   const targetItem = this.barChart.data[idx].words[j];
-        //   if (word.indexOf(targetItem.word) != -1) {
-        //     a = this.color(targetItem.weight);
-        //     break;
-        //   }
-        // }
+        if (word === ',' || word === ';' || word === '.' || word === '!') {
+          a = this.color(0);
+        }
       } else {
         a = this.color(0);
       }
@@ -492,6 +441,32 @@ export default {
                 .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
                 .then((responseSentence) => {
                   this.DataInfo.sentencesData = responseSentence.data.sentencesData;
+                  if (this.DataInfo.sentencesData) {
+                    for (let y = 0; y < this.DataInfo.sentencesData.length; y += 1) {
+                      const tmpSentence = [];
+                      for (let x = 0; x < this.DataInfo.sentencesData[y].sentence.length; x += 1) {
+                        if (this.DataInfo.sentencesData[y].sentence[x].indexOf(',') !== -1) {
+                          // console.log('----Get it-----');
+                          const strArray = this.DataInfo.sentencesData[y].sentence[x].split(',');
+                          tmpSentence.push(strArray[0]);
+                          tmpSentence.push(',');
+                          // console.log('-----StrArray---', strArray);
+                        } else if (this.DataInfo.sentencesData[y].sentence[x].indexOf(';') != -1) {
+                          const strArray = this.DataInfo.sentencesData[y].sentence[x].split(';');
+                          tmpSentence.push(strArray[0]);
+                          tmpSentence.push(';');
+                        } else if (this.DataInfo.sentencesData[y].sentence[x].indexOf('!') != -1) {
+                          const strArray = this.DataInfo.sentencesData[y].sentence[x].split('!');
+                          tmpSentence.push(strArray[0]);
+                          tmpSentence.push('!');
+                        } else {
+                          tmpSentence.push(this.DataInfo.sentencesData[y].sentence[x]);
+                        }
+                      }
+                      tmpSentence.push('.');
+                      this.DataInfo.sentencesData[y].sentence = tmpSentence;
+                    }
+                  }
                   axios
                     .get(`${baseURL}/wordsData?filename=${this.selectedCompanyId}`)
                     .then((responseWord) => {
@@ -914,9 +889,8 @@ export default {
  }
 
  .text-span {
-     padding-right: 0.255vw;
-     padding-left: 0.255vw;
-     text-align: center;
+     display: inline-flex;
+     justify-content: center;
  }
 
  .word-number {
@@ -956,7 +930,7 @@ export default {
     color: #fa39aa;
     font-size: 15px;
     position: absolute;
-    top: -11px;
+    top: -16px;
     left: 10px;
     cursor: hover;
     width: 500px;

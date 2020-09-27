@@ -19,7 +19,7 @@
               <b-alert :show="isSelectorError" variant="danger">Oops!Please Choose year and company name before submit.</b-alert>
             <!-- </div> -->
             <div v-if="!isLoading" class="meta-info">{{metaInfo.name}} &nbsp {{metaInfo.date}} &nbsp
-                <h5 style="display: inline-block" class="df-small-title" v-b-popover.hover.top="'Post-event return volatility is a widely used financial risk proxy; by following the definition in (Loughran and McDonald 2011), it is defined as the root-mean-square error from a Fama and French three-factor model for days 162 [6, 252] after the report filing date.'" title="Annual volatility">
+                <h5 style="display: inline-block" class="df-small-title" v-b-popover.hover.top="'Post-event return volatility is a widely used financial risk proxy and is defined as the root-mean-square error from a Fama and French three-factor model for days 162 [6, 252] after the report filing date  (Loughran and McDonald 2011).'" title="Annual volatility">
                     Annual volatility: {{metaInfo.volatility}}%
                 </h5>
                 </div>
@@ -67,29 +67,30 @@
                 :style="{opacity: item.opacity}"
                 v-for="(item, idx) in barChart.data"
                 >
-                    <span
+                    <div
                     v-if="isHeatMap"
                     :style="{ background: colorFunc(idx, word, id, true),
-                    fontWeight:  checkSelected(item.name, id)? 900: 10}"
+                    fontWeight:  checkSelected(item.name, id)? 900: 10,
+                    padding: paddingSet(word)}"
                     class="text-span"
                     :ref="`ref-text-${item.name}-text-span-${id}`"
                     :id="`text-${item.name}-text-span-${id}`"
                     v-for="(word, id) in item.sentence">
                     {{word}}
-                    <span v-if="id === item.sentence.length - 1">.</span>
-                    </span>
+                    </div>
 
-                    <span
+
+                    <div
                     v-if="!isHeatMap"
                     :style="{ background: colorFunc(idx, word,id,  false),
-                    fontWeight:  checkSelected(item.name, id)? 900: 10}"
+                    fontWeight:  checkSelected(item.name, id)? 900: 10,
+                    padding: paddingSet(word)}"
                     class="text-span"
                     :ref="`ref-text-${item.name}-text-span-${id}`"
                     :id="`text-${item.name}-text-span-${id}`"
                     v-for="(word, id) in item.sentence">
                     {{word}}
-                    <span v-if="id === item.sentence.length - 1">.</span>
-                    </span>
+                    </div>
                 </div>
               <!-- </div> -->
             <!-- </div> -->
@@ -193,17 +194,12 @@ export default {
     mouseLeave() {
       this.isShowPredText = false;
     },
-    // 點擊的單字變色(ok)
-    // 點擊的句子往上跑(ok)
-    // 關鍵字跑到中間（ok)
-    // 字變成粗體、變色(ok)
-    // 點擊別的字、別的按鈕，字的底線會變回來(ok)
-    // 其他句子飽和度降低(ok)
-    // 不要讓字跑到下面 (ok)
-    // 點擊別的按鈕，整個句子的 opacity, 關鍵字的底線會消失
-    // initFunc(){
-
-    // },
+    paddingSet(word) {
+      if (word === ',' || word === '.' || word === '!' || word === ';') {
+        return '0 0 0 0';
+      }
+      return '0 0.255vw 0 0.255vw';
+    },
     checkSelected(textId, wordId) {
       const a = Object.keys(this.clickedSentenceansWord);
       // console.log('a', a);
@@ -347,13 +343,9 @@ export default {
       let a = this.color(0);
       if (flag) {
         a = this.barChart.data[idx].wordDetail[id];
-        // for (let j = 0; j < this.barChart.data[idx].words.length; j += 1) {
-        //   const targetItem = this.barChart.data[idx].words[j];
-        //   if (word.indexOf(targetItem.word) != -1) {
-        //     a = this.color(targetItem.weight);
-        //     break;
-        //   }
-        // }
+        if (word === ',' || word === ';' || word === '.' || word === '!') {
+          a = this.color(0);
+        }
       } else {
         a = this.color(0);
       }
@@ -438,6 +430,32 @@ export default {
                 .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
                 .then((responseSentence) => {
                   this.DataInfo.sentencesData = responseSentence.data.sentencesData;
+                  if (this.DataInfo.sentencesData) {
+                    for (let y = 0; y < this.DataInfo.sentencesData.length; y += 1) {
+                      const tmpSentence = [];
+                      for (let x = 0; x < this.DataInfo.sentencesData[y].sentence.length; x += 1) {
+                        if (this.DataInfo.sentencesData[y].sentence[x].indexOf(',') !== -1) {
+                          // console.log('----Get it-----');
+                          const strArray = this.DataInfo.sentencesData[y].sentence[x].split(',');
+                          tmpSentence.push(strArray[0]);
+                          tmpSentence.push(',');
+                          // console.log('-----StrArray---', strArray);
+                        } else if (this.DataInfo.sentencesData[y].sentence[x].indexOf(';') != -1) {
+                          const strArray = this.DataInfo.sentencesData[y].sentence[x].split(';');
+                          tmpSentence.push(strArray[0]);
+                          tmpSentence.push(';');
+                        } else if (this.DataInfo.sentencesData[y].sentence[x].indexOf('!') != -1) {
+                          const strArray = this.DataInfo.sentencesData[y].sentence[x].split('!');
+                          tmpSentence.push(strArray[0]);
+                          tmpSentence.push('!');
+                        } else {
+                          tmpSentence.push(this.DataInfo.sentencesData[y].sentence[x]);
+                        }
+                      }
+                      tmpSentence.push('.');
+                      this.DataInfo.sentencesData[y].sentence = tmpSentence;
+                    }
+                  }
                   axios
                     .get(`${baseURL}/wordsData?filename=${this.selectedCompanyId}`)
                     .then((responseWord) => {
@@ -609,6 +627,32 @@ export default {
     let a = this.color(0);
     if (DataInfo) {
       this.barChart.data = DataInfo.sentencesData;
+      if (this.barChart.data) {
+        for (let y = 0; y < this.barChart.data.length; y += 1) {
+          const tmpSentence = [];
+          for (let x = 0; x < this.barChart.data[y].sentence.length; x += 1) {
+            if (this.barChart.data[y].sentence[x].indexOf(',') !== -1) {
+              // console.log('----Get it-----');
+              const strArray = this.barChart.data[y].sentence[x].split(',');
+              tmpSentence.push(strArray[0]);
+              tmpSentence.push(',');
+              // console.log('-----StrArray---', strArray);
+            } else if (this.barChart.data[y].sentence[x].indexOf(';') != -1) {
+              const strArray = this.barChart.data[y].sentence[x].split(';');
+              tmpSentence.push(strArray[0]);
+              tmpSentence.push(';');
+            } else if (this.barChart.data[y].sentence[x].indexOf('!') != -1) {
+              const strArray = this.barChart.data[y].sentence[x].split('!');
+              tmpSentence.push(strArray[0]);
+              tmpSentence.push('!');
+            } else {
+              tmpSentence.push(this.barChart.data[y].sentence[x]);
+            }
+          }
+          tmpSentence.push('.');
+          this.barChart.data[y].sentence = tmpSentence;
+        }
+      }
       for (let i = 0; i < this.barChart.data.length; i += 1) {
         this.barChart.data[i].opacity = 1;
         this.barChart.data[i].wordDetail = [];
@@ -886,9 +930,10 @@ export default {
  }
 
  .text-span {
-     padding-right: 0.255vw;
+     padding-right: 0.25vw;
      padding-left: 0.255vw;
-     text-align: center;
+     display: inline-flex;
+     justify-content: center;
  }
 
  .word-number {
@@ -926,9 +971,9 @@ export default {
     color: #fa39aa;
     font-size: 15px;
     position: absolute;
-    top: -11px;
+    top: -16px;
     left: 10px;
-    cursor: hover;
+    cursor: pointer;
     width: 500px;
     z-index: 100;
   }
