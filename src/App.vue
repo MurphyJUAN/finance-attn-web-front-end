@@ -29,6 +29,7 @@ html, body {
   color: #2c3e50;
   /* background: rgb(249,247,235); */
   /* margin-top: 10px; */
+  overflow-x: hidden;
 }
 .company-input-home {
     /* width: 8rem; */

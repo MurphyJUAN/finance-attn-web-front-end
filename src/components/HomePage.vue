@@ -34,7 +34,6 @@
                     </g>
                 </mask>
     </svg>
-    <div style="opacity: 0">hi</div>
     <b-alert :show="isError" variant="danger">Please choose year and company name before submit.</b-alert>
     <div class="form-block">
         <h1 class="text-light product-name hive" style="font-size:65px;">HIVE</h1>
