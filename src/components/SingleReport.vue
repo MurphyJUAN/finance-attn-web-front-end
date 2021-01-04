@@ -269,10 +269,22 @@ export default {
     },
   },
   created() {
-    this.selectedCompanyId = this.$route.params.reportId;
-    this.file = this.$route.params.file;
-    this.routeFlag = this.$route.params.flag;
-    this.getDataInfo();
+    if (this.$route.params.dataInfo) {
+      console.log('---hu----');
+      this.selectedCompanyId = this.$route.params.companyId;
+      this.metaInfo = this.$route.params.metaInfo;
+      this.DataInfo = this.$route.params.dataInfo;
+      this.triangleOffset = this.$route.params.triangleOffset;
+      this.sentenceAverageWeight = this.$route.params.sentenceAverageWeight;
+      this.sentenceValueArray = this.$route.params.sentenceValueArray;
+      this.firstTitleStopIndex = this.$route.params.firstTitleStopIndex;
+      this.similarReportList = this.$route.params.similarReportList;
+    } else {
+      this.selectedCompanyId = this.$route.params.reportId;
+      this.file = this.$route.params.file;
+      this.routeFlag = this.$route.params.flag;
+      this.getDataInfo();
+    }
   },
 
   mounted() {

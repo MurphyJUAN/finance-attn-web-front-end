@@ -85,12 +85,13 @@ export default {
     };
   },
   methods: {
-    closeRecPage(id) {
-      this.$emit('closeRecPage');
+    clickRecReport(id) {
+      this.selectedCompanyId = id;
+      this.submitMeta();
     },
-    closeSingleFinPage() {
+    closeRecPage() {
       this.isClose = true;
-      this.$emit('closeSingleFinPage', this.isClose, this.pageStatus);
+      this.$emit('closeRecPage');
     },
     submitMeta() {
       if (this.selectedCompanyId) {

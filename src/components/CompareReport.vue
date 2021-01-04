@@ -390,9 +390,14 @@ export default {
       this.$router.push({
         name: 'SingleReport',
         params: {
-          reportId: this.selectedCompanyId,
-          file: this.file,
-          flag: 'id' } });
+          companyId: this.selectedCompanyId,
+          metaInfo: this.metaInfo,
+          dataInfo: this.DataInfo,
+          triangleOffset: this.triangleOffset,
+          sentenceAverageWeight: this.sentenceAverageWeight,
+          sentenceValueArray: this.sentenceValueArray,
+          firstTitleStopIndex: this.firstTitleStopIndex,
+          similarReportList: this.similarReportList } });
     },
     closeSingleFinPageFromComparedPage(isClose) {
       if (isClose) {
