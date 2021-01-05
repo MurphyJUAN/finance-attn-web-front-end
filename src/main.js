@@ -6,6 +6,9 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import vSelect from 'vue-select';
+import HighchartsVue from 'highcharts-vue';
+
+Vue.use(HighchartsVue);
 
 Vue.component('v-select', vSelect);
 

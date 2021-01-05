@@ -11,6 +11,8 @@
     :sentenceAverageWeight="sentenceAverageWeight"
     :sentenceValueArray="sentenceValueArray"
     :firstTitleStopIndex="firstTitleStopIndex"
+    :stockInfo="stockInfo"
+    :isStockLoading="isStockLoading"
     :pageStatus=0 />
 
     <div class="compareBtn" @click="switch2Compare">
@@ -29,6 +31,7 @@ import axios from 'axios';
 import SelectReport from './SelectReport';
 import PageItem from './PageItem';
 import * as d3 from 'd3';
+import companyList from '../assets/csvjson.json';
 
 const baseURL = 'https://clip.csie.org/HIVEBACK/api';
 export default {
@@ -48,6 +51,7 @@ export default {
       isSelectorError: false,
       isError: false,
       isLoading: true,
+      isStockLoading: false,
       metaInfo: {},
       DataInfo: {
         sentencesData: [],
@@ -58,6 +62,11 @@ export default {
       sentenceValueArray: [],
       firstTitleStopIndex: -1,
       similarReportList: [],
+      stockInfo: {
+        name: '',
+        price: [],
+        volume: [],
+      },
     };
   },
   methods: {
@@ -111,6 +120,72 @@ export default {
               a.pr = response.data.PR;
               this.triangleOffset = `${Math.floor(a.pr).toString()}%`;
               this.metaInfo = a;
+              // fins stock symbol
+              const company = this.metaInfo.name.trim().split(' ')[0];
+              this.stockInfo.name = this.metaInfo.name;
+              let symbol = '';
+              for (let i = 0; i < companyList.length; i += 1) {
+                if (companyList[i].Name.toLowerCase().indexOf(company.toLowerCase()) !== -1) {
+                  symbol = companyList[i].Symbol;
+                  break;
+                }
+              }
+              // Get stock data
+              if (symbol.length > 0) {
+                this.isStockLoading = true;
+                const d1 = new Date(this.metaInfo.date);
+                const d2 = new Date(d1);
+                d2.setFullYear(d2.getFullYear() - 1);
+                const t = new Date(d2).getTime();
+
+                const options = {
+                  method: 'GET',
+                  url: 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-histories',
+                  params: {
+                    symbol,
+                    from: t,
+                    to: '1562086800',
+                    events: 'div',
+                    interval: '1d',
+                    region: 'US',
+                  },
+                  headers: {
+                    'x-rapidapi-key': '849af88f92mshab85a4adc3b97e2p13cc69jsn6ae5bed9ae55',
+                    'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com',
+                  },
+                };
+
+
+                axios.request(options).then((stockResponse) => {
+                  const ohlc2 = [];
+                  const volume2 = [];
+                  const quote = stockResponse.data.chart.result[0].indicators.quote[0];
+                  const myTimestamp = stockResponse.data.chart.result[0].timestamp;
+                  console.log('---time len---', myTimestamp.length);
+                  for (let i = 0; i < myTimestamp.length; i += 1) {
+                    ohlc2.push([
+                      myTimestamp[i] * 1000, // the date
+                      quote.open[i],
+                      quote.high[i],
+                      quote.low[i],
+                      quote.close[i],
+                    ]);
+
+                    volume2.push([
+                      myTimestamp[i] * 1000, // the date
+                      quote.volume[i], // the volume
+                    ]);
+                  }
+                  this.stockInfo.price = ohlc2;
+                  this.stockInfo.volume = volume2;
+                  this.isStockLoading = false;
+                }).catch((error) => {
+                  this.isStockLoading = false;
+                  console.error(error);
+                });
+              }
+
+
               axios
                 .get(`${baseURL}/sentencesData?filename=${this.selectedCompanyId}`)
                 .then((responseSentence) => {
@@ -235,20 +310,21 @@ export default {
                   );
                 });
             }
-          });
-        console.log('---similar---', this.similarReportList);
-        this.$router.push(
-          { name: 'CompareReport',
-            params: {
-              companyId: this.selectedCompanyId,
-              metaInfo: this.metaInfo,
-              dataInfo: this.DataInfo,
-              triangleOffset: this.triangleOffset,
-              sentenceAverageWeight: this.sentenceAverageWeight,
-              sentenceValueArray: this.sentenceValueArray,
-              firstTitleStopIndex: this.firstTitleStopIndex,
-              similarReportList: this.similarReportList,
-            },
+            console.log('---similar---', this.similarReportList);
+            this.$router.push(
+              { name: 'CompareReport',
+                params: {
+                  companyId: this.selectedCompanyId,
+                  metaInfo: this.metaInfo,
+                  dataInfo: this.DataInfo,
+                  triangleOffset: this.triangleOffset,
+                  sentenceAverageWeight: this.sentenceAverageWeight,
+                  sentenceValueArray: this.sentenceValueArray,
+                  firstTitleStopIndex: this.firstTitleStopIndex,
+                  similarReportList: this.similarReportList,
+                  stockInfo: this.stockInfo,
+                },
+              });
           });
       }
     },
@@ -279,6 +355,7 @@ export default {
       this.sentenceValueArray = this.$route.params.sentenceValueArray;
       this.firstTitleStopIndex = this.$route.params.firstTitleStopIndex;
       this.similarReportList = this.$route.params.similarReportList;
+      this.stockInfo = this.$route.params.stockInfo;
     } else {
       this.selectedCompanyId = this.$route.params.reportId;
       this.file = this.$route.params.file;

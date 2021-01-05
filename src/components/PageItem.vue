@@ -1,5 +1,7 @@
 <template>
     <div class="reportContainer">
+        <!-- <highcharts :constructorType="'stockChart'" :options="chartOptions2" ></highcharts> -->
+        <!-- <highcharts :constructorType="'stockChart'" :options="chartOptions" ></highcharts> -->
 
         <div class="meta-info">
         <div class="report-name">
@@ -49,7 +51,7 @@
 
         </div>
 
-        <!-- <div class="stock">
+        <div class="stock">
             <div
             :aria-expanded="priceVisible ? 'true' : 'false'"
             :aria-controls="`collapse-2-${name}`"
@@ -57,11 +59,15 @@
             class="collapse-item">
               <h5 class="bold-class collapse-title">Price Changes</h5>
               <img class="arrow" src="../assets/arrow.svg" />
+              <div v-if="isStockLoading"><Loading /></div>
             </div>
             <b-collapse :id="`collapse-2-${name}`"  v-model="priceVisible" class="mt-2">
-              <div class="stock-block"></div>
+              <div class="stock-block">
+                <!-- <div @click="clickStockBtn">Test Btn</div> -->
+                <highcharts v-if="stockInfo.price.length > 0" :constructorType="'stockChart'" :options="chartOptions" ></highcharts>
+              </div>
             </b-collapse>
-        </div> -->
+        </div>
 
         <div class="report-text">
           <div
@@ -80,7 +86,7 @@
               </div>
               <span  v-for="(sentences, idxS) in DataInfo.sentencesData">
                 <!-- checkHighlight(sentences.value, word, idxS), -->
-                <!-- number: {{firstTitleStopIndex}} -->
+                <!-- number: {{idxS}} -->
                 <div
                 :class="{
                   contentText: true,
@@ -112,6 +118,15 @@ import NewNavBar from './NewNavBar';
 import axios from 'axios';
 import SelectReport from './SelectReport';
 import * as d3 from 'd3';
+import { Chart } from 'highcharts-vue';
+import Highcharts from 'highcharts';
+import stockInit from 'highcharts/modules/stock';
+import exportingInit from 'highcharts/modules/exporting';
+import Loading from './Loading';
+
+
+stockInit(Highcharts);
+exportingInit(Highcharts);
 
 const baseURL = 'https://clip.csie.org/HIVEBACK/api';
 export default {
@@ -120,9 +135,11 @@ export default {
     NavBar,
     NewNavBar,
     SelectReport,
+    highcharts: Chart,
+    Loading,
   },
   // pageStatus:0->single, 1->compare
-  props: ['similarity', 'name', 'DataInfo', 'metaInfo', 'triangleOffset', 'sentenceAverageWeight', 'sentenceValueArray', 'pageStatus', 'firstTitleStopIndex'],
+  props: ['isStockLoading', 'stockInfo', 'similarity', 'name', 'DataInfo', 'metaInfo', 'triangleOffset', 'sentenceAverageWeight', 'sentenceValueArray', 'pageStatus', 'firstTitleStopIndex'],
   data() {
     return {
       infoVisible: true,
@@ -135,10 +152,281 @@ export default {
         idx: -1,
         target: 'none',
       },
+      chartOptions: {
+        chart: {
+          events: {
+            load: (function (self) {
+              return function () {
+                self.chart = this;
+              };
+            }(this)),
+          },
+        },
+        rangeSelector: {
+          // selected: 1,
+        },
+
+        title: {
+          text: '',
+        },
+
+        yAxis: [{
+          labels: {
+            align: 'right',
+            x: -3,
+          },
+          title: {
+            text: 'OHLC',
+          },
+          height: '60%',
+          lineWidth: 2,
+          resize: {
+            enabled: true,
+          },
+        }, {
+          labels: {
+            align: 'right',
+            x: -3,
+          },
+          title: {
+            text: 'Volume',
+          },
+          top: '65%',
+          height: '35%',
+          offset: 0,
+          lineWidth: 2,
+        }],
+
+        tooltip: {
+          split: true,
+        },
+
+        series: [
+          {
+            type: 'candlestick',
+            name: 'AAPL',
+            // ohlc
+            data: [[]],
+            dataGrouping: {
+            // groupingUnits
+              units: [['week', [1]], ['month', [1, 2, 3, 4, 6]]],
+            },
+          }, {
+            type: 'column',
+            name: 'Volume',
+            // volume
+            data: [[]],
+            yAxis: 1,
+            dataGrouping: {
+            // groupingUnits
+              units: [['week', [1]], ['month', [1, 2, 3, 4, 6]]],
+            },
+          },
+          {
+            type: 'flags',
+            data: [{
+              x: Date.UTC(2002, 11, 1),
+              title: '*',
+              text: 'Post Event Point',
+            }],
+            onSeries: 'dataseries',
+            shape: 'flag',
+            width: 25,
+          },
+        ],
+      },
+      chartOptions2: {
+        chart: {
+          events: {
+            load: (function (self) {
+              return function () {
+                self.chart = this;
+              };
+            }(this)),
+          },
+        },
+        credits: {
+          enabled: false,
+        },
+        plotOptions: {
+          series: {
+            marker: {
+              radius: 4,
+              lineColor: '#666666',
+              lineWidth: 1,
+            },
+          },
+        },
+        rangeSelector: {
+          // selected: 1,
+        },
+
+        title: {
+          text: '',
+        },
+
+        yAxis: [{
+          labels: {
+            align: 'right',
+            x: -3,
+          },
+          title: {
+            text: 'OHLC',
+          },
+          height: '60%',
+          lineWidth: 2,
+          resize: {
+            enabled: true,
+          },
+        }, {
+          labels: {
+            align: 'right',
+            x: -3,
+          },
+          title: {
+            text: 'Volume',
+          },
+          top: '65%',
+          height: '35%',
+          offset: 0,
+          lineWidth: 2,
+        }],
+
+        tooltip: {
+          split: true,
+        },
+
+        series: [
+          {
+            type: 'candlestick',
+            name: '',
+            // ohlc
+            data: [[]],
+            id: 'dataseries',
+            dataGrouping: {
+            // groupingUnits
+              units: [['week', [1]], ['month', [1, 2, 3, 4, 6]]],
+            },
+          }, {
+            type: 'column',
+            name: 'Volume',
+            // volume
+            data: [[]],
+            yAxis: 1,
+            dataGrouping: {
+            // groupingUnits
+              units: [['week', [1]], ['month', [1, 2, 3, 4, 6]]],
+            },
+          },
+          {
+            type: 'flags',
+            data: [{
+              x: Date.UTC(2002, 11, 1),
+              title: 'A',
+              text: 'Some event with a description',
+            }],
+            onSeries: 'dataseries',
+            shape: 'circlepin',
+            width: 16,
+          },
+        ],
+
+      },
 
     };
   },
   methods: {
+    clickStockBtn() {
+      const ohlc = [];
+      const volume = [];
+      axios
+        .get('https://demo-live-data.highcharts.com/aapl-ohlcv.json')
+        .then((data) => {
+        // split the data set into ohlc and volume
+
+          const _data = data.data;
+          const dataLength = _data.length;
+          // set the allowed units for data grouping
+          console.log('---stock---', _data);
+          const groupingUnits = [['week', [1]], ['month', [1, 2, 3, 4, 6]]];
+
+          let i = 0;
+
+          console.log('--type---', typeof (_data), typeof (_data[1][0]));
+
+          for (i; i < dataLength; i += 1) {
+            const a =
+            [
+              _data[i][0], // the date
+              _data[i][1], // open
+              _data[i][2], // high
+              _data[i][3], // low
+              _data[i][4], // close
+            ];
+            ohlc.push(
+              a,
+            );
+
+            volume.push([
+              _data[i][0], // the date
+              _data[i][5], // the volume
+            ]);
+          }
+          // this.chartOptions.series[0].data = _data;
+          this.chartOptions2.series[0].data = ohlc;
+          this.chartOptions2.series[1].data = volume;
+          console.log('---option1---', this.chartOptions2);
+        });
+
+
+      const options = {
+        method: 'GET',
+        url: 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-histories',
+        params: {
+          symbol: 'AAON',
+          from: '726163200',
+          to: '1562086800',
+          events: 'div',
+          interval: '1d',
+          region: 'US',
+        },
+        headers: {
+          'x-rapidapi-key': '849af88f92mshab85a4adc3b97e2p13cc69jsn6ae5bed9ae55',
+          'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com',
+        },
+      };
+
+
+      axios.request(options).then((response) => {
+        const ohlc2 = [];
+        const volume2 = [];
+        const quote = response.data.chart.result[0].indicators.quote[0];
+        const myTimestamp = response.data.chart.result[0].timestamp;
+        console.log('---time len---', myTimestamp.length);
+        for (let i = 0; i < myTimestamp.length; i += 1) {
+          ohlc2.push([
+            myTimestamp[i] * 1000, // the date
+            quote.open[i],
+            quote.high[i],
+            quote.low[i],
+            quote.close[i],
+          ]);
+
+          volume2.push([
+            myTimestamp[i] * 1000, // the date
+            quote.volume[i], // the volume
+          ]);
+        }
+
+        this.chartOptions.series[0].data = ohlc2;
+        this.chartOptions.series[1].data = volume2;
+
+
+        console.log('---final---', this.chartOptions);
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
     checkHighlight(sv, word, idxS) {
       if (idxS > 0 && sv >= this.mutableAverageWeight && word !== this.clickedWord[1]) {
         return true;
@@ -1024,6 +1312,12 @@ export default {
   },
   created() {
     this.mutableAverageWeight = JSON.parse(this.sentenceAverageWeight);
+    this.chartOptions.title.text = this.stockInfo.name;
+    this.chartOptions.series[0].name = this.stockInfo.name;
+    this.chartOptions.series[0].data = this.stockInfo.price;
+    this.chartOptions.series[1].data = this.stockInfo.volume;
+    this.chartOptions.series[2].data[0].x = new Date(this.metaInfo.date).getTime();
+    console.log('---asd---', this.chartOptions.series[2]);
   },
   computed: {
   },
@@ -1036,6 +1330,17 @@ export default {
     }
   },
   watch: {
+    stockInfo: {
+      handler(n, o) {
+        this.chartOptions.title.text = n.name;
+        this.chartOptions.series[0].name = n.name;
+        this.chartOptions.series[0].data = n.price;
+        this.chartOptions.series[1].data = n.volume;
+        this.chartOptions.series[2].data[0].x = new Date(this.metaInfo.date).getTime();
+        console.log('---asd---', this.chartOptions.series[2]);
+      },
+      deep: true,
+    },
     sentenceAverageWeight: {
       handler(n, o) {
         console.log('---!!!---', this.sentenceAverageWeight);
@@ -1090,7 +1395,7 @@ export default {
   box-shadow: inset 0 0 10px rgb(85, 85, 85);
 }
 .stock-block {
-  height: 10rem;
+  /* height: 10rem; */
   width: 100％;
   background: grey;
   opacity: 0.6;
