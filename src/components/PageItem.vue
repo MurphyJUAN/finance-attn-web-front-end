@@ -13,37 +13,48 @@
         </div>
 
 
-        <div
+        <!-- <div
         :aria-expanded="infoVisible ? 'true' : 'false'"
         :aria-controls="`collapse-1-${this.name}`"
         @click="infoVisible = !infoVisible"
         class="collapse-item">
           <h5 class="bold-class collapse-title">General Information</h5>
           <img class="arrow" src="../assets/arrow.svg" />
-        </div>
+        </div> -->
         <b-collapse :id="`collapse-1-${name}`" v-model="infoVisible" class="mt-2">
           <div class="meta-box">
             <div class="meta-detail">
-              <h5>Post Return Volitility: {{metaInfo.volatility}}%</h5>
-              <!-- <h5>Word Composition: 50% financial words</h5> -->
               <h5>
-                  <h5 class="inline-class">Top 5 High Attention Words: </h5>
+                  <div class="risky-word-title">Top 5 High Attention Words: </div>
+                  <div class="risky-words-block">
                   <h5 v-for="(item, idx) in DataInfo.wordsData" v-if="idx<5" class="inline-class top-5-words"
                   :class="{
-                    color0: idx === 0,
-                    color1: idx === 1,
-                    color2: idx === 2,
-                    color3: idx === 3,
-                    color4: idx === 4,
-                    clickedRiskyWord: idx === clickedWord.idx
+                    color0: idx == 0 && idx === clickedWord.idx,
+                    color1: idx == 1 && idx === clickedWord.idx,
+                    color2: idx == 2 && idx === clickedWord.idx,
+                    color3: idx == 3 && idx === clickedWord.idx,
+                    color4: idx == 4 && idx === clickedWord.idx
                   }"
 
                   @click="clickedRiskyWords(idx, item['word'])">
                       {{item['word']}}
                   </h5>
+                  </div>
+                  <div class="risky-word-title">Post-event return volatility: {{metaInfo.volatility}}%</div>
+                  <div class="inline-class">
+                    <div class="inline-class" :class="getPrClass()"></div>
+                    <div v-if="triangleOffset >= 50" class="inline-class">Safe I Placed at lower {{100 - triangleOffset}}% companies of the same year</div>
+                    <div v-if="triangleOffset <= 10" class="inline-class">Danger I Placed at top {{triangleOffset}}% companies of the same year</div>
+                    <div v-if="triangleOffset < 50 && triangleOffset > 10" class="inline-class">Caution I Placed at top {{triangleOffset}}% companies of the same year</div>
+                  </div>
+
+
+              </h5>
+
+              <!-- <h5>Word Composition: 50% financial words</h5> -->
+
               </h5>
             </div>
-            <div :class="getPrClass()">{{triangleOffset}}</div>
           </div>
 
         </b-collapse>
@@ -70,7 +81,7 @@
         </div>
 
         <div class="report-text">
-          <div
+          <!-- <div
             class="collapse-item"
             :aria-expanded="reportVisible ? 'true' : 'false'"
             :aria-controls="`collapse-3-${name}`"
@@ -78,11 +89,11 @@
         >
           <h5 class="bold-class collapse-title">Financial Statement</h5>
           <img class="arrow" src="../assets/arrow.svg" />
-        </div>
+          </div> -->
           <b-collapse :id="`collapse-3-${name}`"  v-model="reportVisible" class="mt-2">
               <div class="viz-block">
                 <div :class="`viz__box-plot-${name}`"></div>
-                <div class="viz-title">Sentence Weight Box Plot:&nbsp(Highlight sentences by their sentence attention weight)</div>
+                <div class="viz-title">Click the range selector to highlight sentences by their attention weight!</div>
               </div>
               <span  v-for="(sentences, idxS) in DataInfo.sentencesData">
                 <!-- checkHighlight(sentences.value, word, idxS), -->
@@ -445,15 +456,15 @@ export default {
       }
     },
     getPrClass() {
-      const pr = parseFloat(this.triangleOffset);
-      if (pr <= 25) {
+      const pr = this.triangleOffset;
+      if (pr <= 10) {
         return {
           prLevel: true,
           prLevelLow: true,
           prLevelMid: false,
           prLevelHigh: false,
         };
-      } else if (pr > 25 && pr <= 50) {
+      } else if (pr > 10 && pr <= 50) {
         return {
           prLevel: true,
           prLevelLow: false,
@@ -525,9 +536,11 @@ export default {
       // ! the vertical scale is defined for the histogram once the bins are created, since it's based on the bins' sizes
       const xScale = d3
         .scaleLinear()
-        .domain([minBoxPlot, maxBoxPlot])
+        .domain([q1, q3])
         .range([0, width]);
         // .nice();
+
+      const q2Position = q1 + (q3 - q1) / 2;
 
       console.log('1: minBox, q1, median, q3, maxBoxPlot', xScale(minBoxPlot), xScale(q1), xScale(median), xScale(q3), xScale(maxBoxPlot));
       console.log('1: minBox, q1, median, q3, maxBoxPlot', (minBoxPlot), (q1), (median), (q3), (maxBoxPlot));
@@ -549,7 +562,7 @@ export default {
 
       const clickedCircleRadius = 7;
 
-      const clickedSmallCircleRadius = 4;
+      const clickedSmallCircleRadius = 7;
 
       const clickedCircleColor = 'white';
 
@@ -575,44 +588,44 @@ export default {
 
 
       // Normalize
-      const offsetRange = [q1 - minBoxPlot, median - q1, q3 - median, maxBoxPlot - q3];
+      // const offsetRange = [q1 - minBoxPlot, median - q1, q3 - median, maxBoxPlot - q3];
       // const maxRange = d3.maxIndex(offsetRange);
-      if (xScale(q1 - minBoxPlot) < 40) {
-        const offset = 40 - xScale(q1 - minBoxPlot);
-        q1 += xScale.invert(offset);
-      }
-      if (xScale(median - q1) < 40) {
-        const offset = 40 - xScale(median - q1);
-        median += xScale.invert(offset);
-      }
-      if (xScale(q3 - median) < 40) {
-        const offset = 40 - xScale(q3 - median);
-        q3 += xScale.invert(offset);
-      }
-      if (xScale(maxBoxPlot - q3) < 40) {
-        const offset = 40 - xScale(maxBoxPlot - q3);
-        maxBoxPlot += xScale.invert(offset);
-      }
+      // if (xScale(q1 - minBoxPlot) < 40) {
+      //   const offset = 40 - xScale(q1 - minBoxPlot);
+      //   q1 += xScale.invert(offset);
+      // }
+      // if (xScale(median - q1) < 40) {
+      //   const offset = 40 - xScale(median - q1);
+      //   median += xScale.invert(offset);
+      // }
+      // if (xScale(q3 - median) < 40) {
+      //   const offset = 40 - xScale(q3 - median);
+      //   q3 += xScale.invert(offset);
+      // }
+      // if (xScale(maxBoxPlot - q3) < 40) {
+      //   const offset = 40 - xScale(maxBoxPlot - q3);
+      //   maxBoxPlot += xScale.invert(offset);
+      // }
 
 
       // --- min rect---
-      groupBoxPlot
-        .append('rect')
-        .attr('x', xScale(minBoxPlot))
-        .attr('width', xScale(q1) - xScale(minBoxPlot))
-        .attr('y', -boxHeight / 2)
-        .attr('height', boxHeight)
-        .attr('fill', 'rgb(56,33,167)')
-        .attr('class', `rectMin-${this.name}`);
-      // ---max rec---
-      groupBoxPlot
-        .append('rect')
-        .attr('x', xScale(q3))
-        .attr('width', xScale(maxBoxPlot) - xScale(q3))
-        .attr('y', -boxHeight / 2)
-        .attr('height', boxHeight)
-        .attr('fill', `${yellowColor}`)
-        .attr('class', `rectMax-${this.name}`);
+      // groupBoxPlot
+      //   .append('rect')
+      //   .attr('x', xScale(minBoxPlot))
+      //   .attr('width', xScale(q1) - xScale(minBoxPlot))
+      //   .attr('y', -boxHeight / 2)
+      //   .attr('height', boxHeight)
+      //   .attr('fill', 'rgb(56,33,167)')
+      //   .attr('class', `rectMin-${this.name}`);
+      // // ---max rec---
+      // groupBoxPlot
+      //   .append('rect')
+      //   .attr('x', xScale(q3))
+      //   .attr('width', xScale(maxBoxPlot) - xScale(q3))
+      //   .attr('y', -boxHeight / 2)
+      //   .attr('height', boxHeight)
+      //   .attr('fill', `${yellowColor}`)
+      //   .attr('class', `rectMax-${this.name}`);
 
       // ---min path---
       // groupBoxPlot
@@ -632,207 +645,210 @@ export default {
       //   .attr('class', 'path2')
       //   .attr('d', `M ${xScale(q3)} 0 H ${xScale(maxBoxPlot)}`);
 
-      groupBoxPlot
-        .append('path')
-        .attr('fill', 'none')
-        .attr('stroke', 'currentColor')
-        .attr('stroke-width', '1')
-        .attr('d', `M ${xScale(minBoxPlot)} ${-verticalMargin} V ${verticalMargin}`);
+      // right vertical path
+      // groupBoxPlot
+      //   .append('path')
+      //   .attr('fill', 'none')
+      //   .attr('stroke', 'currentColor')
+      //   .attr('stroke-width', '1')
+      //   .attr('d', `M ${xScale(minBoxPlot)} ${-verticalMargin} V ${verticalMargin}`);
 
-      groupBoxPlot
-        .append('path')
-        .attr('fill', 'none')
-        .attr('stroke', 'currentColor')
-        .attr('stroke-width', '1')
-        .attr('d', `M ${xScale(maxBoxPlot)} ${-verticalMargin} V ${verticalMargin}`);
+      // left vertical path
+      // groupBoxPlot
+      //   .append('path')
+      //   .attr('fill', 'none')
+      //   .attr('stroke', 'currentColor')
+      //   .attr('stroke-width', '1')
+      //   .attr('d', `M ${xScale(maxBoxPlot)} ${-verticalMargin} V ${verticalMargin}`);
 
       // ---min circle---
-      groupBoxPlot
-        .append('circle')
-        .attr('cx', `${xScale(minBoxPlot)}`)
-        .attr('cy', 0)
-        .attr('r', `${clickedSmallCircleRadius}`)
-        .attr('fill', `${clickedCircleColor}`)
-        .attr('stroke', `${blueColor}`)
-        .attr('stroke-width', `${clickedCircleWidth}`)
-        .attr('class', `minCircle-${this.name}`)
-        .on('click', (d) => {
-          if (this.clickedCircleItem !== 'min') {
-            this.clickedCircleItem = 'min';
-            this.mutableAverageWeight = minBoxPlot;
-            // 激活中
-            d3.selectAll(`.minCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius + 2}`)
-              .attr('stroke-width', `${clickedCircleWidth + 2}`)
-              .attr('stroke', `${yellowColor}`);
+      // groupBoxPlot
+      //   .append('circle')
+      //   .attr('cx', `${xScale(minBoxPlot)}`)
+      //   .attr('cy', 0)
+      //   .attr('r', `${clickedSmallCircleRadius}`)
+      //   .attr('fill', `${clickedCircleColor}`)
+      //   .attr('stroke', `${blueColor}`)
+      //   .attr('stroke-width', `${clickedCircleWidth}`)
+      //   .attr('class', `minCircle-${this.name}`)
+      //   .on('click', (d) => {
+      //     if (this.clickedCircleItem !== 'min') {
+      //       this.clickedCircleItem = 'min';
+      //       this.mutableAverageWeight = minBoxPlot;
+      //       // 激活中
+      //       d3.selectAll(`.minCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius + 2}`)
+      //         .attr('stroke-width', `${clickedCircleWidth + 2}`)
+      //         .attr('stroke', `${yellowColor}`);
 
-            d3.selectAll(`.q1Circle-${this.name}, .q2Circle-${this.name}, .q3Circle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`)
-              .attr('stroke', `${yellowColor}`);
+      //       d3.selectAll(`.q1Circle-${this.name}, .q2Circle-${this.name}, .q3Circle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`)
+      //         .attr('stroke', `${yellowColor}`);
 
-            d3.selectAll(`.maxCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`)
-              .attr('stroke', `${yellowColor}`);
-            d3.selectAll(`.rectMin-${this.name}, .rect1-${this.name}, .rect2-${this.name}, .rectMax-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('stroke', `${yellowColor}`)
-              .attr('fill', `${yellowColor}`);
-            d3.selectAll(`.q1Text-${this.name}, .q2Text-${this.name}, .q3Text-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('font-weight', 400);
-          } else {
-            this.clickedCircleItem = '';
-            this.mutableAverageWeight = 100;
-            d3.selectAll(`.q1Circle-${this.name}, .q2Circle-${this.name}, .q3Circle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`)
-              .attr('stroke', `${blueColor}`);
-            d3.selectAll(`.minCircle-${this.name}, .maxCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`)
-              .attr('stroke', `${blueColor}`);
-            d3.selectAll(`.q1Text-${this.name}, .q2Text-${this.name}, .q3Text-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('font-weight', 400);
-            d3.selectAll(`.rect1-${this.name}, .rect2-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('fill', `${blueColor}`);
-            d3.selectAll(`.rectMin-${this.name}, .rectMax-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('fill', `${blueColor}`);
-          }
-        })
-        .on('mouseover', (d) => {
-          if (this.clickedCircleItem !== 'min') {
-            d3.select(`.minCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius + 2}`)
-              .attr('stroke-width', `${clickedCircleWidth + 2}`);
-          }
-        })
-        .on('mouseout', (d) => {
-          if (this.clickedCircleItem !== 'min') {
-            d3.select(`.minCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`);
-          }
-        });
+      //       d3.selectAll(`.maxCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`)
+      //         .attr('stroke', `${yellowColor}`);
+      //       d3.selectAll(`.rectMin-${this.name}, .rect1-${this.name}, .rect2-${this.name}, .rectMax-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('stroke', `${yellowColor}`)
+      //         .attr('fill', `${yellowColor}`);
+      //       d3.selectAll(`.q1Text-${this.name}, .q2Text-${this.name}, .q3Text-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('font-weight', 400);
+      //     } else {
+      //       this.clickedCircleItem = '';
+      //       this.mutableAverageWeight = 100;
+      //       d3.selectAll(`.q1Circle-${this.name}, .q2Circle-${this.name}, .q3Circle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`)
+      //         .attr('stroke', `${blueColor}`);
+      //       d3.selectAll(`.minCircle-${this.name}, .maxCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`)
+      //         .attr('stroke', `${blueColor}`);
+      //       d3.selectAll(`.q1Text-${this.name}, .q2Text-${this.name}, .q3Text-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('font-weight', 400);
+      //       d3.selectAll(`.rect1-${this.name}, .rect2-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('fill', `${blueColor}`);
+      //       d3.selectAll(`.rectMin-${this.name}, .rectMax-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('fill', `${blueColor}`);
+      //     }
+      //   })
+      //   .on('mouseover', (d) => {
+      //     if (this.clickedCircleItem !== 'min') {
+      //       d3.select(`.minCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius + 2}`)
+      //         .attr('stroke-width', `${clickedCircleWidth + 2}`);
+      //     }
+      //   })
+      //   .on('mouseout', (d) => {
+      //     if (this.clickedCircleItem !== 'min') {
+      //       d3.select(`.minCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`);
+      //     }
+      //   });
+
       // ---max circle---
-      groupBoxPlot
-        .append('circle')
-        .attr('cx', `${xScale(maxBoxPlot)}`)
-        .attr('cy', 0)
-        .attr('r', `${clickedSmallCircleRadius}`)
-        .attr('fill', `${clickedCircleColor}`)
-        .attr('stroke', `${yellowColor}`)
-        .attr('stroke-width', `${clickedCircleWidth}`)
-        .attr('class', `maxCircle-${this.name}`)
-        .on('click', (d) => {
-          if (this.clickedCircleItem !== 'max') {
-            this.clickedCircleItem = 'max';
-            this.mutableAverageWeight = maxBoxPlot;
-            // 激活中
-            d3.selectAll(`.maxCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius + 2}`)
-              .attr('stroke-width', `${clickedCircleWidth + 2}`)
-              .attr('stroke', `${yellowColor}`);
+      // groupBoxPlot
+      //   .append('circle')
+      //   .attr('cx', `${xScale(maxBoxPlot)}`)
+      //   .attr('cy', 0)
+      //   .attr('r', `${clickedSmallCircleRadius}`)
+      //   .attr('fill', `${clickedCircleColor}`)
+      //   .attr('stroke', `${yellowColor}`)
+      //   .attr('stroke-width', `${clickedCircleWidth}`)
+      //   .attr('class', `maxCircle-${this.name}`)
+      //   .on('click', (d) => {
+      //     if (this.clickedCircleItem !== 'max') {
+      //       this.clickedCircleItem = 'max';
+      //       this.mutableAverageWeight = maxBoxPlot;
+      //       // 激活中
+      //       d3.selectAll(`.maxCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius + 2}`)
+      //         .attr('stroke-width', `${clickedCircleWidth + 2}`)
+      //         .attr('stroke', `${yellowColor}`);
 
-            d3.selectAll(`.q1Circle-${this.name}, .q2Circle-${this.name}, .q3Circle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`)
-              .attr('stroke', `${blueColor}`);
+      //       d3.selectAll(`.q1Circle-${this.name}, .q2Circle-${this.name}, .q3Circle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`)
+      //         .attr('stroke', `${blueColor}`);
 
-            d3.selectAll(`.minCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`)
-              .attr('stroke', `${blueColor}`);
-            d3.selectAll(`.rectMin-${this.name}, .rect1-${this.name}, .rect2-${this.name}, .rectMax-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('fill', `${blueColor}`);
-            d3.selectAll(`.q1Text-${this.name}, .q2Text-${this.name}, .q3Text-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('font-weight', 400);
-          } else {
-            this.clickedCircleItem = '';
-            this.mutableAverageWeight = 100;
-            d3.selectAll(`.q1Circle-${this.name}, .q2Circle-${this.name}, .q3Circle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`)
-              .attr('stroke', `${blueColor}`);
-            d3.selectAll(`.minCircle-${this.name}, .maxCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`)
-              .attr('stroke', `${blueColor}`);
-            d3.selectAll(`.q1Text-${this.name}, .q2Text-${this.name}, .q3Text-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('font-weight', 400);
-            d3.selectAll(`.rect1-${this.name}, .rect2-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('fill', `${blueColor}`);
-            d3.selectAll(`.rectMin-${this.name}, .rectMax-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('fill', `${blueColor}`);
-          }
-        })
-        .on('mouseover', (d) => {
-          if (this.clickedCircleItem !== 'max') {
-            d3.select(`.maxCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius + 2}`)
-              .attr('stroke-width', `${clickedCircleWidth + 2}`);
-          }
-        })
-        .on('mouseout', (d) => {
-          if (this.clickedCircleItem !== 'max') {
-            d3.select(`.maxCircle-${this.name}`)
-              .transition()
-              .duration(500)
-              .attr('r', `${clickedSmallCircleRadius}`)
-              .attr('stroke-width', `${clickedCircleWidth}`);
-          }
-        });
+      //       d3.selectAll(`.minCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`)
+      //         .attr('stroke', `${blueColor}`);
+      //       d3.selectAll(`.rectMin-${this.name}, .rect1-${this.name}, .rect2-${this.name}, .rectMax-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('fill', `${blueColor}`);
+      //       d3.selectAll(`.q1Text-${this.name}, .q2Text-${this.name}, .q3Text-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('font-weight', 400);
+      //     } else {
+      //       this.clickedCircleItem = '';
+      //       this.mutableAverageWeight = 100;
+      //       d3.selectAll(`.q1Circle-${this.name}, .q2Circle-${this.name}, .q3Circle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`)
+      //         .attr('stroke', `${blueColor}`);
+      //       d3.selectAll(`.minCircle-${this.name}, .maxCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`)
+      //         .attr('stroke', `${blueColor}`);
+      //       d3.selectAll(`.q1Text-${this.name}, .q2Text-${this.name}, .q3Text-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('font-weight', 400);
+      //       d3.selectAll(`.rect1-${this.name}, .rect2-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('fill', `${blueColor}`);
+      //       d3.selectAll(`.rectMin-${this.name}, .rectMax-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('fill', `${blueColor}`);
+      //     }
+      //   })
+      //   .on('mouseover', (d) => {
+      //     if (this.clickedCircleItem !== 'max') {
+      //       d3.select(`.maxCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius + 2}`)
+      //         .attr('stroke-width', `${clickedCircleWidth + 2}`);
+      //     }
+      //   })
+      //   .on('mouseout', (d) => {
+      //     if (this.clickedCircleItem !== 'max') {
+      //       d3.select(`.maxCircle-${this.name}`)
+      //         .transition()
+      //         .duration(500)
+      //         .attr('r', `${clickedSmallCircleRadius}`)
+      //         .attr('stroke-width', `${clickedCircleWidth}`);
+      //     }
+      //   });
 
       // draw a rectangle from q1 to q2
       groupBoxPlot
         .append('rect')
         .attr('x', xScale(q1))
-        .attr('width', xScale(median) - xScale(q1))
+        .attr('width', xScale(q2Position) - xScale(q1))
         .attr('y', -boxHeight / 2)
         .attr('height', boxHeight)
         .attr('fill', 'rgb(56,33,167)')
@@ -841,8 +857,8 @@ export default {
       // draw a rectangle from q2 to q3
       groupBoxPlot
         .append('rect')
-        .attr('x', xScale(median))
-        .attr('width', xScale(q3) - xScale(median))
+        .attr('x', xScale(q2Position))
+        .attr('width', xScale(q3) - xScale(q2Position))
         .attr('y', -boxHeight / 2)
         .attr('height', boxHeight)
         .attr('fill', `${blueColor}`)
@@ -854,7 +870,7 @@ export default {
       // median: draw the line in the rectangle, a text element describing the purpose and a line connecting the two
       const medianBoxPlot = groupBoxPlot
         .append('g')
-        .attr('transform', `translate(${xScale(median)} ${-(boxHeight / 2)})`);
+        .attr('transform', `translate(${xScale(q2Position)} ${-(boxHeight / 2)})`);
 
       medianBoxPlot
         .append('path')
@@ -870,7 +886,7 @@ export default {
 
       medianBoxPlot
         .append('text')
-        .text('q2')
+        .text('median')
         .attr('x', 0)
         .attr('y', -verticalMargin + 5 - 2)
         .attr('text-anchor', 'middle')
@@ -881,7 +897,7 @@ export default {
 
       const medianCircle = groupBoxPlot
         .append('g')
-        .attr('transform', `translate(${xScale(median)} ${-(boxHeight / 2)})`);
+        .attr('transform', `translate(${xScale(q2Position)} ${-(boxHeight / 2)})`);
 
       medianCircle
         .append('circle')
@@ -1002,7 +1018,7 @@ export default {
 
       q1BoxPlot
         .append('text')
-        .text('q1')
+        .text('low')
         .attr('x', 0)
         .attr('y', -verticalMargin - 2)
         .attr('text-anchor', 'middle')
@@ -1134,7 +1150,7 @@ export default {
 
       q3BoxPlot
         .append('text')
-        .text('q3')
+        .text('high')
         .attr('x', 0)
         .attr('y', -verticalMargin - 2)
         .attr('text-anchor', 'middle')
@@ -1365,7 +1381,7 @@ export default {
 </style>
 <style scoped>
 * {
-  transition: all 0.2s ease-out 0.2s;
+  transition: all 0.2s ease-out 0.1s;
 }
 .fontBold {
   font-weight: 800;
@@ -1380,17 +1396,18 @@ export default {
     display: inline-block;
 }
 .top-5-words {
-    margin: 0rem 0.5rem;
-    padding: 0rem 0.5rem;
-    background: red;
+    margin-right: 0.5rem;
+    padding: 0rem 1rem;
+    background: rgb(173, 173, 173);
+    color: white;
     border-radius: 20px;
     cursor: pointer;
-    box-shadow: 2px 3px rgb(167, 166, 166);
 }
+
 .top-5-words:hover {
-  /* opacity: 0.8; */
-  box-shadow: inset 0 0 10px rgb(85, 85, 85);
+  background: rgb(202, 201, 201);
 }
+
 .clickedRiskyWord {
   box-shadow: inset 0 0 10px rgb(85, 85, 85);
 }
@@ -1404,16 +1421,9 @@ export default {
   background: #FFF98A;
 }
 .prLevel {
-  width: 6rem;
-  height: 6rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 100%;
-  /* position: absolute;
-  right: 2rem;
-  top: 10rem; */
-  text-align: center;
-  color: white;
-  line-height: 6rem;
-  font-size: 2rem;
 }
 .prLevelLow {
   background: #FA4A4A;
@@ -1518,5 +1528,9 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+}
+.risky-word-title {
+  font-weight: 800;
+  margin-bottom: 0.5rem;
 }
 </style>

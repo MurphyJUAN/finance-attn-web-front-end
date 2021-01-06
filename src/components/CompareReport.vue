@@ -88,7 +88,7 @@ export default {
         sentencesData: [],
         wordsData: [],
       },
-      comparedTriangleOffset: '0%',
+      comparedTriangleOffset: 0,
       comparedSentenceAverageWeight: 0,
       comparedSentenceValueArray: [],
       metaInfo: {},
@@ -96,7 +96,7 @@ export default {
         sentencesData: [],
         wordsData: [],
       },
-      triangleOffset: '0%',
+      triangleOffset: 0,
       sentenceAverageWeight: 0,
       hasComparedReport: false,
       sentenceValueArray: [],
@@ -174,7 +174,7 @@ export default {
               const a = response.data.metaInfo;
               a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility)) * 100);
               a.pr = response.data.PR;
-              this.comparedTriangleOffset = `${Math.floor(a.pr).toString()}%`;
+              this.comparedTriangleOffset = Math.floor(a.pr);
               this.comparedMetaInfo = a;
               // fins stock symbol
               const company = this.comparedMetaInfo.name.trim().split(' ')[0];
@@ -346,7 +346,7 @@ export default {
               const a = response.data.metaInfo;
               a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility)) * 100);
               a.pr = response.data.PR;
-              this.triangleOffset = `${Math.floor(a.pr).toString()}%`;
+              this.triangleOffset = Math.floor(a.pr);
               this.metaInfo = a;
               // fins stock symbol
               const company = this.metaInfo.name.trim().split(' ')[0];

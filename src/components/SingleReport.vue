@@ -57,7 +57,7 @@ export default {
         sentencesData: [],
         wordsData: [],
       },
-      triangleOffset: '0%',
+      triangleOffset: 0,
       sentenceAverageWeight: 100,
       sentenceValueArray: [],
       firstTitleStopIndex: -1,
@@ -118,7 +118,7 @@ export default {
               const a = response.data.metaInfo;
               a.volatility = Math.round(Math.exp(parseFloat(response.data.volatility)) * 100);
               a.pr = response.data.PR;
-              this.triangleOffset = `${Math.floor(a.pr).toString()}%`;
+              this.triangleOffset = Math.floor(a.pr);
               this.metaInfo = a;
               // fins stock symbol
               const company = this.metaInfo.name.trim().split(' ')[0];
