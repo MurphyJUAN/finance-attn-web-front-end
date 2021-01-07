@@ -25,7 +25,15 @@
           <div class="meta-box">
             <div class="meta-detail">
               <h5>
-                  <div class="risky-word-title">Top 5 High Attention Words: </div>
+
+                  <div class="risky-word-title">Post-event return volatility: {{metaInfo.volatility}}%</div>
+                  <div class="inline-class">
+                    <div class="inline-class" :class="getPrClass()"></div>
+                    <div v-if="triangleOffset >= 50" class="inline-class">Safe I Placed at lower {{100 - triangleOffset}}% companies of the same year</div>
+                    <div v-if="triangleOffset <= 10" class="inline-class">Danger I Placed at top {{triangleOffset}}% companies of the same year</div>
+                    <div v-if="triangleOffset < 50 && triangleOffset > 10" class="inline-class">Caution I Placed at top {{triangleOffset}}% companies of the same year</div>
+                  </div>
+                  <div class="risky-word-title" style="margin-top: 1rem">Top 5 High Attention Words: </div>
                   <div class="risky-words-block">
                   <h5 v-for="(item, idx) in DataInfo.wordsData" v-if="idx<5" class="inline-class top-5-words"
                   :class="{
@@ -39,13 +47,6 @@
                   @click="clickedRiskyWords(idx, item['word'])">
                       {{item['word']}}
                   </h5>
-                  </div>
-                  <div class="risky-word-title">Post-event return volatility: {{metaInfo.volatility}}%</div>
-                  <div class="inline-class">
-                    <div class="inline-class" :class="getPrClass()"></div>
-                    <div v-if="triangleOffset >= 50" class="inline-class">Safe I Placed at lower {{100 - triangleOffset}}% companies of the same year</div>
-                    <div v-if="triangleOffset <= 10" class="inline-class">Danger I Placed at top {{triangleOffset}}% companies of the same year</div>
-                    <div v-if="triangleOffset < 50 && triangleOffset > 10" class="inline-class">Caution I Placed at top {{triangleOffset}}% companies of the same year</div>
                   </div>
 
 
@@ -1421,8 +1422,8 @@ export default {
   background: #FFF98A;
 }
 .prLevel {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   border-radius: 100%;
 }
 .prLevelLow {
