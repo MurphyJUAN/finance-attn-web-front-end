@@ -381,8 +381,14 @@ export default {
                 this.isStockLoading = true;
                 const d1 = new Date(this.metaInfo.date);
                 const d2 = new Date(d1);
+                const d4 = new Date(d1);
+                d4.setFullYear(d4.getFullYear() + 1);
+                console.log('---date---', d4);
                 d2.setFullYear(d2.getFullYear() - 1);
-                const t = new Date(d2).getTime();
+                console.log('---date---', d2);
+                const t = new Date(d2).getTime() / 1000;
+                const t2 = new Date(d4).getTime() / 1000;
+                console.log('---date---', t, t2);
 
                 const options = {
                   method: 'GET',
@@ -390,7 +396,7 @@ export default {
                   params: {
                     symbol,
                     from: t,
-                    to: '1562086800',
+                    to: t2,
                     events: 'div',
                     interval: '1d',
                     region: 'US',
