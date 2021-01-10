@@ -39,6 +39,7 @@
             <RecommentItem
             v-if="!hasComparedReport"
             :similarReportList="similarReportList"
+            :similarSectorReportList="similarSectorReportList"
             v-on:selectComparedReport="selectComparedReport"
             v-on:closeRecPage="closeRecPage"/>
         </div>
@@ -104,6 +105,7 @@ export default {
       comparedFirstTitleStopIndex: -1,
       firstTitleStopIndex: -1,
       similarReportList: [],
+      similarSectorReportList: [],
       stockInfo: {
         name: '',
         price: [],
@@ -165,6 +167,11 @@ export default {
       this.comparedMetaInfo = {};
       this.comparedSentenceValueArray = [];
       this.comparedSentenceAverageWeight = 0;
+      this.comparedStockInfo = {
+        name: '',
+        price: [],
+        volume: [],
+      };
       if (this.routeFlag === 'id') {
         if (this.selectedComparedCompanyId) {
           let path = `${baseURL}/metaInfo?filename=${this.selectedComparedCompanyId}`;
@@ -188,11 +195,17 @@ export default {
               }
               // Get stock data
               if (symbol.length > 0) {
-                this.isComparedStockLoading = true;
+                this.isStockLoading = true;
                 const d1 = new Date(this.metaInfo.date);
                 const d2 = new Date(d1);
+                const d4 = new Date(d1);
+                d4.setFullYear(d4.getFullYear() + 1);
+                console.log('---date---', d4);
                 d2.setFullYear(d2.getFullYear() - 1);
-                const t = new Date(d2).getTime();
+                console.log('---date---', d2);
+                const t = new Date(d2).getTime() / 1000;
+                const t2 = new Date(d4).getTime() / 1000;
+                console.log('---date---', t, t2);
 
                 const options = {
                   method: 'GET',
@@ -200,7 +213,7 @@ export default {
                   params: {
                     symbol,
                     from: t,
-                    to: '1562086800',
+                    to: t2,
                     events: 'div',
                     interval: '1d',
                     region: 'US',
@@ -211,7 +224,7 @@ export default {
                   },
                 };
 
-
+                // Yahoo Financial API
                 axios.request(options).then((stockResponse) => {
                   const ohlc2 = [];
                   const volume2 = [];
@@ -337,6 +350,11 @@ export default {
       this.metaInfo = {};
       this.sentenceAverageWeight = 0;
       this.sentenceValueArray = [];
+      this.stockInfo = {
+        name: '',
+        price: [],
+        volume: [],
+      };
       if (this.routeFlag === 'id') {
         if (this.selectedCompanyId) {
           const path = `${baseURL}/metaInfo?filename=${this.selectedCompanyId}`;
@@ -545,6 +563,7 @@ export default {
           sentenceValueArray: this.sentenceValueArray,
           firstTitleStopIndex: this.firstTitleStopIndex,
           similarReportList: this.similarReportList,
+          similarSectorReportList: this.similarSectorReportList,
           stockInfo: this.stockInfo } });
     },
     closeSingleFinPageFromComparedPage(isClose) {
@@ -591,6 +610,7 @@ export default {
       this.sentenceValueArray = this.$route.params.sentenceValueArray;
       this.firstTitleStopIndex = this.$route.params.firstTitleStopIndex;
       this.similarReportList = this.$route.params.similarReportList;
+      this.similarSectorReportList = this.$route.params.similarSectorReportList;
       this.stockInfo = this.$route.params.stockInfo;
     } else {
       this.selectedCompanyId = this.$route.params.reportId;
@@ -606,6 +626,7 @@ export default {
     selectedCompanyId: {
       handler(n, o) {
         this.similarReportList = [];
+        this.similarSectorReportList = [];
         let path = `${baseURL}/similarReport?filename=${this.selectedCompanyId}`;
         axios
           .get(path)
@@ -626,6 +647,27 @@ export default {
                   );
                 });
             }
+            path = `${baseURL}/similarSector?filename=${this.selectedCompanyId}`;
+            axios
+              .get(path)
+              .then((response) => {
+                const reportIdList = response.data.similar_sector;
+                for (let i = 0; i < reportIdList.length; i += 1) {
+                  path = `${baseURL}/metaInfo?filename=${reportIdList[i]}`;
+                  axios
+                    .get(path)
+                    .then((res) => {
+                      const m = res.data.metaInfo;
+                      this.similarSectorReportList.push(
+                        {
+                          id: `${reportIdList[i]}`,
+                          name: m.name,
+                          date: m.date,
+                        },
+                      );
+                    });
+                }
+              });
           });
         console.log('---similar---', this.similarReportList);
       },
@@ -718,5 +760,6 @@ export default {
   width: 100%;
   text-align: center;
   z-index: 100;
+  opacity: 0.85;
 }
 </style>

@@ -33,7 +33,7 @@
                     <div v-if="triangleOffset <= 10" class="inline-class">Danger I Placed at top {{triangleOffset}}% companies of the same year</div>
                     <div v-if="triangleOffset < 50 && triangleOffset > 10" class="inline-class">Caution I Placed at top {{triangleOffset}}% companies of the same year</div>
                   </div>
-                  <div class="risky-word-title" style="margin-top: 1rem">Top 5 High Attention Words: </div>
+                  <div class="risky-word-title" style="margin-top: 1rem">Top 5 high attention words: </div>
                   <div class="risky-words-block">
                   <h5 v-for="(item, idx) in DataInfo.wordsData" v-if="idx<5" class="inline-class top-5-words"
                   :class="{
@@ -96,23 +96,29 @@
                 <div :class="`viz__box-plot-${name}`"></div>
                 <div class="viz-title">Click the range selector to highlight sentences by their attention weight!</div>
               </div>
-              <span  v-for="(sentences, idxS) in DataInfo.sentencesData">
+              <span  v-for="(sentences, idxS) in DataInfo.sentencesData"
+              :class="{
+                highlight: checkHighlight(sentences.value, 'hi', idxS),
+              }">
                 <!-- checkHighlight(sentences.value, word, idxS), -->
                 <!-- number: {{idxS}} -->
+                <div v-if="idxS==0" class="fontBold">Item 7 . MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS</div>
+                <div v-if="idxS==0" style="width: 100%;opacity: 0">asd</div>
                 <div
                 :class="{
                   contentText: true,
-                  highlight: checkHighlight(sentences.value, word, idxS),
                   breakWord: word==='FredSam',
+                  fontBold: idxS===0 && idxW<firstTitleStopIndex
+                  }"
+                  v-for="(word, idxW) in sentences.sentence">
+                  <div
+                  :class="{
                   color0: clickedWord.idx === 0 && word.toLowerCase().indexOf(clickedWord.target)>=0,
                   color1: clickedWord.idx === 1 && word.toLowerCase().indexOf(clickedWord.target)>=0,
                   color2: clickedWord.idx === 2 && word.toLowerCase().indexOf(clickedWord.target)>=0,
                   color3: clickedWord.idx === 3 && word.toLowerCase().indexOf(clickedWord.target)>=0,
                   color4: clickedWord.idx === 4 && word.toLowerCase().indexOf(clickedWord.target)>=0,
-                  fontBold: idxS===0 && idxW<firstTitleStopIndex
-                  }"
-                  v-for="(word, idxW) in sentences.sentence">
-                  <span v-if="idxS==0&&idxW==0&&word!=='ITEM 7.'">Item7.</span>{{word}}
+                  }">{{word}}</div>
                 </div>
               </span>
           </b-collapse>
@@ -176,6 +182,27 @@ export default {
         },
         rangeSelector: {
           // selected: 1,
+          buttons: [{
+            type: 'month',
+            count: 1,
+            text: '1m',
+          }, {
+            type: 'month',
+            count: 3,
+            text: '3m',
+          }, {
+            type: 'month',
+            count: 6,
+            text: '6m',
+          }, {
+            type: 'year',
+            count: 1,
+            text: '1y',
+          }, {
+            type: 'all',
+            text: 'All',
+          }],
+          selected: 4,
         },
 
         title: {
@@ -238,10 +265,20 @@ export default {
             type: 'flags',
             data: [{
               x: Date.UTC(2002, 11, 1),
-              title: '*',
-              text: 'Post Event Point',
+              title: 'v',
+              text: `Report filing day on ${this.metaInfo.date}`,
             }],
             onSeries: 'dataseries',
+            color: '#e62510', // same as onSeries
+            fillColor: '#e62510',
+            style: { // text style
+              color: 'white',
+            },
+            states: {
+              hover: {
+                fillColor: '#e69f10', // darker
+              },
+            },
             shape: 'flag',
             width: 25,
           },
@@ -337,9 +374,11 @@ export default {
               title: 'A',
               text: 'Some event with a description',
             }],
+            color: '#2f7ed8', // same as onSeries
+            fillColor: '#2f7ed8',
             onSeries: 'dataseries',
             shape: 'circlepin',
-            width: 16,
+            width: 20,
           },
         ],
 
@@ -440,7 +479,10 @@ export default {
       });
     },
     checkHighlight(sv, word, idxS) {
-      if (idxS > 0 && sv >= this.mutableAverageWeight && word !== this.clickedWord[1]) {
+      // if (idxS > 0 && sv >= this.mutableAverageWeight && word !== this.clickedWord[1]) {
+      //   return true;
+      // }
+      if (idxS > 0 && sv >= this.mutableAverageWeight) {
         return true;
       }
       return false;
@@ -554,7 +596,7 @@ export default {
       // describe the size of the box plot to be at most half the height of the visualization
       const boxHeight = 10;
 
-      const blueColor = 'rgb(56, 33, 167)';
+      const blueColor = 'rgb(115,115,115)';
       const yellowColor = 'rgb(255, 248, 138)';
 
       // //////Control Clicked Circle Style
@@ -568,6 +610,8 @@ export default {
       const clickedCircleColor = 'white';
 
       const clickedCircleStrokeColor = 'rgb(56,33,167)';
+
+      // const clickedCircleStrokeColor = 'rgb(86,63,197)';
 
       const vizBlockWidth = document.getElementsByClassName('viz-block')[0].clientWidth;
 
@@ -583,6 +627,17 @@ export default {
       const groupBoxPlot = svgBoxPlot
         .append('g')
         .attr('transform', `translate(${margin.left} ${margin.top + height / 2})`);
+
+      //   const svgBoxPlot = vizBoxPlot
+      //   .append('svg')
+      //   .attr('width', `${vizBlockWidth}`)
+      //   .attr('height', `${height + (margin.top + margin.bottom)}`)
+      //   .attr('viewBox', `0 0 ${vizBlockWidth + margin.right + margin.left} ${height + (margin.top + margin.bottom)}`);
+
+      // // translate the group to vertically center the box plot elements
+      // const groupBoxPlot = svgBoxPlot
+      //   .append('g')
+      //   .attr('transform', `translate(15 ${margin.top + height / 2})`);
 
       // draw a line considering the interquartile range (q1 - iqr*1.5, q3 + iqr *1.5)
       // where the interquartile range is (q3 - q1)
@@ -852,7 +907,7 @@ export default {
         .attr('width', xScale(q2Position) - xScale(q1))
         .attr('y', -boxHeight / 2)
         .attr('height', boxHeight)
-        .attr('fill', 'rgb(56,33,167)')
+        .attr('fill', `${blueColor}`)
         .attr('class', `rect1-${this.name}`);
 
       // draw a rectangle from q2 to q3
@@ -891,9 +946,7 @@ export default {
         .attr('x', 0)
         .attr('y', -verticalMargin + 5 - 2)
         .attr('text-anchor', 'middle')
-        .attr('font-family', 'Georgia')
         .attr('font-weight', 400)
-        .attr('font-size', '1.5rem')
         .attr('class', `q2Text-${this.name}`);
 
       const medianCircle = groupBoxPlot
@@ -1023,8 +1076,7 @@ export default {
         .attr('x', 0)
         .attr('y', -verticalMargin - 2)
         .attr('text-anchor', 'middle')
-        .attr('font-family', 'Georgia')
-        .attr('font-size', '1.5rem')
+        // .attr('font-family', 'Georgia')
         .attr('class', `q1Text-${this.name}`);
 
       const q1Circle = groupBoxPlot
@@ -1037,7 +1089,7 @@ export default {
         .attr('cy', 0)
         .attr('r', `${clickedCircleRadius}`)
         .attr('fill', `${clickedCircleColor}`)
-        .attr('stroke', `${clickedCircleStrokeColor}`)
+        .attr('stroke', `${blueColor}`)
         .attr('stroke-width', `${clickedCircleWidth}`)
         .attr('class', `q1Circle-${this.name}`)
         .on('click', (d) => {
@@ -1155,8 +1207,7 @@ export default {
         .attr('x', 0)
         .attr('y', -verticalMargin - 2)
         .attr('text-anchor', 'middle')
-        .attr('font-family', 'Georgia')
-        .attr('font-size', '1.5rem')
+        // .attr('font-family', 'Georgia')
         .attr('font-weight', 800)
         .attr('class', `q3Text-${this.name}`);
 
@@ -1516,6 +1567,7 @@ export default {
   width: 100%;
 }
 .viz-title{
+  margin-top: -1rem;
   border-bottom: solid 1px gray;
 }
 /* g.outlier circle {
@@ -1533,5 +1585,9 @@ export default {
 .risky-word-title {
   font-weight: 800;
   margin-bottom: 0.5rem;
+}
+path.highcharts-label-box {
+  stroke: red;
+  stroke-width: 5px;
 }
 </style>

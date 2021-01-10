@@ -37,11 +37,11 @@
                   </div>
                   <div class="by-sector">
                     <h4 class="rec-title">By Sector</h4>
-                    <div class="recomment-item">Company Name A</div>
-                    <div class="recomment-item">Company Name B</div>
-                    <div class="recomment-item">Company Name C</div>
-                    <div class="recomment-item">Company Name D</div>
-                    <div class="recomment-item">Company Name E</div>
+                    <div class="recomment-item"
+                    @click="clickRecReport(item.id)"
+                    v-for="(item, idx) in similarSectorReportList">
+                      {{item.name}} / {{item.date}}
+                    </div>
                   </div>
                 </div>
 
@@ -68,7 +68,7 @@ export default {
     SelectReport,
   },
   // pageStatus:0->single, 1->compare
-  props: ['similarReportList', 'DataInfo', 'metaInfo', 'triangleOffset', 'sentenceAverageWeight', 'pageStatus'],
+  props: ['similarReportList', 'similarSectorReportList', 'DataInfo', 'metaInfo', 'triangleOffset', 'sentenceAverageWeight', 'pageStatus'],
   data() {
     return {
       isClose: false,
