@@ -47,9 +47,14 @@ html, body {
 }
 .company-input-home .vs__dropdown-toggle,
 .company-input-home .vs__dropdown-menu {
-  background: white;
+  background: #212121;
   min-width: 350px;
   cursor: pointer;
+  border: solid 1px white;
+  border-radius: 0.25rem;
+}
+.vs__selected {
+  color: white;
 }
 .company-input-home .vs__selected-options,
 .company-input-home .vs__search {

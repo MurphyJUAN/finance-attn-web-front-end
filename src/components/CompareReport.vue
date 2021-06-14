@@ -756,6 +756,8 @@ export default {
 .page {
     flex: 0 0 50%;
     position: relative;
+    height: 800px;
+    overflow-y: scroll;
 }
 .similarity-box {
   position: fixed;
@@ -767,5 +769,6 @@ export default {
   text-align: center;
   z-index: 100;
   opacity: 0.85;
+  font-size: 40px;
 }
 </style>

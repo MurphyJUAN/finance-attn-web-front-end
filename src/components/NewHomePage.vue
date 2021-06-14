@@ -6,7 +6,7 @@
         :whiteTheme="whiteTheme" />
         <div class="bcg-black"></div>
         <div class="bcg-img">
-            <svg width="751" height="751" viewBox="0 0 751 751" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <svg width="650" height="650" viewBox="0 0 650 650" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <rect width="751" height="751" fill="url(#pattern0)"/>
                 <defs>
                 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -151,7 +151,7 @@ export default {
     /* Vector 1 */
     position: absolute;
     width: 100%;
-    height: 1066.37px;
+    height: 100vh;
     left: 0px;
     top: 0px;
     z-index: -1;
